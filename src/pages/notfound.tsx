@@ -1,9 +1,10 @@
-import React from 'react'
 
-const notfound = () => {
+function Notfound() {
   return (
-    <div>notfound</div>
+    <div>
+      
+    </div>
   )
 }
 
-export default notfound
+export default Notfound
