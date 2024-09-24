@@ -1,20 +1,35 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { Route, Routes } from "react-router-dom"
-import Notfound from "./pages/Notfound"
+import { Route, Routes, useNavigate } from "react-router-dom"
 import Login from "./pages/auth/login"
+import Notfound from "./pages/notfound"
+import { useEffect } from "react"
 
 const queryClient = new QueryClient()
 
 function App() {
+  const navigate = useNavigate()
+
+  function checkLogin() {
+    let token = localStorage.getItem('token')
+    if (!token) {
+      navigate('/login')
+    }
+  }
+
+  useEffect(() => {
+    checkLogin()
+  }, [])
+
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
-        <Route path="*" element={<Notfound />} />
+        {/* Login */}
         <Route path="/login" element={<Login />} />
+        {/* Notfound */}
+        <Route path="/*" element={<Notfound />} />
       </Routes>
       {/* <ReactQueryDevtools initialIsOpen={false} position="right"/> */}
     </QueryClientProvider >
   )
 }
-
 export default App
