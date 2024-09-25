@@ -1,13 +1,16 @@
+import { ReactDOM } from "react";
 
-function Notfound() {
-  return (
-    <div className="w-[100%] h-[100vh] flex justify-center items-center">
+const NotFound: React.FC = () => {
+
+  return(
+    <div className = "w-[100%] h-[100vh] flex justify-center items-center" >
       <div className="text-6xl font-mono font-bold">
         <h1>404</h1>
         <h2>Not Found</h2>
       </div>
-    </div>
+    </div >
   )
+
 }
 
-export default Notfound
+export default NotFound
