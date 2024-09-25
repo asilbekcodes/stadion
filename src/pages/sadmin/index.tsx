@@ -5,7 +5,7 @@ import { LuUserCog } from 'react-icons/lu'
 import { FiUsers } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 
-const SAdmin : React.FC = () => {
+const SAdmin: React.FC = () => {
     return (
         <div>
             <AdminHeader title="Admin" pageName="Dashboard" />
