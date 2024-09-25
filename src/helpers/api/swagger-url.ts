@@ -1,1 +1,1 @@
-export const swaggerUrl = 'http://164.92.165.18:8080/swagger-ui/index.html#/'
+export const swaggerUrl = 'http://164.92.165.18:8080/'
