@@ -1,6 +1,6 @@
 import { swaggerUrl } from '@/helpers/api/swagger-url';
 import { useGlobalFunction } from '@/helpers/function/global-function';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Login(): JSX.Element {
@@ -11,19 +11,19 @@ function Login(): JSX.Element {
     const { loading, error, response, globalDataFunc } = useGlobalFunction(
         `${swaggerUrl}api/v1/auth/login`, 
         'post', 
-        { phone, password }
+        { phone, password },
     );
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (phone && password) {
-            globalDataFunc();
+            try {
+                await globalDataFunc(); // Loginni chaqiramiz
+                navigate('/sadmin'); // Muvaffaqiyatli login bo'lsa, navigatsiya
+            } catch (error) {
+                console.error('Login error', error);
+            }
         }
     };
-
-    if (response) {
-        localStorage.setItem('authToken', response.data.token);
-        navigate('/dashboard');
-    }
 
     return (
         <div>

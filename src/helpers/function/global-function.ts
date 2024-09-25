@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 export interface useGlobalTypes<T> {
     loading: boolean;
     error: Error | null;
-    response: T | undefined;
+    response: T | undefined | string;
     globalDataFunc: () => void;
 }
 
@@ -34,6 +34,7 @@ export function useGlobalFunction<T>(
                 default:
                     throw new Error('Invalid method');
             }
+            console.log('Axios response:', res); // Javobni konsolga chiqaramiz
 
             if (res.data.error) {
                 if (method !== 'get') {
@@ -42,20 +43,32 @@ export function useGlobalFunction<T>(
                     return '';
                 }
             }
-            return res.data.body;
+            return res.data.data; // 'data' ichidagi 'data'ni qaytaramiz
         },
         onError: (error: AxiosError) => {
             console.log(error);
         },
+        onSuccess: (data) => {
+            console.log('Backend response:', data); // Backend'dan kelgan 'data'ni konsolga chiqaramiz
+
+            // Login muvaffaqiyatli bo'lsa, tokenni saqlash
+            if (method === 'post' && url.includes('login')) {
+                if (data.token) {
+                    localStorage.setItem('token', data.token); // tokenni localStorage'ga saqlaymiz
+                    toast.success('Login Successful!');
+                } else {
+                    console.error('Token is not available in the response');
+                }
+            }
+        }
     });
 
     return {
-        loading: mutation.status === 'pending', 
-        error: mutation.error, 
-        response: mutation.data, 
-        globalDataFunc: mutation.mutateAsync 
+        loading: mutation.status === 'pending',
+        error: mutation.error,
+        response: mutation.data,
+        globalDataFunc: mutation.mutateAsync
     };
 }
-
 
 
