@@ -1,12 +1,11 @@
 import React from 'react'
 import AdminHeader from '@/components/custom/AdminHeader'
-import SidebarDashboard from '../dashboard/sidebardash'
 import { FaTerminal } from 'react-icons/fa'
 import { LuUserCog } from 'react-icons/lu'
 import { FiUsers } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 
-const SAdmin = () => {
+const SAdmin : React.FC = () => {
     return (
         <div>
             <AdminHeader title="Admin" pageName="Dashboard" />

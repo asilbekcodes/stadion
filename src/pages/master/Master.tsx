@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Master = () => {
+const Master : React.FC = () => {
   return (
     <div>
         

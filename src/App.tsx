@@ -13,16 +13,16 @@ const queryClient = new QueryClient()
 function App() {
   const navigate = useNavigate()
 
-  // function checkLogin() {
-  //   let token = localStorage.getItem('token')
-  //   if (!token) {
-  //     navigate('/login')
-  //   }
-  // }
+  function checkLogin() {
+    let token = localStorage.getItem('token')
+    if (!token) {
+      navigate('/login')
+    }
+  }
 
-  // useEffect(() => {
-  //   checkLogin()
-  // }, [])
+  useEffect(() => {
+    checkLogin()
+  }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
