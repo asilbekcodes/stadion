@@ -26,8 +26,9 @@ const MyChart: React.FC = () => {
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 5000000, 0, 0, 0],  // Example data to match the spike in the chart
                 borderColor: 'rgba(54, 162, 235, 1)',
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderWidth: 4,
+                borderWidth: 5,
                 fill: true, // You can make it a filled line chart
+                pointRadius: 0,
             },
         ],
     };
@@ -58,8 +59,7 @@ const MyChart: React.FC = () => {
                 beginAtZero: true, // Ensure Y-axis starts from zero
             },
         },
-    };
-
+    }
     return (
         <div
             style={{

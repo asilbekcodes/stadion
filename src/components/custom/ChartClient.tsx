@@ -27,8 +27,9 @@ const MyChart: React.FC = () => {
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0],  // Example data to match the spike in the chart
                 borderColor: 'rgba(54, 162, 235, 1)',
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderWidth: 4,
+                borderWidth: 5,
                 fill: true, // You can make it a filled line chart
+                pointRadius: 0,
             },
         ],
     };
@@ -41,17 +42,17 @@ const MyChart: React.FC = () => {
                 display: false, // Completely remove the legend
             },
             title: {
-              display: true,
-              text: 'Client Count', // Title text
-              align: 'center', // Align the title to center
-              font: {
-                size: 18, // Customize font size
-                weight: 'bold',
-              },
-              padding: {
-                top: 10,
-                bottom: 10,
-              },
+                display: true,
+                text: 'Client Count', // Title text
+                align: 'center', // Align the title to center
+                font: {
+                    size: 18, // Customize font size
+                    weight: 'bold',
+                },
+                padding: {
+                    top: 10,
+                    bottom: 10,
+                },
             },
         },
         scales: {

@@ -14,16 +14,16 @@ const queryClient = new QueryClient()
 function App() {
   const navigate = useNavigate()
 
-  // function checkLogin() {
-  //   let token = localStorage.getItem('token')
-  //   if (!token) {
-  //     navigate('/login')
-  //   }
-  // }
+  function checkLogin() {
+    let token = localStorage.getItem('token')
+    if (!token) {
+      navigate('/login')
+    }
+  }
 
-  // useEffect(() => {
-  //   checkLogin()
-  // }, [])
+  useEffect(() => {
+    checkLogin()
+  }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -34,7 +34,7 @@ function App() {
         <Route path="*" element={<Notfound />} />
 
         {/* Super Admin */}
-        <Route path="/sadmin" element={<Sadmin />} />
+        {/* <Route path="/sadmin" element={<Sadmin />} /> */}
         <Route path="/sadmin/sadmindashboard" element={<SadminDash />} />
         <Route path="/sadmin/sadminmaster" element={<SadminMaster />} />
         <Route path="/sadmin/sadminclient" element={<SadminClie />} />

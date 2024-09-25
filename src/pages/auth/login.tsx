@@ -14,11 +14,12 @@ function Login(): JSX.Element {
         { phone, password },
     );
 
+
     const handleSubmit = async () => {
         if (phone && password) {
             try {
                 await globalDataFunc(); // Loginni chaqiramiz
-                navigate('/sadmin'); // Muvaffaqiyatli login bo'lsa, navigatsiya
+                navigate('/sadmin/sadmindashboard'); // Muvaffaqiyatli login bo'lsa, navigatsiya
             } catch (error) {
                 console.error('Login error', error);
             }

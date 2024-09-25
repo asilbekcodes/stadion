@@ -31,7 +31,20 @@ interface Plugin {
     title: Title;
 }
 
+interface Tension {
+    from: number;
+    to: number;
+    loop: boolean;
+    duration: number;
+    easing: string;
+}
+
+interface Animation {
+    tension: Tension;
+}
+
 export default interface Options {
+    // animations: Animation;
     responsive: boolean;
     maintainAspectRatio: boolean;
     plugins: Plugin;
