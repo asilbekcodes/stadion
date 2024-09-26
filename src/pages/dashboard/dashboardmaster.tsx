@@ -12,7 +12,7 @@ import Tables from '@/components/custom/Tables'
 // import { config } from 'process'
 // import { TableTypes } from '@/helpers/interface/types'
 
-const dashboardmas: React.FC = () => {
+const dashboardmaster: React.FC = () => {
     const { pathname } = useLocation()
     // const RejectedMaster = useGlobalFunction(
     //     `${swaggerUrl}api/v1/user/rejected/list`,
@@ -61,17 +61,17 @@ const dashboardmas: React.FC = () => {
             <div>
                 <div className='my-5'>
                     <Link to='/sadmin/sadminmaster'>
-                        <Button variant="outline" className='mr-5 bg-gray-200'>Confirmed Masters</Button>
+                        <Button variant="outline" className='mr-5'>Confirmed Masters</Button>
                     </Link>
                     <Link to='/sadmin/sadminmasterr'>
-                        <Button variant="outline">Not Confirmed Masters</Button>
+                        <Button variant="outline" className='bg-gray-200'>Not Confirmed Masters</Button>
                     </Link>
                 </div>
                 <div>
                     {/* {RejectedMaster.response && Array.isArray(RejectedMaster.response) && RejectedMaster.response.map((item: TableTypes) =>
                         <Tables firstName={item.firstName} lastName={item.lastName} phoneNumber={item.phoneNumber} />
                     )} */}
-                    <Tables firstName="John" lastName="Doe" phoneNumber="1234567890"/>
+                    <Tables firstName="Anna" lastName="Kennedy" phoneNumber="1234567890"/>
                 </div>
             </div>
         </div>
@@ -79,4 +79,4 @@ const dashboardmas: React.FC = () => {
   )
 }
 
-export default dashboardmas
+export default dashboardmaster
