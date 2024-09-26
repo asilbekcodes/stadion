@@ -64,6 +64,8 @@ export interface TableTypes {
     firstName: string;
     lastName: string;
     phoneNumber: string;
+    btn: string;
+    btn2: string;
 }
 
 export interface ClientTypes {

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import AdminHeader from '@/components/custom/AdminHeader'
 import { Button } from '@/components/ui/button'
+import Tables from '@/components/custom/MasterTables'
 
 const dashboardmas: React.FC = () => {
     const { pathname } = useLocation()
@@ -42,7 +43,7 @@ const dashboardmas: React.FC = () => {
                                 <Button variant="outline">Not Confirmed Masters</Button>
                             </Link>
                         </div>
-
+                        <Tables firstName="John" lastName="Doe" phoneNumber="1234567890"  btn="Delete" btn2="Info" />
                     </div>
                 </div>
             </div>

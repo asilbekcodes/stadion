@@ -59,10 +59,10 @@ const Tables: React.FC<TableTypes> = ({ firstName, lastName, phoneNumber, btn, b
           <TableCell className="w-[300px] border border-black">{phoneNumber}</TableCell>
           <TableCell className="w-[300px] border border-black">
             <Dialog>
-              <DialogTrigger><Button className='bg-red-600 mr-3'>{btn}</Button></DialogTrigger>
+              <DialogTrigger><Button className='bg-green-600 mr-3'>{btn}</Button></DialogTrigger>
               <DialogContent className='w-[400px] '>
                 <DialogHeader>
-                  <DialogTitle className='text-center py-5 text-xl'>Do you delete this master?</DialogTitle>
+                  <DialogTitle className='text-center py-5 text-xl'>Do you confirm this master?</DialogTitle>
                   <DialogDescription className='flex justify-end pt-10'>
                     <Button className='bg-red-600 w-[100px] mr-2'>No</Button>
                     <Button className='bg-green-600 w-[100px]'>Yes</Button>
@@ -71,10 +71,10 @@ const Tables: React.FC<TableTypes> = ({ firstName, lastName, phoneNumber, btn, b
               </DialogContent>
             </Dialog>
             <Dialog>
-              <DialogTrigger><Button className='bg-blue-600'>{btn2}</Button></DialogTrigger>
+              <DialogTrigger><Button className='bg-red-600'>{btn2}</Button></DialogTrigger>
               <DialogContent className='w-[400px] '>
                 <DialogHeader>
-                  <DialogTitle className='text-center py-5 text-xl'>Do you info this master?</DialogTitle>
+                  <DialogTitle className='text-center py-5 text-xl'>Do you reject this master?</DialogTitle>
                   <DialogDescription className='flex justify-end pt-10'>
                     <Button className='bg-red-600 w-[100px] mr-2'>No</Button>
                     <Button className='bg-green-600 w-[100px]'>Yes</Button>

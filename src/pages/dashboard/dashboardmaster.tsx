@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import AdminHeader from '@/components/custom/AdminHeader'
 import { Button } from '@/components/ui/button'
-import Tables from '@/components/custom/MasterTables'
+import Tables from '@/components/custom/MasterTables2'
 // import { useGlobalFunction } from '@/helpers/function/global-function'
 // import { swaggerUrl } from '@/helpers/api/swagger-url'
 // import { config } from 'process'
@@ -71,7 +71,7 @@ const dashboardmaster: React.FC = () => {
                     {/* {RejectedMaster.response && Array.isArray(RejectedMaster.response) && RejectedMaster.response.map((item: TableTypes) =>
                         <Tables firstName={item.firstName} lastName={item.lastName} phoneNumber={item.phoneNumber} />
                     )} */}
-                    <Tables firstName="Anna" lastName="Kennedy" phoneNumber="1234567890"/>
+                    <Tables firstName="Anna" lastName="Kennedy" phoneNumber="1234567890"  btn="Confirm" btn2="Reject" />
                 </div>
             </div>
         </div>
