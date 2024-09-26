@@ -10,7 +10,7 @@ const ClientTables: React.FC<ClientTypes> = ({firstName, lastName, order, phoneN
         <TableCaption>
             <div className='flex justify-between items-center'>
                 <Button>Previous</Button>
-
+                <p className='mt-2'>1/1</p>
                 <Button>Next</Button>
             </div>
         </TableCaption>
@@ -20,7 +20,7 @@ const ClientTables: React.FC<ClientTypes> = ({firstName, lastName, order, phoneN
                 <TableHead className="w-[300px] border border-black">Last Name</TableHead>
                 <TableHead className="w-[300px] border border-black">Order Count</TableHead>
                 <TableHead className="w-[300px] border border-black">Phone Number</TableHead>
-                <TableHead className=" w-[300px] border border-black">Actions</TableHead>
+                <TableHead className="w-[300px] border border-black">Actions</TableHead>
             </TableRow>
         </TableHeader>
         <TableBody>

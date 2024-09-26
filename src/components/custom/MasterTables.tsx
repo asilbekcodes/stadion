@@ -22,19 +22,6 @@ import {
   
 
 const Tables: React.FC<TableTypes> = ({ firstName, lastName, phoneNumber, btn, btn2 }) => {
-  // const modal = () => {
-  //   // return(
-  //     <DropdownMenu>
-  //       <DropdownMenuTrigger></DropdownMenuTrigger>
-  //         <DropdownMenuContent>
-  //           <DropdownMenuLabel>My Account</DropdownMenuLabel>
-  //           <DropdownMenuSeparator />
-  //           <DropdownMenuItem>Profile</DropdownMenuItem>
-  //           <DropdownMenuItem>Log Out</DropdownMenuItem>
-  //         </DropdownMenuContent>
-  //     </DropdownMenu>
-  //   // )
-  // }
   return (
     <Table className='bg-gray-100 '>
       <TableCaption>
