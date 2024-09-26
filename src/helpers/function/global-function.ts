@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 export interface useGlobalTypes<T> {
     loading: boolean;
     error: Error | null;
-    response: T | undefined | string;
+    response: T | undefined | string | null;   
     globalDataFunc: () => void;
 }
 

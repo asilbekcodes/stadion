@@ -65,3 +65,18 @@ export interface TableTypes {
     lastName: string;
     phoneNumber: string;
 }
+
+export interface ClientTypes {
+    firstName: string;
+    lastName: string;
+    order: number;
+    phoneNumber: string;
+}
+
+export interface T{
+    id: number;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    order: number;
+}
