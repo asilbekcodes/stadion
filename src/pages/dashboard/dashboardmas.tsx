@@ -12,7 +12,7 @@ const dashboardmas: React.FC = () => {
   return (
     <div>
         <AdminHeader pageName="Masters" title="Admin"/>
-        <div>
+        <div className='flex'>
             <div>
                 <div className="w-64 bg-gray-100 h-screen">
                     <nav>
@@ -29,6 +29,9 @@ const dashboardmas: React.FC = () => {
                         </ul>
                     </nav>
                 </div>
+            </div>
+            <div>
+                
             </div>
         </div>
     </div>
