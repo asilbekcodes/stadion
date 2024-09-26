@@ -5,8 +5,6 @@ import { LuUserCog } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import AdminHeader from '@/components/custom/AdminHeader'
-import ConfirmedMas from '../sadmin/ConfirmedMas'
-import NotConfirmedMas from '../sadmin/NotConfirmedMas'
 
 const dashboardmas: React.FC = () => {
     const { pathname } = useLocation()

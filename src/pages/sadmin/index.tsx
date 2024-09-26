@@ -1,10 +1,8 @@
 import React from 'react'
 import AdminHeader from '@/components/custom/AdminHeader'
-import { Link, useLocation } from 'react-router-dom'
 import Dashboard from "../dashboard/dashboard"
 
 const SAdmin: React.FC = () => {
-    const { pathname } = useLocation()
 
     return (
         <div>

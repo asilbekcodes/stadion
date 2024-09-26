@@ -59,3 +59,9 @@ export interface GlobalTypes {
     options: Options;
     data: any;
 }
+
+export interface TableTypes {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+}

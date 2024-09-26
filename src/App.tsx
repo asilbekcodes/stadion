@@ -3,13 +3,12 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 import Login from "./pages/auth/login"
 import Notfound from "./pages/notfound"
 import { useEffect } from "react"
-import Sadmin from "./pages/sadmin/index"
 import SadminDash from "./pages/dashboard/dashboard"
 import SadminClie from "./pages/dashboard/dashboardclie"
 import SadminMaster from "./pages/dashboard/dashboardmas"
 import Dashboard from "./pages/dashboard/dashboard"
-import ConfirmedMas from "./pages/sadmin/ConfirmedMas"
-import NotConfirmedMas from "./pages/sadmin/NotConfirmedMas"
+// import ConfirmedMas from "./pages/sadmin/ConfirmedMas"
+// import NotConfirmedMas from "./pages/sadmin/NotConfirmedMas"
 
 const queryClient = new QueryClient()
 
@@ -41,8 +40,8 @@ function App() {
         <Route path="/sadmin/sadminmaster" element={<SadminMaster />} />
         <Route path="/sadmin/sadminclient" element={<SadminClie />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/sadmin/sadminmasterconfirmedmas" element={<ConfirmedMas />} />
-        <Route path="/sadmin/sadminmasternotconfirmedmas" element={<NotConfirmedMas />} />
+        {/* <Route path="/sadmin/sadminmasterconfirmedmas" element={<ConfirmedMas />} /> */}
+        {/* <Route path="/sadmin/sadminmasternotconfirmedmas" element={<NotConfirmedMas />} /> */}
         {/* <Route path="/index" element={<Index />} /> */}
 
 
