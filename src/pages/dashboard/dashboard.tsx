@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaTerminal } from 'react-icons/fa'
 import { FiUsers } from 'react-icons/fi'
 import { LuUserCog } from 'react-icons/lu'
@@ -11,6 +11,7 @@ import ChartClient from '@/components/custom/ChartClient'
 
 const dashboard: React.FC = () => {
     const { pathname } = useLocation()
+    const [year, setYear] = useState<number>(2024);
 
     return (
         <div>
@@ -36,7 +37,7 @@ const dashboard: React.FC = () => {
                 <div className='w-full relative px-16 py-4'>
                     <form className='flex text-end absolute right-16 items-center gap-3'>
                         <label htmlFor="search" className='text-md font-semibold'>Enter Year:</label>
-                        <input type="number" className='p-2 text-gray-900 border shadow-md border-gray-300 rounded-lg font-semibold bg-white text-xs focus:ring-blue-500 focus:border-blue-500' />
+                        <input value={year} onChange={(e) => setYear(parseInt(e.target.value))} type="number" className='p-2 text-gray-900 border shadow-md border-gray-300 rounded-lg font-semibold bg-white text-xs focus:ring-blue-500 focus:border-blue-500' />
                     </form>
                     <div className='flex justify-between items-center'>
                         <ChartOrder/>
