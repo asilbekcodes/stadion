@@ -44,7 +44,7 @@ interface Animation {
 }
 
 export default interface Options {
-    // animations: Animation;
+    animations: Animation;
     responsive: boolean;
     maintainAspectRatio: boolean;
     plugins: Plugin;
