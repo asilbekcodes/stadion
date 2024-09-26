@@ -19,7 +19,7 @@ A Type-script , React Js and Vite based **football stadiums** website that provi
 
 1. Clone the repo:
 ```bash
-    git clone https://github.com/username/repo.git
+    git clone https://github.com/asilbekcodes/stadion.git
 ```
 
 
