@@ -1,16 +1,12 @@
 import React from 'react'
+import AdminHeader from '@/components/custom/AdminHeader'
+import { Link, useLocation } from 'react-router-dom'
 import { FaTerminal } from 'react-icons/fa'
 import { FiUsers } from 'react-icons/fi'
 import { LuUserCog } from 'react-icons/lu'
-import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
-import AdminHeader from '@/components/custom/AdminHeader'
-import ConfirmedMas from '../sadmin/ConfirmedMas'
-import NotConfirmedMas from '../sadmin/NotConfirmedMas'
 
-const dashboardmas: React.FC = () => {
+const NotConfirmedMas: React.FC = () => {
     const { pathname } = useLocation()
-
     return (
         <div>
             <AdminHeader pageName="Masters" title="Admin" />
@@ -37,14 +33,14 @@ const dashboardmas: React.FC = () => {
                 <div className='p-8'>
                     <div className='flex space-x-4 items-center'>
                         <Link to={"/sadmin/sadminmasterconfirmedmas"}>
-                            <p className={`${pathname === '/sadmin/sadminmaster' && '/sadmin/sadminmasterconfirmedmas' ? 'bg-gray-300' : 'bg-gray-300'} rounded-sm text-md font-semibold p-2`}>Confirmed Masters</p>
+                            <p className={`${pathname === '/sadmin/sadminmasterconfirmedmas' ? 'bg-gray-300' : 'bg-white'} rounded-sm text-md font-semibold p-2`}>Confirmed Masters</p>
                         </Link>
                         <Link to={"/sadmin/sadminmasternotconfirmedmas"}>
                             <p className={`${pathname === '/sadmin/sadminmasternotconfirmedmas' ? 'bg-gray-300' : 'bg-white'} rounded-sm text-md font-semibold p-2`}>Not Confirmed Masters</p>
                         </Link>
                     </div>
                     <div>
-                        masters
+                        
                     </div>
                 </div>
             </div>
@@ -52,4 +48,4 @@ const dashboardmas: React.FC = () => {
     )
 }
 
-export default dashboardmas
+export default NotConfirmedMas
