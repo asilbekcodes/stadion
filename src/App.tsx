@@ -9,6 +9,8 @@ import SadminMaster from "./pages/dashboard/dashboardmas"
 import SadminMasterr from "./pages/dashboard/dashboardmaster"
 import Dashboard from "./pages/dashboard/dashboard"
 import Client from "./pages/dashboard/dashboardclient"
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify'
 // import ConfirmedMas from "./pages/sadmin/ConfirmedMas"
 // import NotConfirmedMas from "./pages/sadmin/NotConfirmedMas"
 
@@ -49,6 +51,7 @@ function App() {
 
         <Route path="/c" element={<Client />} />
       </Routes>
+        <ToastContainer />
       {/* <ReactQueryDevtools initialIsOpen={false} position="right"/> */}
     </QueryClientProvider >
   )
