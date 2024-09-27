@@ -11,26 +11,40 @@ import { swaggerUrl } from '@/helpers/api/swagger-url'
 import { useGlobalFunction } from '@/helpers/function/global-function'
 import { TableTypes } from '@/helpers/interface/types'
 import { config } from '@/helpers/token/token'
+import axios from 'axios'
 
 const dashboardmas: React.FC = () => {
     const { pathname } = useLocation()
-    const conMAster = useGlobalFunction(
-        `${swaggerUrl}api/v1/user/rejected/list`,
-        'get',
-        '',
-        config
-    )
+    // const conMAster = useGlobalFunction(
+    //     `${swaggerUrl}api/v1/user/rejected/list`,
+    //     'get',
+    //     '',
+    //     config
+    // )
     
-    useEffect(() => {
-        conMAster.globalDataFunc()
-    }, []);
+    // useEffect(() => {
+    //     conMAster.globalDataFunc()
+    // }, []);
     
-    if (conMAster.loading) {
-        return <p>Loading...</p>
-    }
-    if (conMAster.error) {
-        return <p>error</p>
-    }
+    // if (conMAster.loading) {
+    //     return <p>Loading...</p>
+    // }
+    // if (conMAster.error) {
+    //     return <p>error</p>
+    // }
+
+    // const [data, setData] = React.useState<any>([])
+    // function getData() {
+    //     axios.get(`${swaggerUrl}api/v1/user/rejected/list`, config)
+    //         .then(res => {
+    //             setData(res.data.data.object)
+
+    //         })
+    // }
+
+
+    
+
 
     return (
         <div>
@@ -64,9 +78,9 @@ const dashboardmas: React.FC = () => {
                                 <Button variant="outline">Not Confirmed Masters</Button>
                             </Link>
                         </div>
-                        {conMAster.response && Array.isArray(conMAster.response) && conMAster.response.map((item: TableTypes) =>
+                        {/* {conMAster.response && Array.isArray(conMAster.response) && conMAster.response.map((item: TableTypes) =>
                         <Tables firstName={item.firstName} lastName={item.lastName} phoneNumber={item.phoneNumber} btn="Delete" btn2="Info"/>
-                        )}
+                        )} */}
                         {/* <Tables firstName="John" lastName="Doe" phoneNumber="1234567890"  btn="Delete" btn2="Info" /> */}
                     </div>
                 </div>
