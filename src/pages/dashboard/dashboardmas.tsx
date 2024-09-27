@@ -81,7 +81,7 @@ const dashboardmas: React.FC = () => {
                         {/* {conMAster.response && Array.isArray(conMAster.response) && conMAster.response.map((item: TableTypes) =>
                         <Tables firstName={item.firstName} lastName={item.lastName} phoneNumber={item.phoneNumber} btn="Delete" btn2="Info"/>
                         )} */}
-                        {/* <Tables firstName="John" lastName="Doe" phoneNumber="1234567890"  btn="Delete" btn2="Info" /> */}
+                        <Tables firstName="" lastName="" phoneNumber=""  btn="" btn2=""/>
                     </div>
                 </div>
             </div>

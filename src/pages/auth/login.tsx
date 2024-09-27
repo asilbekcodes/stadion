@@ -56,6 +56,7 @@ function Login(): JSX.Element {
         onSuccess: (data: AxiosResponse) => {
             localStorage.setItem('token', data.data.token)
             if (data.data.role == "ROLE_SUPER_ADMIN") {
+                toast.success('Login Successful!')
                 isRole('/sadmin/sadmindashboard')
             }
         },
@@ -114,7 +115,6 @@ function Login(): JSX.Element {
                                 disabled={mutation.status === 'pending'}
                             >
                                 {mutation.status === 'pending' ? 'Signing in...' : 'Sign In'}
-                                {/* Sign in */}
                             </button>
                             {/* {mutation.error && <p className="text-red-500 text-sm mt-2">Error: {mutation.error.message}</p>}
                             {mutation.isSuccess && <p className="text-green-500 text-sm mt-2">Login Successful!</p>} */}
