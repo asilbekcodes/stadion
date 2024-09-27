@@ -11,6 +11,16 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { FaChevronDown } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/modal"
+import { Button } from '../ui/button'
 
 interface Props {
   title: string
@@ -50,7 +60,20 @@ const Header: React.FC<Props> = ({ title, pageName }) => {
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem onClick={handleLogout}>Log Out</DropdownMenuItem>
+                <Dialog>
+                  <DialogTrigger className='text-[13px] text-start px-2 py-1 w-[115px] hover:bg-gray-100'>Log Out</DialogTrigger>
+                    <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle className='text-center pt-[30px] text-xl font-bold'>Are you sure log out?</DialogTitle>
+                      <DialogDescription className='text-end pt-[80px]'>
+                        <DialogClose>
+                          <Button  className='bg-red-600 w-[100px] mr-2'>No</Button>  
+                        </DialogClose> 
+                        <Button onClick={handleLogout} className='bg-green-600 w-[100px]'>Yes</Button>
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
