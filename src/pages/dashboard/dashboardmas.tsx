@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaTerminal } from 'react-icons/fa'
 import { FiUsers } from 'react-icons/fi'
 import { LuUserCog } from 'react-icons/lu'
@@ -7,9 +7,30 @@ import { useLocation } from 'react-router-dom'
 import AdminHeader from '@/components/custom/AdminHeader'
 import { Button } from '@/components/ui/button'
 import Tables from '@/components/custom/MasterTables'
+import { swaggerUrl } from '@/helpers/api/swagger-url'
+import { useGlobalFunction } from '@/helpers/function/global-function'
+import { TableTypes } from '@/helpers/interface/types'
+import { config } from '@/helpers/token/token'
 
 const dashboardmas: React.FC = () => {
     const { pathname } = useLocation()
+    const conMAster = useGlobalFunction(
+        `${swaggerUrl}api/v1/user/rejected/list`,
+        'get',
+        '',
+        config
+    )
+    
+    useEffect(() => {
+        conMAster.globalDataFunc()
+    }, []);
+    
+    if (conMAster.loading) {
+        return <p>Loading...</p>
+    }
+    if (conMAster.error) {
+        return <p>error</p>
+    }
 
     return (
         <div>
@@ -43,7 +64,10 @@ const dashboardmas: React.FC = () => {
                                 <Button variant="outline">Not Confirmed Masters</Button>
                             </Link>
                         </div>
-                        <Tables firstName="John" lastName="Doe" phoneNumber="1234567890"  btn="Delete" btn2="Info" />
+                        {conMAster.response && Array.isArray(conMAster.response) && conMAster.response.map((item: TableTypes) =>
+                        <Tables firstName={item.firstName} lastName={item.lastName} phoneNumber={item.phoneNumber} btn="Delete" btn2="Info"/>
+                        )}
+                        {/* <Tables firstName="John" lastName="Doe" phoneNumber="1234567890"  btn="Delete" btn2="Info" /> */}
                     </div>
                 </div>
             </div>
