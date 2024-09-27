@@ -12,6 +12,7 @@ import { Button } from '../ui/button'
 import { TableTypes } from '@/helpers/interface/types'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -51,7 +52,9 @@ const Tables: React.FC<TableTypes> = ({ firstName, lastName, phoneNumber, btn, b
                 <DialogHeader>
                   <DialogTitle className='text-center py-5 text-xl'>Do you delete this master?</DialogTitle>
                   <DialogDescription className='flex justify-end pt-10'>
-                    <Button className='bg-red-600 w-[100px] mr-2'>No</Button>
+                    <DialogClose>
+                      <Button className='bg-red-600 w-[100px] mr-2'>No</Button>
+                    </DialogClose>
                     <Button className='bg-green-600 w-[100px]'>Yes</Button>
                   </DialogDescription>
                 </DialogHeader>
@@ -63,7 +66,9 @@ const Tables: React.FC<TableTypes> = ({ firstName, lastName, phoneNumber, btn, b
                 <DialogHeader>
                   <DialogTitle className='text-center py-5 text-xl'>Do you info this master?</DialogTitle>
                   <DialogDescription className='flex justify-end pt-10'>
-                    <Button className='bg-red-600 w-[100px] mr-2'>No</Button>
+                    <DialogClose>
+                      <Button className='bg-red-600 w-[100px] mr-2'>No</Button>
+                    </DialogClose>
                     <Button className='bg-green-600 w-[100px]'>Yes</Button>
                   </DialogDescription>
                 </DialogHeader>
