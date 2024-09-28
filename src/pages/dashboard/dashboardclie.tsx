@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaTerminal } from 'react-icons/fa'
 import { FiUsers } from 'react-icons/fi'
 import { LuUserCog } from 'react-icons/lu'
@@ -6,33 +6,49 @@ import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import AdminHeader from '@/components/custom/AdminHeader'
 
-const dashboardclie: React.FC = () => {
+const DashboardClient: React.FC = () => {
     const { pathname } = useLocation()
+    const [isOpen, setIsOpen] = useState(true);
+
+    // Sidebar toggle function
+    const toggleSidebar = () => {
+        setIsOpen(!isOpen);
+    };
 
     return (
         <div>
-            <AdminHeader pageName="Clients" title="Admin" />
-            <div>
-                <div>
-                    <div className="w-64 bg-gray-100 h-screen">
-                        <nav>
-                            <ul>
-                                <li>
-                                    <Link to="/sadmin/sadmindashboard" className='flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-400 gap-5 font-semibold items-center'><FaTerminal />Dashboard</Link>
-                                </li>
-                                <li>
-                                    <Link to="/sadmin/sadminmaster" className='flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-400  gap-5 font-semibold items-center'><LuUserCog /> Master</Link>
-                                </li>
-                                <li>
-                                    <Link to="/sadmin/sadminclient" className={`${pathname === '/sadmin/sadmindashboard' ? 'bg-gray-400 text-white' : 'bg-gray-400 text-white'} flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-400 gap-5 font-semibold items-center`} ><FiUsers />Clients</Link>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+            <AdminHeader pageName="Clients" title="Admin" toggleSidebar={toggleSidebar} />
+            <div className="flex">
+                {/* Sidebar */}
+                <div className={`transition-width duration-300 ${isOpen ? 'w-64' : 'w-16'} bg-gray-100 h-screen`}>
+                    <nav>
+                        <ul>
+                            <li>
+                                <Link to="/sadmin/sadmindashboard" className={`flex p-4 gap-5 font-semibold items-center`}>
+                                    <FaTerminal /> {isOpen && 'Dashboard'}
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/sadmin/sadminmaster" className={`flex p-4 gap-5 font-semibold items-center`}>
+                                    <LuUserCog /> {isOpen && 'Master'}
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/sadmin/sadminclient" className={`${pathname === '/sadmin/sadminclient' ? 'bg-gray-400 text-white' : 'bg-gray-300 text-white'} flex p-4 gap-5 font-semibold items-center`}>
+                                    <FiUsers /> {isOpen && 'Clients'}
+                                </Link>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                {/* Main content */}
+                <div className="flex-1 pr-8">
+                    {/* Content for Clients goes here */}
                 </div>
             </div>
-        </div >
+        </div>
     )
 }
 
-export default dashboardclie
+export default DashboardClient;
