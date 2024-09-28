@@ -47,7 +47,7 @@ const Header: React.FC<Props> = ({ title, pageName, toggleSidebar: propsToggleSi
       {/* Left: Hamburger Menu */}
       <div className="flex items-center space-x-6">
         {/* Hamburger Icon */}
-        <BiMenuAltLeft onClick={handleToggleSidebar} className='text-xl ml-48' />
+        <BiMenuAltLeft cursor={"pointer"} onClick={handleToggleSidebar} className='text-xl ml-48' />
 
         {/* Dashboard Title */}
         <h1 className="text-md font-semibold text-gray-800">{pageName}</h1>
