@@ -89,10 +89,10 @@ const Dashboard: React.FC = () => {
                                 <Link to="/sadmin/sadmindashboard" className={`${pathname === '/sadmin/sadmindashboard' ? 'bg-gray-400 text-white' : 'bg-gray-300 text-white'} flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-400 gap-5 font-semibold items-center`}><FaTerminal />{isOpen && 'Dashboard'}</Link>
                             </li>
                             <li>
-                                <Link to="/sadmin/sadminmaster" className='flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-400 gap-5 font-semibold items-center'><LuUserCog />{isOpen && 'Master'}</Link>
+                                <Link to="/sadmin/sadminmaster" className='flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-200 gap-5 font-semibold items-center'><LuUserCog />{isOpen && 'Master'}</Link>
                             </li>
                             <li>
-                                <Link to="/sadmin/sadminclient" className='flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-400 gap-5 font-semibold items-center'><FiUsers />{isOpen && 'Clients'}</Link>
+                                <Link to="/sadmin/sadminclient" className='flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-200 gap-5 font-semibold items-center'><FiUsers />{isOpen && 'Clients'}</Link>
                             </li>
                         </ul>
                     </nav>

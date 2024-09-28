@@ -24,12 +24,12 @@ const DashboardClient: React.FC = () => {
                     <nav>
                         <ul>
                             <li>
-                                <Link to="/sadmin/sadmindashboard" className={`flex p-4 gap-5 font-semibold items-center`}>
+                                <Link to="/sadmin/sadmindashboard" className={`flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-200 gap-5 font-semibold items-center`}>
                                     <FaTerminal /> {isOpen && 'Dashboard'}
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/sadmin/sadminmaster" className={`flex p-4 gap-5 font-semibold items-center`}>
+                                <Link to="/sadmin/sadminmaster" className={`flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-200 gap-5 font-semibold items-center`}>
                                     <LuUserCog /> {isOpen && 'Master'}
                                 </Link>
                             </li>
