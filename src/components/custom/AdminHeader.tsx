@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { BiMenuAltLeft } from 'react-icons/bi'
 import { LuUserCircle2 } from 'react-icons/lu'
 import {
@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { FaChevronDown } from 'react-icons/fa'
 import ModalApp from './Modal'
-import { useNavigate } from 'react-router-dom'
 
 
 interface Props {
@@ -22,12 +21,6 @@ interface Props {
 
 
 const Header: React.FC<Props> = ({ title, pageName, toggleSidebar: propsToggleSidebar }) => {
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    localStorage.removeItem('token')
-    navigate('/login')
-  }
 
 
   // Toggle funksiyasi menyuni ochadi yoki yopadi
