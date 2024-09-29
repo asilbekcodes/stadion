@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import AdminHeader from '@/components/custom/AdminHeader'
 import { Button } from '@/components/ui/button'
-import Tables from '@/components/custom/MasterTables'
-import { swaggerUrl } from '@/helpers/api/swagger-url'
-import { useGlobalFunction } from '@/helpers/function/global-function'
-import { TableTypes } from '@/helpers/interface/types'
-import { config } from '@/helpers/token/token'
-import axios from 'axios'
+import MasterTable from '@/components/custom/MasterTable'
+// import { swaggerUrl } from '@/helpers/api/swagger-url'
+// import { useGlobalFunction } from '@/helpers/function/global-function'
+// import { TableTypes } from '@/helpers/interface/types'
+// import { config } from '@/helpers/token/token'
+// import axios from 'axios'
 
 const dashboardmas: React.FC = () => {
     const { pathname } = useLocation()
@@ -84,7 +84,7 @@ const dashboardmas: React.FC = () => {
                             {/* {conMAster.response && Array.isArray(conMAster.response) && conMAster.response.map((item: TableTypes) =>
                             <Tables firstName={item.firstName} lastName={item.lastName} phoneNumber={item.phoneNumber} btn="Delete" btn2="Info"/>
                             )} */}
-                            <Tables firstName="" lastName="" phoneNumber=""  btn="" btn2=""/>
+                            <MasterTable />
                         </div>
                     </div>
                 </div>

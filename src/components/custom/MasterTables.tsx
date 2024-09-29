@@ -27,8 +27,8 @@ import { config } from '@/helpers/token/token'
 
 const Tables: React.FC<TableTypes> = () => {
   const fetchMasters = async () => {
-    const response = await axios.get(`${swaggerUrl}api/v1/user/rejected/list`, config); // Ma'lumotlarni olish
-    return response.data.object; // Ma'lumotlarni qaytarish
+    const response = await axios.get(`${swaggerUrl}api/v1/user/masters/list?page=0&size=10`, config); // Ma'lumotlarni olish
+    return response.data.data.object; // Ma'lumotlarni qaytarish
   }
 
   const { data } = useQuery({

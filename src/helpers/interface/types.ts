@@ -64,8 +64,6 @@ export interface TableTypes {
     firstName: string;
     lastName: string;
     phoneNumber: string;
-    btn: string;
-    btn2: string;
 }
 
 export interface ClientTypes {
@@ -95,5 +93,17 @@ export interface ClientType{
 export interface ClientResponse {
     data: {
         object: ClientType; 
+    };
+}
+
+interface Data {
+    "id": string
+    "firstName": string
+    "lastName": string
+    "phoneNumber": string
+}
+export interface getMasters {
+    data: {
+        object: Data; 
     };
 }
