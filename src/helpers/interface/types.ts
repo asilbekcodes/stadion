@@ -82,3 +82,18 @@ export interface T{
     phoneNumber: string;
     order: number;
 }
+
+
+export interface ClientType{
+    "id": string
+    "firstName": string
+    "lastName": string
+    "phoneNumber": string
+    "orderCount": number | null
+}
+
+export interface ClientResponse {
+    data: {
+        object: ClientType; 
+    };
+}

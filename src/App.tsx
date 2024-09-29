@@ -35,6 +35,8 @@ function App() {
       <Routes>
         {/* Login */}
         <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
+        
         {/* Notfound */}
         <Route path="/*" element={<Notfound />} />
 

@@ -1,15 +1,18 @@
 import { swaggerUrl } from '@/helpers/api/swagger-url';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IoEye, IoEyeOff } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 
 function Login(): JSX.Element {
-    const isRole = useNavigate()
+    const navigate = useNavigate()
 
     const userName = useRef<HTMLInputElement>(null)
     const parol = useRef<HTMLInputElement>(null)
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+
 
     // interface User {
     //     phone: string,
@@ -45,8 +48,11 @@ function Login(): JSX.Element {
     //     }
     // }
 
+    const togglePasswordVisibility = (): void => {
+        setShowPassword((prev) => !prev);
+    };
 
-    const signIn = async (credentials:{phone: string, password: string}) =>{
+    const signIn = async (credentials: { phone: string, password: string }) => {
         const response = await axios.post(swaggerUrl + 'api/v1/auth/login', credentials)
         return response.data
     }
@@ -57,71 +63,79 @@ function Login(): JSX.Element {
             localStorage.setItem('token', data.data.token)
             if (data.data.role == "ROLE_SUPER_ADMIN") {
                 toast.success('Login Successful!')
-                isRole('/sadmin/sadmindashboard')
+                navigate('/sadmin/sadmindashboard')
             }
         },
         onError: (error: AxiosError) => {
             toast.error(error.message)
         }
     })
-    
+
     const getLogin = () => {
-        const phone = userName.current?.value ||'';
-        const password = parol.current?.value ||'';
+        const phone = userName.current?.value || '';
+        const password = parol.current?.value || '';
         if (phone && password) {
-            mutation.mutate({phone, password})
+            mutation.mutate({ phone, password })
         }
     }
 
     return (
-        <div className='bg-[#f1f3f5] w-[100%] h-[100vh]'>
-            <div className='relative flex items-center justify-center top-24 container mx-auto'>
-                <div className='w-[500px] h-[360px] border shadow-xl border-gray-300 border-solid rounded-xl px-20 bg-white'>
-                    <div className='py-5 space-y-2'>
-                        <h1 className="text-xl font-bold">Sign in</h1>
-                        <p className="text-[12px] text-gray-600 font-medium">Login to website if you can because we don't have a login flow yet</p>
-                    </div>
-                        <div className='flex flex-col gap-3'>
-                            <div>
-                                <label htmlFor="phone-input" className="block mb-2 text-[12px] font-semibold text-gray-900">Phone Number</label>
-                                <input 
-                                    placeholder='Enter Phone Number' 
-                                    type="text" 
-                                    id="phone-input" 
-                                    className="block w-[350px] p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-xs focus:ring-blue-500 focus:border-blue-500" 
-                                    disabled={mutation.status === 'pending'}
-                                    // value={phone}
-                                    // onChange={(e) => setPhone(e.target.value)}
+        <section className="bg-gray-50 dark:bg-gray-900">
+            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+                <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                    <div className="p-6 space-y-1 md:space-y-3 sm:p-8">
+                        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                            Sign in
+                        </h1>
+                        <p className="text-[14px] text-gray-600 font-medium">Login to website if you can because we don't have a login flow yet</p>
+                        {mutation.error?.message && <div className="text-red-500">{mutation.error?.message}</div>}
+                        <form className="space-y-4 md:space-y-6" onSubmit={getLogin}>
+                            <div className='mt-7'>
+                                <label htmlFor="phone" className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Phone Number</label>
+                                <input
+                                    type="text"
                                     ref={userName}
+                                    name="phone"
+                                    id="phone"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Phone number"
+                                    required
                                 />
                             </div>
                             <div>
-                                <label htmlFor="password-input" className="block mb-2 text-[12px] font-semibold text-gray-900">Password</label>
-                                <input 
-                                    placeholder='Enter Password' 
-                                    type="password" 
-                                    id="password-input" 
-                                    className="block w-[350px] p-2 text-gray-900 border border-gray-300 rounded-lg bg-white text-xs focus:ring-blue-500 focus:border-blue-500" 
-                                    disabled={mutation.status === 'pending'} 
-                                    // value={password}
-                                    // onChange={(e) => setPassword(e.target.value)}
-                                    ref={parol}
-                                />
+                                <label htmlFor="password" className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Password</label>
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        ref={parol}
+                                        name="password"
+                                        id="password"
+                                        placeholder="••••••••"
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        required
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={togglePasswordVisibility}
+                                        className="absolute inset-y-0 right-0 flex items-center pr-3"
+                                    >
+                                        {showPassword ? (
+                                            <IoEyeOff />
+                                        ) : (
+                                            <IoEye />
+                                        )}
+                                    </button>
+                                </div>
                             </div>
-                            <button 
-                                onClick={getLogin}
-                                type="submit"  
-                                className='bg-gradient-to-br from-black to-gray-600 btn w-[350px] rounded-lg text-white py-2 border'
-                                disabled={mutation.status === 'pending'}
-                            >
-                                {mutation.status === 'pending' ? 'Signing in...' : 'Sign In'}
+                            <button type="submit" className="w-full bg-gradient-to-br from-black to-gray-600 btn rounded-lg text-white py-2 border">
+                                {mutation.status === 'pending' ? 'Signing in...' : 'Sign in'}
+                                {mutation.error?.message && <p className="text-red-500 text-sm mt-2">Error: {mutation.error?.message}</p>}
                             </button>
-                            {/* {mutation.error && <p className="text-red-500 text-sm mt-2">Error: {mutation.error.message}</p>}
-                            {mutation.isSuccess && <p className="text-green-500 text-sm mt-2">Login Successful!</p>} */}
-                        </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 
