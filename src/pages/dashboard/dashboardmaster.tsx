@@ -1,4 +1,4 @@
-// import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaTerminal } from 'react-icons/fa'
 import { FiUsers } from 'react-icons/fi'
 import { LuUserCog } from 'react-icons/lu'
@@ -7,76 +7,89 @@ import { useLocation } from 'react-router-dom'
 import AdminHeader from '@/components/custom/AdminHeader'
 import { Button } from '@/components/ui/button'
 import Tables from '@/components/custom/MasterTables2'
-// import { useGlobalFunction } from '@/helpers/function/global-function'
-// import { swaggerUrl } from '@/helpers/api/swagger-url'
-// import { config } from 'process'
-// import { TableTypes } from '@/helpers/interface/types'
+import { swaggerUrl } from '@/helpers/api/swagger-url'
+import { useGlobalFunction } from '@/helpers/function/global-function'
+import { TableTypes } from '@/helpers/interface/types'
+import { config } from '@/helpers/token/token'
+import axios from 'axios'
 
-const dashboardmaster: React.FC = () => {
+const dashboardmas: React.FC = () => {
     const { pathname } = useLocation()
-    // const RejectedMaster = useGlobalFunction(
+    // const conMAster = useGlobalFunction(
     //     `${swaggerUrl}api/v1/user/rejected/list`,
     //     'get',
-    //     undefined,
+    //     '',
     //     config
     // )
+    
     // useEffect(() => {
-    //     const fetchRejectedMaster = async () => {
-    //         await RejectedMaster.globalDataFunc();
-    //     };
-
-    //     fetchRejectedMaster();
+    //     conMAster.globalDataFunc()
     // }, []);
-
-    // if (RejectedMaster.loading) {
+    
+    // if (conMAster.loading) {
     //     return <p>Loading...</p>
     // }
-    // if (RejectedMaster.error) {
+    // if (conMAster.error) {
     //     return <p>error</p>
     // }
-    // console.log(RejectedMaster.response);
-    
 
-  return (
-    <div>
-        <AdminHeader pageName="Masters" title="Admin"/>
-        <div className='flex gap-8'>
+    // const [data, setData] = React.useState<any>([])
+    // function getData() {
+    //     axios.get(`${swaggerUrl}api/v1/user/rejected/list`, config)
+    //         .then(res => {
+    //             setData(res.data.data.object)
+
+    //         })
+    // }
+
+    const [isOpen, setIsOpen] = useState(true);
+
+    
+    const toggleSidebar = () => {
+        setIsOpen(!isOpen);
+    };
+
+    return (
+        <div>
             <div>
-                <div className="w-64 bg-gray-100 h-screen">
-                    <nav>
-                        <ul>
-                            <li>
-                                <Link to="/sadmin/sadmindashboard"  className='flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-400 gap-5 font-semibold items-center'><FaTerminal />Dashboard</Link>
-                            </li>
-                            <li>
-                                <Link to="/sadmin/sadminmaster" className={`${pathname === 'sadmin/sadminmaster' ? 'bg-gray-400 text-white' : 'bg-gray-400 text-white'} flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-400  gap-5 font-semibold items-center`}><LuUserCog /> Master</Link>
-                            </li>
-                            <li>
-                                <Link to="/sadmin/sadminclient" className='flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-400 gap-5 font-semibold items-center'><FiUsers />Clients</Link>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <div>
-                <div className='my-5'>
-                    <Link to='/sadmin/sadminmaster'>
-                        <Button variant="outline" className='mr-5'>Confirmed Masters</Button>
-                    </Link>
-                    <Link to='/sadmin/sadminmaster'>
-                        <Button variant="outline" className='bg-gray-200'>Not Confirmed Masters</Button>
-                    </Link>
-                </div>
-                <div>
-                    {/* {RejectedMaster.response && Array.isArray(RejectedMaster.response) && RejectedMaster.response.map((item: TableTypes) =>
-                        <Tables firstName={item.firstName} lastName={item.lastName} phoneNumber={item.phoneNumber} />
-                    )} */}
-                    <Tables firstName="Anna" lastName="Kennedy" phoneNumber="1234567890"  btn="Confirm" btn2="Reject" />
+                <AdminHeader pageName="Masters" title="Admin" toggleSidebar={toggleSidebar}/>
+                <div className='flex gap-8'>
+                    <div className={`transition-width duration-300 ${isOpen ? 'w-64' : 'w-16'} bg-gray-100 h-screen`}>
+                        <div >
+                            <nav>
+                                <ul>
+                                    <li>
+                                        <Link to="/sadmin/sadmindashboard" className='flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-400 gap-5 font-semibold items-center'><FaTerminal />{isOpen && 'Dashboard'}</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/sadmin/sadminmaster" className={`${pathname === 'sadmin/sadminmaster' ? 'bg-gray-400 text-white' : 'bg-gray-400 text-white'} flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-400  gap-5 font-semibold items-center`}><LuUserCog /> {isOpen && 'Master'}</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/sadmin/sadminclient" className='flex p-4 active:w-full active:bg-gray-400 hover:w-full hover:bg-gray-400 gap-5 font-semibold items-center'><FiUsers /> {isOpen && 'Clients'}</Link>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div className='flex-1 pr-8'> 
+                        <div>
+                            <div className='my-5'>
+                                <Link to='/sadmin/sadminmaster'>
+                                    <Button variant="outline" >Confirmed Masters</Button>
+                                </Link>
+                                <Link to='/sadmin/sadminmasterr'>
+                                    <Button variant="outline" className='ml-5 bg-gray-200'>Not Confirmed Masters</Button>
+                                </Link>
+                            </div>
+                            {/* {conMAster.response && Array.isArray(conMAster.response) && conMAster.response.map((item: TableTypes) =>
+                            <Tables firstName={item.firstName} lastName={item.lastName} phoneNumber={item.phoneNumber} btn="Delete" btn2="Info"/>
+                            )} */}
+                            <Tables firstName="Anna" lastName="Doe" phoneNumber="1255645"  btn="Confirm" btn2="Reject"/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-  )
+    )
 }
-
-export default dashboardmaster
+export default dashboardmas;

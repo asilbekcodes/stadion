@@ -3,7 +3,6 @@ import { ClientResponse, ClientType } from '@/helpers/interface/types';
 import { config } from '@/helpers/token/token';
 import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { error } from 'console';
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
 const queryClient = new QueryClient()
