@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Client/Navbar";
-import { Calendar, message, Modal, theme } from "antd";
+import { Calendar, message, Modal, Rate, theme } from "antd";
 import axios from "axios";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import { useParams } from "react-router-dom";
@@ -55,6 +55,7 @@ function ClintBron() {
         message.success("Muvaffaqiyatli bron qilindi!");
         getStadion();
         setSelectedHours([]);
+        setIsRate(true);
       })
       .catch(() => message.error(`Bron qilishda xatolik yuz berdi!`));
   };
@@ -149,6 +150,28 @@ function ClintBron() {
       setIsPhone(true);
     }
   };
+  const [isRate, setIsRate] = useState(false);
+  const [rating, setRating] = useState(0);
+
+  // Reytingni yuborish uchun funksiya
+  const postRank = () => {
+    axios
+      .post(
+        `${baseUrl}common/rank-stadion/`,
+        {
+          rank: rating, // Yulduzcha qiymatini yuboramiz
+          stadion: resultId,
+        },
+        userConfig
+      )
+      .then(() => {
+        message.success("Reytingingiz muvaffaqiyatli saqlandi!");
+        setIsRate(false);
+        getStadion();
+      })
+      .catch(() => message.error("Reytingni saqlashda xatolik yuz berdi!"));
+  };
+
 
   return (
     <div>
@@ -212,6 +235,34 @@ function ClintBron() {
         <h3 style={{ fontSize: "18px", marginTop: "20px" }}>
           Haqiqatdan ham bron qilmoqchimisiz?
         </h3>
+      </Modal>
+      <Modal
+        okText="Jo'natish"
+        open={isRate}
+        onOk={postRank}
+        onCancel={() => setIsRate(false)}
+        centered
+        width={400}
+        okButtonProps={{
+          style: {
+            backgroundColor: "#28a745",
+            color: "#fff",
+            border: "none",
+            width: "100%",
+            height: "40px",
+            borderRadius: "5px",
+            position: "relative",
+            left: "-10px",
+          },
+        }}
+        cancelButtonProps={{ style: { display: "none" } }}
+      >
+        <h3 style={{ fontSize: "15px", marginBottom: "10px", marginTop: "20px", textAlign: "center" }}>
+          Fikrlaringiz biz uchun muhim! Iltimos, reytingingizni bildiring.
+        </h3>
+        <div className="text-center my-5">
+          <Rate className="text-4xl" onChange={(value) => setRating(value)} />
+        </div>
       </Modal>
       <ModalComponent isOpen={isPhone} onClose={() => setIsPhone(false)} />
       <div className="pt-10 bg-gray-50">
