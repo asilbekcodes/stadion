@@ -19,6 +19,7 @@ import Regester from './pages/auth/Regester';
 import StadinAdd from './pages/Admin/StadinAdd';
 import { useEffect } from 'react';
 import Money from './components/Admin/Money';
+import Times from './pages/Admin/Times';
 
 function App() {
   const navigate = useNavigate()
@@ -81,6 +82,14 @@ function App() {
         element={
           <ThemeContextProvider>
             <Money />
+          </ThemeContextProvider>
+        }
+      />
+      <Route
+        path="/times"
+        element={
+          <ThemeContextProvider>
+            <Times />
           </ThemeContextProvider>
         }
       />

@@ -1,4 +1,5 @@
 import { FaChartPie, FaClipboardList, FaMoneyCheckAlt, FaPlusCircle, FaUserCircle, } from 'react-icons/fa'
+import { TbCalendarTime } from "react-icons/tb";
 import { NavLink, useLocation } from 'react-router-dom'
 
 const Sidebar = () => {
@@ -20,6 +21,11 @@ const Sidebar = () => {
       title: 'Orders',
       pathName: 'orders',
 
+    },
+    {
+      icon: <TbCalendarTime />,
+      title: 'Times',
+      pathName: 'times',
     },
     {
       icon: <FaMoneyCheckAlt />,
