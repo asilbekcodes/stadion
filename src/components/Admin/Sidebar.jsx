@@ -1,4 +1,4 @@
-import { FaChartPie, FaClipboardList, FaPlusCircle, FaUserCircle, } from 'react-icons/fa'
+import { FaChartPie, FaClipboardList, FaMoneyCheckAlt, FaPlusCircle, FaUserCircle, } from 'react-icons/fa'
 import { NavLink, useLocation } from 'react-router-dom'
 
 const Sidebar = () => {
@@ -19,6 +19,12 @@ const Sidebar = () => {
       icon: <FaClipboardList />,
       title: 'Orders',
       pathName: 'orders',
+
+    },
+    {
+      icon: <FaMoneyCheckAlt />,
+      title: 'Daromat',
+      pathName: 'daromat',
 
     },
     {

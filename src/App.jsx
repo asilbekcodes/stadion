@@ -18,20 +18,21 @@ import Profils from './pages/Client/Profils';
 import Regester from './pages/auth/Regester';
 import StadinAdd from './pages/Admin/StadinAdd';
 import { useEffect } from 'react';
+import Money from './components/Admin/Money';
 
 function App() {
   const navigate = useNavigate()
   function RoleAuth() {
-    if (localStorage.getItem("adminToken") && localStorage.getItem("role")=== "A") {
+    if (localStorage.getItem("adminToken") && localStorage.getItem("role") === "A") {
       navigate("/dashboard")
     }
     else {
       navigate("/")
     }
   }
-  useEffect(()=>{
+  useEffect(() => {
     RoleAuth()
-  },[])
+  }, [])
   return (
 
     <Routes>
@@ -72,6 +73,14 @@ function App() {
         element={
           <ThemeContextProvider>
             <Orders />
+          </ThemeContextProvider>
+        }
+      />
+      <Route
+        path='/daromat'
+        element={
+          <ThemeContextProvider>
+            <Money />
           </ThemeContextProvider>
         }
       />

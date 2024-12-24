@@ -155,9 +155,9 @@ const StadionAdds = ({ addStadion  }) => {
               <div>
                 <label className="block mb-2">Stadion Manzili:</label>
                 <input
-                  type="number"
+                  type="text"
                   ref={address}
-                  placeholder="50000"
+                  placeholder="Manzil : "
                   className="w-full px-4 py-2 border rounded-md bg-slate-800"
                   required
                 />
