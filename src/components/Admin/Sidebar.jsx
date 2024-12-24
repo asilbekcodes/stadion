@@ -1,6 +1,7 @@
 import { FaChartPie, FaClipboardList, FaMoneyCheckAlt, FaPlusCircle, FaUserCircle, } from 'react-icons/fa'
 import { TbCalendarTime } from "react-icons/tb";
 import { NavLink, useLocation } from 'react-router-dom'
+import { AiOutlineLineChart } from "react-icons/ai";
 
 const Sidebar = () => {
   const { pathName } = useLocation()
@@ -15,6 +16,11 @@ const Sidebar = () => {
       title: 'Stadion Qo\'shish',
       pathName: 'stadionAdd',
 
+    },
+    {
+      icon: <AiOutlineLineChart/>,
+      title: 'Statistika',
+      pathName: 'statistika',
     },
     {
       icon: <FaClipboardList />,

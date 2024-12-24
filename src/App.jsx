@@ -20,6 +20,7 @@ import StadinAdd from './pages/Admin/StadinAdd';
 import { useEffect } from 'react';
 import Money from './components/Admin/Money';
 import Times from './pages/Admin/Times';
+import Statistika from './pages/Admin/Statistika';
 
 function App() {
   const navigate = useNavigate()
@@ -58,6 +59,14 @@ function App() {
         element={
           <ThemeContextProvider>
             <Dashboards />
+          </ThemeContextProvider>
+        }
+      />
+      <Route
+        path="/statistika"
+        element={
+          <ThemeContextProvider>
+            <Statistika />
           </ThemeContextProvider>
         }
       />
