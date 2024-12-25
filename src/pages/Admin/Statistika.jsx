@@ -1,12 +1,63 @@
 import React, { useState } from "react";
 import Layout from "../../components/Admin/Layout";
-import Card from "../../components/Admin/Card";
+import Umumiy from "../../components/Admin/Statistika/Umumiy";
+import Kunlik from "../../components/Admin/Statistika/Kunlik";
+import Oylik from "../../components/Admin/Statistika/Oylik";
+import Yillik from "../../components/Admin/Statistika/Yillik";
 
 function Statistika() {
-  const [activeTab, setActiveTab] = useState("1");
+  const [activeTab, setActiveTab] = useState("1"); // Default: Oylik
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toISOString().slice(0, 7) // Bugungi oy ("YYYY-MM" formatida)
+  );
+
+  const [kunlikDate, setKunlikDate] = useState(
+    new Date().toISOString().slice(0, 10) // Bugungi kun ("YYYY-MM-DD" formatida)
+  );
+
+  const kunlikDateChange = (event) => {
+    setKunlikDate(event.target.value);
+  };
 
   const handleTabChange = (key) => {
     setActiveTab(key);
+  };
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value); // Tanlangan oyning qiymatini yangilash
+  };
+
+  const handleYearChange = (event) => {
+    setSelectedYear(event.target.value); // Tanlangan yillik qiymatini yangilash
+  };
+
+  const formatMonthYear = (date) => {
+    const options = { month: "long", year: "numeric" };
+    return new Intl.DateTimeFormat("uz-UZ", options).format(new Date(date));
+  };
+
+  const monthlyData = {
+    month: formatMonthYear(selectedDate),
+    totalBookings: 15,
+    totalRevenue: "1,200,000 so'm",
+    details: [
+      { day: "1-dekabr", count: 3, amount: "300,000 so'm" },
+      { day: "5-dekabr", count: 5, amount: "500,000 so'm" },
+      { day: "10-dekabr", count: 7, amount: "400,000 so'm" },
+    ],
+  };
+
+  const yearlyData = {
+    year: selectedYear,
+    totalBookings: 180,
+    totalRevenue: "14,400,000 so'm",
+    details: [
+      { month: "Yanvar", count: 15, amount: "1,200,000 so'm" },
+      { month: "Fevral", count: 12, amount: "960,000 so'm" },
+      { month: "Mart", count: 18, amount: "1,440,000 so'm" },
+      // Add remaining months...
+    ],
   };
 
   return (
@@ -40,47 +91,26 @@ function Statistika() {
 
         {/* Tab Content */}
         <div className="mt-6">
-          {activeTab === "1" && (
-            <div>
-              <h2 className="text-lg my-5 font-medium text-gray-800 dark:text-gray-100">
-                Umumiy statistika
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-6 gap-4">
-                <Card icon="📊" title="Stadionlar soni" value="2" />
-                <Card icon={"📊"} title="Bronlar soni" value="" />
-                <Card icon={"📊"} title="Olingan daromat" value="" />
-              </div>
-            </div>
-          )}
+          {activeTab === "1" && <Umumiy />}
           {activeTab === "2" && (
-            <div>
-              <h2 className="text-lg font-medium text-gray-800 dark:text-gray-100">
-                Kunlik statistika
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Ma'lumot mavjud emas
-              </p>
-            </div>
+            <Kunlik
+              kunlikDateChange={kunlikDateChange}
+              kunlikDate={kunlikDate}
+            />
           )}
           {activeTab === "3" && (
-            <div>
-              <h2 className="text-lg font-medium text-gray-800 dark:text-gray-100">
-                Oylik statistika
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Ma'lumot mavjud emas
-              </p>
-            </div>
+            <Oylik
+              selectedDate={selectedDate}
+              handleDateChange={handleDateChange}
+              monthlyData={monthlyData}
+            />
           )}
           {activeTab === "4" && (
-            <div>
-              <h2 className="text-lg font-medium text-gray-800 dark:text-gray-100">
-                Yillik statistika
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Ma'lumot mavjud emas
-              </p>
-            </div>
+            <Yillik
+              selectedYear={selectedYear}
+              handleYearChange={handleYearChange}
+              yearlyData={yearlyData}
+            />
           )}
         </div>
       </div>
