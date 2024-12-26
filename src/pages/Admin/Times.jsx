@@ -1,181 +1,87 @@
 import React, { useEffect, useState } from "react";
-import { Calendar, message, Modal, theme } from "antd";
+import Layout from "../../components/Admin/Layout";
 import axios from "axios";
 import { baseUrl } from "../../helpers/api/baseUrl";
-import { useParams } from "react-router-dom";
-import dayjs from "dayjs";
-import Layout from "../../components/Admin/Layout";
 import { Adminconfig } from "../../helpers/token/admintoken";
+import Times from "./Times"; // Times sahifasi uchun import
 
-function Times() {
-  const { resultId } = useParams();
-  const { token } = theme.useToken();
-  const wrapperStyle = {
-    width: "100%",
-    border: `3px solid ${token.colorBorderSecondary}`,
-    borderRadius: token.borderRadiusLG,
-  };
+const Times_Pages = () => {
+  const [stadions, setStadions] = useState([]); // Stadionlar ro'yxati
+  const [selectedStadionId, setSelectedStadionId] = useState(null); // Tanlangan stadion ID
+  const [showTimes, setShowTimes] = useState(false); // Times sahifasini ko'rsatish
 
-  // State management
-  const [stadion, setStadion] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(dayjs().format("YYYY-MM-DD"));
-  const [selectedHours, setSelectedHours] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
-  const [bookedSlots, setBookedSlots] = useState({});
-
-  // Stadion ma'lumotlarini olish
-  const getStadion = () => {
+  // Stadion ma'lumotlarini olish funksiyasi
+  const fetchStadions = () => {
     axios
-      .get(`${baseUrl}order/stadion/12/`)
-      .then((res) => {
-        setStadion(res.data.stadion);
-        setBookedSlots(res.data.brons);
-      })
-      .catch((err) => {
-        console.error("Stadion ma'lumotlarini olishda xatolik:", err);
-        message.error("Stadion ma'lumotlarini olishda xatolik yuz berdi!");
-      });
-  };
-
-  // Bron qilish funksiyasi
-  const postStadion = () => {
-    const brons = selectedHours.map((hour) => ({
-      bron: hour.toString(),
-      date: selectedDate,
-    }));
-
-    axios
-      .post(`${baseUrl}order/stadion/12/`, { brons }, Adminconfig)
-      .then(() => {
-        message.success("Muvaffaqiyatli bron qilindi!");
-        getStadion();
-        setSelectedHours([]);
-      })
-      .catch(() => {
-        message.error("Bron qilishda xatolik yuz berdi!");
-      });
+      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
+      .then((res) => setStadions(res.data))
+      .catch((err) => console.log("Error:", err));
   };
 
   useEffect(() => {
-    getStadion();
-  }, [resultId]);
+    fetchStadions();
+  }, []);
 
-  // Soatni tanlash funksiyasi
-  const handleHourClick = (hour) => {
-    if (selectedHours.includes(hour)) {
-      setSelectedHours(selectedHours.filter((h) => h !== hour));
-    } else {
-      setSelectedHours([...selectedHours, hour]);
-    }
-  };
-
-  // Bron qilingan soatlarni tekshirish
-  const isHourBooked = (date, hour) => {
-    const formattedHour = `${hour}:00-${hour + 1}:00`;
-    return bookedSlots[date]?.some((slot) => slot.time === formattedHour);
-  };
-
-  // Soatlarni ko'rsatish
-  const renderHours = () => {
-    if (!stadion) return <p>Ma'lumotlar yuklanmoqda...</p>;
-
-    const { start_time, end_time, price } = stadion;
-    const startHour = parseInt(start_time.split(":")[0]);
-    const endHour = parseInt(end_time.split(":")[0]);
-
-    const currentHour = dayjs().hour();
-    const isToday = selectedDate === dayjs().format("YYYY-MM-DD");
-
-    const hours = [];
-    for (let hour = startHour; hour < endHour; hour++) {
-      const isDisabled = isToday && hour <= currentHour;
-      const isBooked = isHourBooked(selectedDate, hour);
-      const isSelected = selectedHours.includes(hour);
-
-      hours.push(
-        <div
-          key={hour}
-          className={`flex items-center justify-center border rounded-lg py-4 cursor-pointer shadow-sm text-center ${isSelected
-              ? "bg-green-600 text-white"
-              : isDisabled || isBooked
-                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                : "bg-white text-black"
-            }`}
-          onClick={() => !isDisabled && !isBooked && handleHourClick(hour)}
-        >
-          <span>
-            {hour}:00 - {hour + 1}:00
-          </span>
-          <span className="ml-2">{price} so'm</span>
-        </div>
-      );
-    }
-    return <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">{hours}</div>;
-  };
-
-  // Sana tanlash funksiyasi
-  const onDateSelect = (value) => {
-    setSelectedDate(value.format("YYYY-MM-DD"));
-    setSelectedHours([]);
-  };
-
-  // Umumiy narxni hisoblash
-  const calculateTotalPrice = () => {
-    return selectedHours.length * (stadion?.price || 0);
-  };
-
-  // O'tgan sanalarni o'chirish
-  const disabledDate = (current) => {
-    return current && current < dayjs().startOf("day");
+  // Kartaga bosilganda ishlaydi
+  const handleCardClick = (id) => {
+    setSelectedStadionId(id); // Tanlangan stadion ID ni o'rnatadi
+    setShowTimes(true); // Times sahifasini ko'rsatadi
   };
 
   return (
     <Layout>
-      <div className="p-4 bg-slate-900">
-        {/* Calendar */}
-        <div style={wrapperStyle} className="mb-5">
-          <Calendar
-            fullscreen={false}
-            onSelect={onDateSelect}
-            disabledDate={disabledDate}
-          />
-        </div>
-
-        <p className="text-center text-lg font-semibold">
-          Tanlangan sana: {selectedDate || dayjs().format("YYYY-MM-DD")}
-        </p>
-
-        {/* Vaqtlar */}
-        {renderHours()}
-
-        {/* Bron qilish tugmasi */}
-        {selectedHours.length > 0 && (
-          <div className="text-center mt-4">
-            <button
-              className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-500"
-              onClick={() => setOpenModal(true)}
-            >
-              Tanlangan vaqtlar: {selectedHours.length} soat, {calculateTotalPrice()} so'm
-            </button>
-          </div>
+      <div className="p-4">
+        {/* Agar Times sahifasi ko'rinmasligi kerak bo'lsa */}
+        {!showTimes ? (
+          <>
+            <h1 className="text-2xl font-bold text-center mb-6">
+              Stadion vaqtlarini boshqarish
+            </h1>
+            <div className="grid grid-cols-1 justify-center md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {stadions.length > 0 ? (
+                stadions.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => handleCardClick(item.id)} // Kartaga bosilganda ID o'rnatiladi
+                    className="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 cursor-pointer hover:shadow-xl transition"
+                  >
+                    <img
+                      src={item.photo || "https://via.placeholder.com/400x200"}
+                      alt={item.title}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="p-4">
+                      <h2 className="text-lg font-semibold text-gray-800 mb-1">
+                        {item.title}
+                      </h2>
+                      <p className="text-sm text-gray-500 flex py-2 items-center">
+                        {item.address}
+                      </p>
+                      <p className="text-sm text-gray-500 flex items-center">
+                        {item.description || "Joylashuv noma'lum"}
+                      </p>
+                      <p className="text-lg font-bold text-gray-800 mt-3">
+                        {item.price
+                          ? `${item.price} So'm`
+                          : "Narx belgilanmagan"}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-center text-gray-500">
+                  Ma'lumot hozircha yo'q
+                </p>
+              )}
+            </div>
+          </>
+        ) : (
+          // Agar Times sahifasi ko'rsatilishi kerak bo'lsa
+          <Times selectedId={selectedStadionId} />
         )}
-
-        {/* Bron qilish modali */}
-        <Modal
-          okText="Saqlash"
-          open={openModal}
-          onOk={() => {
-            postStadion();
-            setOpenModal(false);
-          }}
-          onCancel={() => setOpenModal(false)}
-          centered
-        >
-          <h3 className="text-center">Haqiqatdan ham bron qilmoqchimisiz?</h3>
-        </Modal>
       </div>
     </Layout>
   );
-}
+};
 
-export default Times;
+export default Times_Pages;

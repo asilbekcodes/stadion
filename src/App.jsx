@@ -19,8 +19,9 @@ import Regester from './pages/auth/Regester';
 import StadinAdd from './pages/Admin/StadinAdd';
 import { useEffect } from 'react';
 import Money from './components/Admin/Money';
-import Times from './pages/Admin/Times';
 import Statistika from './pages/Admin/Statistika';
+import Times_Pages from './pages/Admin/Times';
+import Times from './components/Admin/Times';
 
 function App() {
   const navigate = useNavigate()
@@ -98,7 +99,7 @@ function App() {
         path="/times"
         element={
           <ThemeContextProvider>
-            <Times />
+            <Times_Pages />
           </ThemeContextProvider>
         }
       />
@@ -110,6 +111,7 @@ function App() {
           </ThemeContextProvider>
         }
       />
+      <Route path='/time_boshqarish' element = {<ThemeContextProvider><Times/></ThemeContextProvider>}/>
     </Routes>
   );
 }
