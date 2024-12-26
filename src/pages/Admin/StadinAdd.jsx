@@ -63,7 +63,7 @@ const StadinAdd = ({ stadionCount }) => {
     axios.delete(`${baseUrl}stadion/admin-stadion-delete/${item.id}/`,Adminconfig)
       .then(res => {
         getMalumotlar(); // Jadvalni yangilash
-       console.log(res);
+       console.log(res); 
       })
       .catch(err => console.log(err))
   }
