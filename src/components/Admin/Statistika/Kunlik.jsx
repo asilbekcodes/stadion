@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "../Card";
 import { Line } from "react-chartjs-2";
+import axios from "axios";
+import { baseUrl } from "../../../helpers/api/baseUrl";
+import { Adminconfig } from "../../../helpers/token/admintoken";
 
 function Kunlik({ kunlikDateChange, kunlikDate }) {
   const data = {
@@ -52,6 +55,19 @@ function Kunlik({ kunlikDateChange, kunlikDate }) {
       },
     },
   };
+
+  const kunlikStatistika = () => {
+    axios
+      .get(`http://footzone.pythonanywhere.com/stadion/statistika-kun/?stadion_id=11&stadion_date=2024-12-26`, Adminconfig)
+      .then((res) => {
+        data.datasets[0].data = res.data;
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    kunlikStatistika();
+  }, [kunlikDate]);
   return (
     <div>
       <div className="flex justify-between items-center">

@@ -5,6 +5,7 @@ import axios from "axios";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import { IoClose } from "react-icons/io5";
 import { Adminconfig } from "../../helpers/token/admintoken";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const StadinAdd = ({ stadionCount }) => {
   const [getAdd, setGetadd] = useState(false);
@@ -60,12 +61,13 @@ const StadinAdd = ({ stadionCount }) => {
   }
 
   function deleteStadion(item) {
-    axios.delete(`${baseUrl}stadion/admin-stadion-delete/${item.id}/`,Adminconfig)
-      .then(res => {
+    axios
+      .delete(`${baseUrl}stadion/admin-stadion-delete/${item.id}/`, Adminconfig)
+      .then((res) => {
         getMalumotlar(); // Jadvalni yangilash
-       console.log(res); 
+        console.log(res);
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err));
   }
 
   // Fetching Data
@@ -74,7 +76,7 @@ const StadinAdd = ({ stadionCount }) => {
       .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
       .then((res) => {
         setgetMalumot(res.data);
-        stadionCount(res.data.length)        
+        stadionCount(res.data.length);
       })
       .catch((err) => console.log(err.message));
   }
@@ -94,7 +96,11 @@ const StadinAdd = ({ stadionCount }) => {
     };
 
     axios
-      .put(`${baseUrl}stadion/admin-stadion-put/${selectedItem.id}/`, updatedData, Adminconfig)
+      .put(
+        `${baseUrl}stadion/admin-stadion-put/${selectedItem.id}/`,
+        updatedData,
+        Adminconfig
+      )
       .then((res) => {
         console.log("Stadion muvaffaqiyatli yangilandi:", res.data);
         getMalumotlar(); // Jadvalni yangilash
@@ -126,13 +132,23 @@ const StadinAdd = ({ stadionCount }) => {
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" className="px-6 py-3">Stadion nomi</th>
-                <th scope="col" className="px-6 py-3">Boshlanish vaqti</th>
-                <th scope="col" className="px-6 py-3">Tugash vaqti</th>
-                <th scope="col" className="px-6 py-3">Narxi</th>
-                <th scope="col" className="px-6 py-3">Manzili</th>
                 <th scope="col" className="px-6 py-3">
-                  <span className="sr-only">Tahrirlash</span>
+                  Stadion nomi
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Boshlanish vaqti
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Tugash vaqti
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Narxi
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Manzili
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Action
                 </th>
               </tr>
             </thead>
@@ -156,12 +172,15 @@ const StadinAdd = ({ stadionCount }) => {
                     <td className="px-6 py-4 flex gap-3 text-right">
                       <button
                         onClick={() => ModalOpen(item)}
-                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline flex items-center"
                       >
-                        Tahrirlash
+                        <FaEdit className="w-5 h-5 mr-1" />
                       </button>
-                      <button onClick={()=>deleteStadion(item)} className="font-medium text-red-600 dark:text-red-500 hover:underline">
-                        Delete
+                      <button
+                        onClick={() => deleteStadion(item)}
+                        className="font-medium text-red-600 dark:text-red-500 hover:underline flex items-center"
+                      >
+                        <FaTrash className="w-5 h-5 mr-1" />
                       </button>
                     </td>
                   </tr>
@@ -182,13 +201,16 @@ const StadinAdd = ({ stadionCount }) => {
                   {item.title}
                 </p>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  <span className="font-semibold">Boshlanish vaqti:</span> {item.start_time}
+                  <span className="font-semibold">Boshlanish vaqti:</span>{" "}
+                  {item.start_time}
                 </p>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  <span className="font-semibold">Tugash vaqti:</span> {item.end_time}
+                  <span className="font-semibold">Tugash vaqti:</span>{" "}
+                  {item.end_time}
                 </p>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  <span className="font-semibold">Narxi:</span> {item.price} so'm
+                  <span className="font-semibold">Narxi:</span> {item.price}{" "}
+                  so'm
                 </p>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
                   <span className="font-semibold">Manzili:</span> {item.address}
@@ -200,7 +222,10 @@ const StadinAdd = ({ stadionCount }) => {
                   >
                     Tahrirlash
                   </button>
-                  <button onClick={()=>deleteStadion(item)} className="mt-2 font-medium text-red-600 dark:text-red-500 hover:underline">
+                  <button
+                    onClick={() => deleteStadion(item)}
+                    className="mt-2 font-medium text-red-600 dark:text-red-500 hover:underline"
+                  >
                     Delete
                   </button>
                 </div>
@@ -213,7 +238,9 @@ const StadinAdd = ({ stadionCount }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="p-5 bg-slate-600 rounded max-h-[90vh] overflow-y-scroll w-[90%] max-w-[900px]">
             <div className="flex mb-4 items-center justify-between">
-              <h2 className="text-2xl font-semibold text-white">Stadion Tahrirlash</h2>
+              <h2 className="text-2xl font-semibold text-white">
+                Stadion Tahrirlash
+              </h2>
               <IoClose
                 className="text-2xl cursor-pointer text-white"
                 onClick={closeModal}
@@ -252,7 +279,9 @@ const StadinAdd = ({ stadionCount }) => {
                 />
               </div>
               <div>
-                <label className="block mb-2 text-white">Boshlanish vaqti:</label>
+                <label className="block mb-2 text-white">
+                  Boshlanish vaqti:
+                </label>
                 <input
                   type="time"
                   ref={startTime}
