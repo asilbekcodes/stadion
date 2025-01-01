@@ -1,15 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../Card";
 import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import axios from "axios";
+import { baseUrl } from "../../../helpers/api/baseUrl";
+import { Adminconfig } from "../../../helpers/token/admintoken";
 
-function Oylik({ selectedDate, handleDateChange, monthlyData }) {
+ChartJS.register(
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend
+);
+
+
+function Oylik({ selectedDate, handleDateChange }) {
+
+  const [oylikData, setOylikData] = useState(null);
+
+  const fetchOylikData = () => {
+    axios.get(`${baseUrl}stadion/statistika-oy/?stadion_id=14&stadion_date=2025-01-01`, Adminconfig)
+      .then((res) => {
+        setOylikData(res.data);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    fetchOylikData();
+  }, []);
+
+  console.log(oylikData);
+  
+
+
+
   // Bar chart uchun data va options
   const chartData = {
-    labels: monthlyData.details.map((row) => row.day), // Kunlar
+    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
     datasets: [
       {
         label: "Kunlar bo'yicha bronlar soni",
-        data: monthlyData.details.map((row) => row.count), // Bronlar soni
+        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
         backgroundColor: "rgba(59, 130, 246, 0.8)",
         borderColor: "rgba(59, 130, 246, 1)",
         borderWidth: 1,
@@ -59,16 +101,14 @@ function Oylik({ selectedDate, handleDateChange, monthlyData }) {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-6 gap-4">
-        <Card icon="📅" title="Oy" value={monthlyData.month} />
+        <Card icon="📅" title="Oy"  />
         <Card
           icon="🛒"
           title="Bronlar soni"
-          value={monthlyData.totalBookings}
         />
         <Card
           icon="💰"
           title="Olingan daromat"
-          value={monthlyData.totalRevenue}
         />
       </div>
       <div className="mb-10">
@@ -100,7 +140,7 @@ function Oylik({ selectedDate, handleDateChange, monthlyData }) {
             </tr>
           </thead>
           <tbody>
-            {monthlyData.details.map((row, index) => (
+            {/* {monthlyData.details.map((row, index) => (
               <tr
                 key={index}
                 className={`${
@@ -119,7 +159,7 @@ function Oylik({ selectedDate, handleDateChange, monthlyData }) {
                   {row.amount}
                 </td>
               </tr>
-            ))}
+            ))} */}
           </tbody>
         </table>
       </div>

@@ -32,22 +32,6 @@ function Statistika() {
     setSelectedYear(event.target.value); // Tanlangan yillik qiymatini yangilash
   };
 
-  const formatMonthYear = (date) => {
-    const options = { month: "long", year: "numeric" };
-    return new Intl.DateTimeFormat("uz-UZ", options).format(new Date(date));
-  };
-
-  const monthlyData = {
-    month: formatMonthYear(selectedDate),
-    totalBookings: 15,
-    totalRevenue: "1,200,000 so'm",
-    details: [
-      { day: "1-dekabr", count: 3, amount: "300,000 so'm" },
-      { day: "5-dekabr", count: 5, amount: "500,000 so'm" },
-      { day: "10-dekabr", count: 7, amount: "400,000 so'm" },
-    ],
-  };
-
   const yearlyData = {
     year: selectedYear,
     totalBookings: 180,
@@ -102,7 +86,6 @@ function Statistika() {
             <Oylik
               selectedDate={selectedDate}
               handleDateChange={handleDateChange}
-              monthlyData={monthlyData}
             />
           )}
           {activeTab === "4" && (
