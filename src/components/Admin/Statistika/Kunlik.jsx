@@ -4,6 +4,27 @@ import { Line } from "react-chartjs-2";
 import axios from "axios";
 import { baseUrl } from "../../../helpers/api/baseUrl";
 import { Adminconfig } from "../../../helpers/token/admintoken";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+// Kerakli komponentlarni ro'yxatdan o'tkazish
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function Kunlik({ kunlikDateChange, kunlikDate }) {
   const [dataKunlik, setDataKunlik] = useState();
@@ -119,6 +140,7 @@ function Kunlik({ kunlikDateChange, kunlikDate }) {
           Soatlik statistika
         </h2>
         <Line
+          key={labels.join(",")} // Har bir qayta render uchun unikal "key"
           className="dark:bg-gray-800 bg-white p-5"
           data={data}
           options={options}
