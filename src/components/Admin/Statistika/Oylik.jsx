@@ -109,6 +109,21 @@ function Oylik({ selectedDate, handleDateChange }) {
     },
   };
 
+  const monthNames = [
+    "Yanvar",
+    "Fevral",
+    "Mart",
+    "Aprel",
+    "May",
+    "Iyun",
+    "Iyul",
+    "Avgust",
+    "Sentabr",
+    "Oktabr",
+    "Noyabr",
+    "Dekabr",
+  ];
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -161,6 +176,53 @@ function Oylik({ selectedDate, handleDateChange }) {
           data={chartData}
           options={chartOptions}
         />
+      </div>
+      <div>
+        <h1 className="text-lg mb-4 text-gray-900 dark:text-gray-100">
+          Bronlar (oylar bo'yicha)
+        </h1>
+        <table className="min-w-full border border-gray-200 dark:border-gray-700">
+          <thead className="bg-gray-100 dark:bg-gray-800">
+            <tr>
+              <th className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                Sana (Kun-Oy)
+              </th>
+              <th className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                Bronlar soni
+              </th>
+              <th className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                Bron summasi
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(oylikData || {}).map(([day, data]) => {
+              if (!isNaN(day)) {
+                return (
+                  <tr
+                    key={day}
+                    className={`${
+                      day % 2 === 0
+                        ? "bg-white dark:bg-gray-800"
+                        : "bg-gray-50 dark:bg-gray-700"
+                    }`}
+                  >
+                    <td className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                      {day} - {monthNames[parseInt(oylikData.oy, 10) - 1]}
+                    </td>
+                    <td className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                      {data.bron} ta
+                    </td>
+                    <td className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                      {data.price} so'm
+                    </td>
+                  </tr>
+                );
+              }
+              return null;
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
