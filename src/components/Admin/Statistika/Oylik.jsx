@@ -69,6 +69,12 @@ function Oylik({ selectedDate, handleDateChange }) {
   }, []);
 
   useEffect(() => {
+    if (getStadion && getStadion.length === 1) {
+      setSelectedStadion(getStadion[0].id); // Agar faqat bitta stadion bo'lsa, uni avtomatik tanlash
+    }
+  }, [getStadion]);
+
+  useEffect(() => {
     fetchOylikData();
   }, [selectedStadion, selectedDate]); // selectedStadion yoki selectedDate o'zgarsa, qayta ishlaydi
 

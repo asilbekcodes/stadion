@@ -11,7 +11,7 @@ const Dashboard = () => {
   const [selectedStadion, setSelectedStadion] = useState("");
   const [getSaved, setGetSaved] = useState([]);
 
-  const fechtDate = (stadionId) => {
+  const fetchDate = (stadionId) => {
     if (!stadionId) return; // Agar stadion tanlanmagan bo'lsa, funksiyani qaytarib yuboramiz
     axios
       .get(`${baseUrl}order/stadion-statistika/${stadionId}/`, Adminconfig)
@@ -24,13 +24,24 @@ const Dashboard = () => {
   const Malumot = () => {
     axios
       .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
-      .then((res) => setGetSaved(res.data))
+      .then((res) => {
+        setGetSaved(res.data);
+      })
       .catch((err) => console.error("Stadionlar ro'yxatini olishda xato:", err));
   };
 
   useEffect(() => {
-    fechtDate(selectedStadion);
+    if (getSaved.length === 1) {
+      setSelectedStadion(getSaved[0].id); // Agar faqat bitta stadion bo'lsa, uni avtomatik tanlang
+    }
+    fetchDate(selectedStadion);
     Malumot();
+  }, [getSaved.length, selectedStadion]);
+
+  useEffect(() => {
+    if (selectedStadion) {
+      fetchDate(selectedStadion);
+    }
   }, [selectedStadion]);
 
   return (
@@ -56,7 +67,9 @@ const Dashboard = () => {
           <p className="font-semibold text-blue-700 dark:text-green-500 text-xl">
             Ish vaqti:{" "}
             <span className="font-normal text-black dark:text-white text-lg">
-              {selectedStadion ? `${date.start_time?.slice(0, 5) || "--"} dan ${date.end_time?.slice(0, 5) || "--"} gacha` : ""}
+              {selectedStadion
+                ? `${date.start_time?.slice(0, 5) || "--"} dan ${date.end_time?.slice(0, 5) || "--"} gacha`
+                : ""}
             </span>
           </p>
         </div>

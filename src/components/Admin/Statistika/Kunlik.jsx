@@ -80,13 +80,21 @@ function Kunlik({ kunlikDateChange, kunlikDate }) {
   const Malumot = () => {
     axios
       .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
-      .then((res) => setgetSaved(res.data))
+      .then((res) => {
+        setgetSaved(res.data);
+      })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     Malumot();
   }, []);
+
+  useEffect(() => {
+    if (getSaved.length === 1) {
+      setSelectedStadion(getSaved[0].id); // Agar faqat bitta stadion bo'lsa, uni avtomatik tanlang
+    }
+  }, [getSaved]);
 
   useEffect(() => {
     if (kunlikDate && selectedStadion) {
@@ -106,7 +114,9 @@ function Kunlik({ kunlikDateChange, kunlikDate }) {
             value={selectedStadion}
             onChange={(e) => setSelectedStadion(e.target.value)}
           >
-            <option disabled value="">Stadion tanlang</option>
+            <option disabled value="">
+              Stadion tanlang
+            </option>
             {Array.isArray(getSaved) &&
               getSaved.map((stadion) => (
                 <option key={stadion.id} value={stadion.id}>

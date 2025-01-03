@@ -71,6 +71,12 @@ function Yillik({ selectedYear, handleYearChange }) {
   }, []);
 
   useEffect(() => {
+    if (getYear.length === 1) {
+      setSelectedYil(getYear[0].id); // Automatically select the only stadion if there's one
+    }
+  }, [getYear]);
+
+  useEffect(() => {
     YearData();
   }, [selectedYil, selectedYear]);
 
