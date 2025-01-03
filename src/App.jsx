@@ -1,43 +1,43 @@
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import Main from './pages/Client/Main';
-import NotFound from './pages/Notfount';
-import About from './pages/Client/About';
-import Map from './pages/Client/Map';
-import Dashboards from './pages/Admin/Dashboards';
-import Orders from './pages/Admin/Orders';
-import Profil from './pages/Admin/Profil';
-import ClintLogin from './pages/auth/clintLogin';
-import ClintCod from './pages/auth/clintCod';
-import ClintIsm_familiya from './pages/auth/clintIsm_familiya';
-import ClintBron from './pages/Client/clintBron';
-import OrdersPage from './pages/Client/OrdersPage';
-import ThemeContextProvider from './context/ThemeContextProvider';
-import Home from './pages/Client/Home';
-import Favorites from './pages/Client/Favorites';
-import Profils from './pages/Client/Profils';
-import Regester from './pages/auth/Regester';
-import StadinAdd from './pages/Admin/StadinAdd';
-import { useEffect } from 'react';
-import Money from './components/Admin/Money';
-import Statistika from './pages/Admin/Statistika';
-import Times_Pages from './pages/Admin/Times';
-import Times from './components/Admin/Times';
+import { Route, Routes, useNavigate } from "react-router-dom";
+import Main from "./pages/Client/Main";
+import NotFound from "./pages/Notfount";
+import About from "./pages/Client/About";
+import Map from "./pages/Client/Map";
+import Dashboards from "./pages/Admin/Dashboards";
+import Orders from "./pages/Admin/Orders";
+import Profil from "./pages/Admin/Profil";
+import ClintLogin from "./pages/auth/clintLogin";
+import ClintCod from "./pages/auth/clintCod";
+import ClintIsm_familiya from "./pages/auth/clintIsm_familiya";
+import ClintBron from "./pages/Client/clintBron";
+import OrdersPage from "./pages/Client/OrdersPage";
+import ThemeContextProvider from "./context/ThemeContextProvider";
+import Home from "./pages/Client/Home";
+import Favorites from "./pages/Client/Favorites";
+import Profils from "./pages/Client/Profils";
+import Regester from "./pages/auth/Regester";
+import StadinAdd from "./pages/Admin/StadinAdd";
+import { useEffect } from "react";
+import Statistika from "./pages/Admin/Statistika";
+import Times_Pages from "./pages/Admin/Times";
+import Times from "./components/Admin/Times";
 
 function App() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   function RoleAuth() {
-    if (localStorage.getItem("adminToken") && localStorage.getItem("role") === "A") {
-      navigate("/dashboard")
-    }
-    else {
-      navigate("/")
+    if (
+      localStorage.getItem("adminToken") &&
+      localStorage.getItem("role") === "A"
+    ) {
+      navigate("/dashboard");
+    } else {
+      navigate("/");
     }
   }
   useEffect(() => {
-    RoleAuth()
-  }, [])
+    RoleAuth();
+  }, []);
   return (
-
     <Routes>
       {/* Client page routes */}
       <Route path="/" element={<Home />} />
@@ -88,14 +88,6 @@ function App() {
         }
       />
       <Route
-        path='/daromat'
-        element={
-          <ThemeContextProvider>
-            <Money />
-          </ThemeContextProvider>
-        }
-      />
-      <Route
         path="/times"
         element={
           <ThemeContextProvider>
@@ -111,7 +103,14 @@ function App() {
           </ThemeContextProvider>
         }
       />
-      <Route path='/time_boshqarish' element = {<ThemeContextProvider><Times/></ThemeContextProvider>}/>
+      <Route
+        path="/time_boshqarish"
+        element={
+          <ThemeContextProvider>
+            <Times />
+          </ThemeContextProvider>
+        }
+      />
     </Routes>
   );
 }

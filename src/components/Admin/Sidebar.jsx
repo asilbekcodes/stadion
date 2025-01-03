@@ -34,12 +34,6 @@ const Sidebar = () => {
       pathName: 'times',
     },
     {
-      icon: <FaMoneyCheckAlt />,
-      title: 'Daromat',
-      pathName: 'daromat',
-
-    },
-    {
       icon: <FaUserCircle />,
       title: 'Profil',
       pathName: 'profil',
