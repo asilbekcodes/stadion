@@ -32,18 +32,6 @@ function Statistika() {
     setSelectedYear(event.target.value); // Tanlangan yillik qiymatini yangilash
   };
 
-  const yearlyData = {
-    year: selectedYear,
-    totalBookings: 180,
-    totalRevenue: "14,400,000 so'm",
-    details: [
-      { month: "Yanvar", count: 15, amount: "1,200,000 so'm" },
-      { month: "Fevral", count: 12, amount: "960,000 so'm" },
-      { month: "Mart", count: 18, amount: "1,440,000 so'm" },
-      // Add remaining months...
-    ],
-  };
-
   return (
     <Layout>
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8">
@@ -92,7 +80,6 @@ function Statistika() {
             <Yillik
               selectedYear={selectedYear}
               handleYearChange={handleYearChange}
-              yearlyData={yearlyData}
             />
           )}
         </div>

@@ -1,15 +1,101 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../Card";
 import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import axios from "axios";
+import { baseUrl } from "../../../helpers/api/baseUrl";
+import { Adminconfig } from "../../../helpers/token/admintoken";
+ChartJS.register(
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend
+);
 
-function Yillik({ selectedYear, handleYearChange, yearlyData }) {
+function Yillik({ selectedYear, handleYearChange }) {
+  const [yillikData, setYillikData] = useState([]);
+  const [selectedYil, setSelectedYil] = useState("");
+  const [getYear, setGetYear] = useState([]);
+  const [bronYear, setBronYear] = useState([]);
+
+  const startYear = 2000;
+  const endYear = 2100;
+  const years = Array.from(
+    { length: endYear - startYear + 1 },
+    (_, i) => startYear + i
+  );
+
+  const YearData = () => {
+    if (selectedYil) {
+      axios
+        .get(
+          `${baseUrl}stadion/statistika-yil/?stadion_id=${selectedYil}&yil=${selectedYear}`,
+          Adminconfig
+        )
+        .then((res) => {
+          setYillikData(res.data);
+          // Extract bron data for each month
+          const monthBronData = Array(12).fill(0); // Initialize an array of 12 months with 0
+          Object.keys(res.data).forEach((month) => {
+            if (res.data[month]?.bron) {
+              monthBronData[month - 1] = res.data[month].bron; // Set the bron count for each month (assuming month is 1-12)
+            }
+          });
+          setBronYear(monthBronData); // Update bronYear state with the month-wise bron data
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  const getStadionlar = () => {
+    axios
+      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
+      .then((res) => {
+        setGetYear(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getStadionlar();
+  }, []);
+
+  useEffect(() => {
+    YearData();
+  }, [selectedYil, selectedYear]);
+
+  const monthNames = [
+    "Yanvar",
+    "Fevral",
+    "Mart",
+    "Aprel",
+    "May",
+    "Iyun",
+    "Iyul",
+    "Avgust",
+    "Sentabr",
+    "Oktabr",
+    "Noyabr",
+    "Dekabr",
+  ];
+
   // Bar chart uchun data va options
   const chartData = {
-    labels: yearlyData.details.map((row) => row.month), // Oylik nomlari
+    labels: monthNames,
     datasets: [
       {
         label: "Oylik bronlar soni",
-        data: yearlyData.details.map((row) => row.count), // Bronlar soni
+        data: bronYear,
         backgroundColor: "rgba(59, 130, 246, 0.8)",
         borderColor: "rgba(59, 130, 246, 1)",
         borderWidth: 1,
@@ -47,26 +133,44 @@ function Yillik({ selectedYear, handleYearChange, yearlyData }) {
           Yillik statistika
         </h2>
         <div>
-          <select className="p-1 border rounded dark:bg-gray-800 dark:text-gray-100 mr-5">
-            <option value="">stadion tanlang</option>
+          <select
+            className="p-1 border rounded dark:bg-gray-800 dark:text-gray-100 mr-5"
+            onChange={(e) => setSelectedYil(e.target.value)}
+            value={selectedYil}
+          >
+            <option disabled value="">
+              stadion tanlang
+            </option>
+            {getYear.map((stadion) => (
+              <option key={stadion.id} value={stadion.id}>
+                {stadion.title}
+              </option>
+            ))}
           </select>
-          <input
-            type="number"
-            min="2000"
-            max="2100"
+          <select
             value={selectedYear}
             onChange={handleYearChange}
             className="mb-4 p-1 border rounded dark:bg-gray-800 dark:text-gray-100"
-          />
+          >
+            {years.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-6 gap-4">
-        <Card icon="📅" title="Yil" value={yearlyData.year} />
-        <Card icon="🛒" title="Bronlar soni" value={yearlyData.totalBookings} />
+        <Card icon="📅" title="Yil" value={selectedYear} />
+        <Card
+          icon="🛒"
+          title="Bronlar soni"
+          value={`${yillikData?.bron_count || 0} ta`}
+        />
         <Card
           icon="💰"
           title="Olingan daromat"
-          value={yearlyData.totalRevenue}
+          value={`${yillikData?.daromad || 0} so'm`}
         />
       </div>
       <div className="mb-10">
@@ -98,26 +202,32 @@ function Yillik({ selectedYear, handleYearChange, yearlyData }) {
             </tr>
           </thead>
           <tbody>
-            {yearlyData.details.map((row, index) => (
-              <tr
-                key={index}
-                className={`${
-                  index % 2 === 0
-                    ? "bg-white dark:bg-gray-800"
-                    : "bg-gray-50 dark:bg-gray-700"
-                }`}
-              >
-                <td className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-                  {row.month}
-                </td>
-                <td className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-                  {row.count} ta
-                </td>
-                <td className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-                  {row.amount}
-                </td>
-              </tr>
-            ))}
+            {Object.entries(yillikData || {}).map(([month, data]) => {
+              if (!isNaN(month)) {
+                const monthName = monthNames[parseInt(month) - 1]; // Get the correct month name
+                return (
+                  <tr
+                    key={month}
+                    className={`${
+                      month % 2 === 0
+                        ? "bg-white dark:bg-gray-800"
+                        : "bg-gray-50 dark:bg-gray-700"
+                    }`}
+                  >
+                    <td className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                      {monthName}
+                    </td>
+                    <td className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                      {data?.bron || 0} ta
+                    </td>
+                    <td className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                      {data?.price || 0} so'm
+                    </td>
+                  </tr>
+                );
+              }
+              return null;
+            })}
           </tbody>
         </table>
       </div>
