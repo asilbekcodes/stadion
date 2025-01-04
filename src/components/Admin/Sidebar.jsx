@@ -1,10 +1,16 @@
-import { FaChartPie, FaClipboardList, FaMoneyCheckAlt, FaPlusCircle, FaUserCircle, } from 'react-icons/fa'
+import { useState } from 'react';
+import { FaBars, FaChartPie, FaClipboardList, FaPlusCircle, FaUserCircle } from 'react-icons/fa';
 import { TbCalendarTime } from "react-icons/tb";
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import { AiOutlineLineChart } from "react-icons/ai";
 
 const Sidebar = () => {
-  const { pathName } = useLocation()
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   const data = [
     {
       icon: <FaChartPie />,
@@ -12,13 +18,12 @@ const Sidebar = () => {
       pathName: 'dashboard',
     },
     {
-      icon:  <FaPlusCircle />,
-      title: 'Stadion Qo\'shish',
+      icon: <FaPlusCircle />,
+      title: "Stadion Qo'shish",
       pathName: 'stadionAdd',
-
     },
     {
-      icon: <AiOutlineLineChart/>,
+      icon: <AiOutlineLineChart />,
       title: 'Statistika',
       pathName: 'statistika',
     },
@@ -26,7 +31,6 @@ const Sidebar = () => {
       icon: <FaClipboardList />,
       title: 'Orders',
       pathName: 'orders',
-
     },
     {
       icon: <TbCalendarTime />,
@@ -37,30 +41,44 @@ const Sidebar = () => {
       icon: <FaUserCircle />,
       title: 'Profil',
       pathName: 'profil',
-
     },
-  ]
-  return (
-    <div className='bg-gray-100 text-gray-900 h-screen p-4 fixed w-16 md:w-64 border-r border-gray-300 dark:bg-gray-900 dark:text-white dark:border-gray-600'>
-    <h1 className='text-2xl font-bold hidden md:block mt-4 text-center italic'>Admin</h1>
-    <ul className='flex flex-col mt-5 text-xl'>
-      {
-        data.map((item, index) => (
-          <NavLink 
-            to={`/${item.pathName}`} 
-            key={index} 
-            className={({ isActive }) =>
-              `flex items-center py-3 px-2 space-x-4 hover:rounded hover:cursor-pointer hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white 
-               ${isActive ? 'bg-gray-500 text-white dark:bg-gray-800' : ''}`
-            }>
-            {item.icon}
-            <span className='hidden md:inline'>{item.title}</span>
-          </NavLink>
-        ))
-      }
-    </ul>
-</div>
-  )
-}
+  ];
 
-export default Sidebar
+  return (
+    <div>
+      {/* Mobil versiya uchun yon panelni ochuvchi tugma */}
+      <button
+        onClick={toggleSidebar}
+        className="p-2 text-white bg-gray-500 fixed top-3 left-3 rounded-full z-50 md:hidden"
+      >
+        <FaBars size={20} />
+      </button>
+
+      {/* Yon panel */}
+      <div
+        className={`bg-gray-100 text-gray-900 h-screen p-4 fixed top-0 left-0 w-64 border-r border-gray-300 dark:bg-gray-900 dark:text-white dark:border-gray-600 z-40 
+          ${isSidebarOpen ? 'block' : 'hidden'} md:block`}
+      >
+        <h1 className="text-2xl font-bold mt-4 text-center italic">Admin</h1>
+        <ul className="flex flex-col mt-5 text-xl">
+          {data.map((item, index) => (
+            <NavLink
+              to={`/${item.pathName}`}
+              key={index}
+              className={({ isActive }) =>
+                `flex items-center py-3 px-2 space-x-4 hover:rounded hover:cursor-pointer hover:bg-gray-400 dark:hover:bg-gray-700 hover:text-white 
+                 ${isActive ? 'bg-gray-500 text-white dark:bg-gray-800' : ''}`
+              }
+              onClick={() => setIsSidebarOpen(false)} // Link bosilganda mobil panel yopiladi
+            >
+              {item.icon}
+              <span>{item.title}</span>
+            </NavLink>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default Sidebar;

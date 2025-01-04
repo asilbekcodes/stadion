@@ -45,9 +45,9 @@ const Dashboard = () => {
   }, [selectedStadion]);
 
   return (
-    <div className="p-8 grow dark:bg-gray-900">
+    <div className="md:p-8 p-4 grow dark:bg-gray-900">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl">Dashboard</h2>
+        <h2 className="md:text-2xl text-xl">Dashboard</h2>
         <div className="flex items-center">
           <select
             className="p-1 border rounded dark:bg-gray-800 dark:text-gray-100 mr-5"
@@ -64,7 +64,7 @@ const Dashboard = () => {
                 </option>
               ))}
           </select>
-          <p className="font-semibold text-blue-700 dark:text-green-500 text-xl">
+          <p className="font-semibold text-blue-700 dark:text-green-500 text-xl hidden md:block">
             Ish vaqti:{" "}
             <span className="font-normal text-black dark:text-white text-lg">
               {selectedStadion

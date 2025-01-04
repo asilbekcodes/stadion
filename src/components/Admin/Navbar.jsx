@@ -34,7 +34,7 @@ const Navbar = () => {
     Malumot()
   },[])
   return (
-    <div className='bg-gray-100 text-gray-900 border-b border-gray-300 px-8 py-4 flex justify-end item-center dark:bg-gray-900 dark:text-white dark:border-gray-600'>
+    <div className='bg-gray-100 text-gray-900 border-b border-gray-300 px-4 md:px-8 py-4 flex justify-end item-center dark:bg-gray-900 dark:text-white dark:border-gray-600'>
       {/* <h1>Dashboard</h1> */}
       <div className="flex items-center gap-5">
         <button className='text-2xl text-dark' onClick={toggleTheme}>
