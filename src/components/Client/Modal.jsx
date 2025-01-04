@@ -1,13 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Input, Button, message } from "antd";
 import axios from "axios";
 import { baseUrl } from "../../helpers/api/baseUrl";
+import { toast } from "react-toastify";
 
 function ModalComponent({ isOpen, onClose }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [userId, setUserId] = useState("");
-  const [codeModal, setCodeModal] = useState(""); // Kod uchun state
-  const [isCodeModalOpen, setIsCodeModalOpen] = useState(false); // Kod modali uchun state
+  const [codeModal, setCodeModal] = useState("");
+  const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
+  const [isModalNameOpen, setIsModalNameOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [timer, setTimer] = useState(); 
+
+  useEffect(() => {
+    if (isCodeModalOpen && timer > 0) {
+      const interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+
+      return () => clearInterval(interval); // Tozalash
+    }
+  }, [isCodeModalOpen, timer]);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
+  };
 
   const handleConfirmPhone = () => {
     axios
@@ -15,9 +38,10 @@ function ModalComponent({ isOpen, onClose }) {
       .then((res) => {
         message.success("Muvaffaqiyatli telefon raqam yuborildi!");
         const data = res.data;
-        setUserId(data.user_id); // user_id ni saqlash
-        setIsCodeModalOpen(true); // Keyingi modalni ochish
-        onClose(); // Birinchi modalni yopish
+        setUserId(data.user_id);
+        setIsCodeModalOpen(true);
+        setTimer(res.data.expire_time*60); // 5 daqiqa hisoblagichni qayta o'rnatish
+        onClose();
       })
       .catch((err) => {
         console.log(err);
@@ -26,17 +50,22 @@ function ModalComponent({ isOpen, onClose }) {
   };
 
   const handleConfirmCode = () => {
+    if (timer <= 0) {
+      message.error("Kodning amal qilish muddati tugadi.");
+      return;
+    }
+
     axios
       .post(`${baseUrl}user/verify/`, { code: codeModal, user_id: userId })
       .then((res) => {
         message.success("Kod muvaffaqiyatli tasdiqlandi!");
         const data = res.data;
-        if(data.action_status === "register") {
-          setIsCodeModalOpen(false); // Kod modali yopiladi
+        if (data.action_status === "register") {
+          setIsCodeModalOpen(false);
           setIsModalNameOpen(true);
-        }else{
-          setIsCodeModalOpen(false); // Kod modali yopiladi
-          localStorage.setItem('userToken', data.access);
+        } else {
+          setIsCodeModalOpen(false);
+          localStorage.setItem("userToken", data.access);
           window.location.reload();
         }
       })
@@ -46,19 +75,16 @@ function ModalComponent({ isOpen, onClose }) {
       });
   };
 
-  const [isModalNameOpen, setIsModalNameOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-
   const handleConfirmName = () => {
     axios
-      .post(
-        `${baseUrl}user/post-user-info/`,
-        { name: name, surname: surname, user_id: userId },
-      )
+      .post(`${baseUrl}user/post-user-info/`, {
+        name: name,
+        surname: surname,
+        user_id: userId,
+      })
       .then((res) => {
         message.success("Ism muvaffaqiyatli yuborildi!");
-        localStorage.setItem('userToken', res.data.access);
+        localStorage.setItem("userToken", res.data.access);
         setIsModalNameOpen(false);
         console.log(res);
         window.location.reload();
@@ -69,9 +95,19 @@ function ModalComponent({ isOpen, onClose }) {
       });
   };
 
+  const resentSms = () => {
+    axios
+      .post(`${baseUrl}user/resend-sms/`, { phone_number: phoneNumber })
+      .then((res) => {
+        console.log(res);
+        toast.success("Qayta yuborildi");
+        setTimer(300); // 5 daqiqa hisoblagichni qayta o'rnatish
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div>
-      {/* Telefon raqami uchun modal */}
       <Modal
         open={isOpen}
         onOk={handleConfirmPhone}
@@ -90,7 +126,7 @@ function ModalComponent({ isOpen, onClose }) {
         styles={{
           body: {
             textAlign: "center",
-            height: "120px"
+            height: "120px",
           },
         }}
         width={450}
@@ -107,7 +143,6 @@ function ModalComponent({ isOpen, onClose }) {
           Tasdiqlash kodini SMS orqali yuboramiz
         </p>
         <Input
-          //   value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
           placeholder="+998901234567"
           defaultValue={"+998"}
@@ -118,16 +153,15 @@ function ModalComponent({ isOpen, onClose }) {
         />
       </Modal>
 
-      {/* Kodni kiritish uchun modal */}
       <Modal
         okText="Tasdiqlash"
         open={isCodeModalOpen}
         onOk={handleConfirmCode}
         onCancel={() => setIsCodeModalOpen(false)}
         okButtonProps={{
-          disabled: codeModal.length !== 4,
+          disabled: codeModal.length !== 4 || timer <= 0,
           style: {
-            backgroundColor: "#28a745",
+            backgroundColor: timer > 0 ? "#28a745" : "#ccc",
             color: "#fff",
             border: "none",
             width: "100%",
@@ -155,7 +189,17 @@ function ModalComponent({ isOpen, onClose }) {
           placeholder="Kodni kiriting"
           style={{ height: "40px", borderRadius: "5px" }}
         />
+        <div className="flex justify-between items-center mt-3">
+          <span className="text-lg">{formatTime(timer)}</span>
+          <button
+            onClick={resentSms}
+            className="p-2 text-white bg-green-600"
+          >
+            Kodni qayta yuborish
+          </button>
+        </div>
       </Modal>
+
       <Modal
         okText="Saqlash"
         open={isModalNameOpen}
