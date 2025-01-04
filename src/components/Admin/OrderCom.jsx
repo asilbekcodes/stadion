@@ -4,23 +4,37 @@ import axios from "axios";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import { Adminconfig } from "../../helpers/token/admintoken";
 import { FaEye } from "react-icons/fa";
+import { IoIosClose } from "react-icons/io";
 
 function OrderCom({ onOrderCount }) {
   const [getOrder, setGetOrder] = useState([]); // GET ma'lumotlari
-  const [openModal, setopenModal] = useState(false); // Modalni boshqarish
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  // const []
-  // Modalni ochish
+  const [openModal, setOpenModal] = useState(false); // Modalni boshqarish
+  const [openUserModal, setOpenUserModal] = useState(false); // Foydalanuvchi ma'lumotlari modal
+  const [selectedOrder, setSelectedOrder] = useState(null); // Tanlangan order
+  const [selectedUser, setSelectedUser] = useState(null); // Tanlangan foydalanuvchi ma'lumotlari
+
+  // Modalni ochish (Tasdiqlash va bekor qilish)
   function OpenModal(order) {
     setSelectedOrder(order); // Tanlangan orderni saqlash
-    setopenModal(true); // Modalni ochish
+    setOpenModal(true); // Modalni ochish
   }
 
   // Modalni yopish
   function CloseModal() {
-    setopenModal(false); // Modalni yopish
+    setOpenModal(false); // Modalni yopish
     setSelectedOrder(null); // Tanlangan orderni tozalash
-    console.log("Modal yopildi");
+  }
+
+  // Foydalanuvchi ma'lumotlari modalni ochish
+  function OpenUserModal(user) {
+    setSelectedUser(user); // Foydalanuvchi ma'lumotlarini saqlash
+    setOpenUserModal(true); // Foydalanuvchi modalni ochish
+  }
+
+  // Foydalanuvchi ma'lumotlari modalni yopish
+  function CloseUserModal() {
+    setOpenUserModal(false); // Modalni yopish
+    setSelectedUser(null); // Ma'lumotlarni tozalash
   }
 
   // Tasdiqlash va bekor qilish tugmalari uchun POST so'rov
@@ -44,13 +58,11 @@ function OrderCom({ onOrderCount }) {
 
   // Tasdiqlash
   function handleTasdiqlash() {
-    console.log("Tasdiqlash bosildi");
     postStatus(true); // Tasdiqlash uchun "true" yuborish
   }
 
   // Bekor qilish
   function handleBekorQilish() {
-    console.log("Bekor qilish bosildi");
     postStatus(false); // Bekor qilish uchun "false" yuborish
   }
 
@@ -59,7 +71,6 @@ function OrderCom({ onOrderCount }) {
     axios
       .get(`${baseUrl}order/my-stadion-bron/`, Adminconfig)
       .then((res) => {
-        console.log("Orders fetched:", res.data);
         setGetOrder(res.data);
         onOrderCount(res.data.length);
       })
@@ -106,59 +117,84 @@ function OrderCom({ onOrderCount }) {
     "Status o'zgartirish": (
       <div>
         <button
-          className="cursor-pointer text-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" // Agar tasdiqlangan bo'lsa, disabled
+          className="cursor-pointer text-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={() => OpenModal(order)}
         >
           O'zgartirish
         </button>
-        <button className="cursor-pointer text-white ml-2 bg-blue-800 p-2 rounded-lg" >
+        <button
+          className="cursor-pointer text-white ml-4 bg-blue-800 p-2 rounded-lg"
+          onClick={() => OpenUserModal(order.user)}
+        >
           <FaEye />
         </button>
       </div>
     ),
   }));
 
-  console.log(getOrder);
-
   return (
-    <div className="p-8 ">
+    <div className="p-8 dark:bg-slate-900">
       <h2 className="text-2xl mb-4 text-white">Orders</h2>
       <Tables columns={columns} rows={data} />
-      <div className="flex justify-center items-center p-2">
-        {openModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="p-6 max-w-[400px] bg-slate-600 rounded-lg relative">
+
+      {/* Tasdiqlash yoki bekor qilish modal */}
+      {openModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="p-6 max-w-[400px] bg-slate-600 rounded-lg relative">
+            <button
+              onClick={CloseModal}
+              className="absolute top-2 right-5 text-white text-3xl cursor-pointer"
+            >
+              &times;
+            </button>
+            <p className="text-center my-4">
+              Siz foydalanuvchini bron vaqtini{" "}
+              <span className="text-green-500">Tasdiqlash</span> yoki{" "}
+              <span className="text-red-500">Bekor qilish</span>ni
+              xohlaysizmi?
+            </p>
+            <div className="flex gap-4 flex-col justify-center">
               <button
-                onClick={CloseModal}
-                className="absolute top-2 right-5 text-white text-3xl cursor-pointer"
+                onClick={handleTasdiqlash}
+                className="bg-green-600 text-white p-2 rounded-md"
               >
-                &times;
+                Tasdiqlash
               </button>
-              <p className="text-center my-4">
-                Siz foydalanuvchini bron vaqtini{" "}
-                <span className="text-green-500">Tasdiqlash</span> yoki{" "}
-                <span className="text-red-500">Bekor qilish</span>ni
-                xohlaysizmi?
-              </p>
-              <div className="flex gap-4 flex-col justify-center">
-                <button
-                  onClick={handleTasdiqlash}
-                  className="bg-green-600 text-white p-2 rounded-md"
-                >
-                  Tasdiqlash
-                </button>
-                <button
-                  onClick={handleBekorQilish}
-                  className="bg-red-600 text-white p-2 rounded-md"
-                >
-                  Bekor qilish
-                </button>
-              </div>
+              <button
+                onClick={handleBekorQilish}
+                className="bg-red-600 text-white p-2 rounded-md"
+              >
+                Bekor qilish
+              </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* Foydalanuvchi ma'lumotlari modal */}
+      {openUserModal && selectedUser && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className=" max-w-[500px] max-h-[500px] w-[350px] h-[300px]  bg-slate-600 rounded-lg ">
+            <div className="flex justify-between p-4 ">
+              <h1 className="text-2xl">Ma'lumotlar</h1>
+              <button
+                onClick={CloseUserModal}
+                className="text-white text-3xl  cursor-pointer"
+              ><IoIosClose />
+              </button>
+            </div>
+            <div className="flex flex-col p-4 text-md">
+              <p className="text-white">Ism: {selectedUser?.first_name || "Noma'lum"}</p>
+              <p className="text-white">Familiya: {selectedUser?.last_name}</p>
+              <p className="text-white">
+                Telefon: {selectedUser?.phone_number || "Noma'lum"}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
 export default OrderCom;
