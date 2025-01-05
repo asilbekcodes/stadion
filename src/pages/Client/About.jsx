@@ -108,10 +108,7 @@ function About() {
                 <FaStar />
               </span>
               <span className="text-gray-500">
-                {result.rank_ratio}{" "}
-                <span className="text-gray-400 text text-sm">
-                  ({result.comment_count})
-                </span>
+                {result.star}{" "}
               </span>
             </div>
             <h2 className="text-2xl md:text-[32px] font-semibold">

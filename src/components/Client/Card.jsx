@@ -93,15 +93,15 @@ function Card({className, classNames, classNm}) {
             <div className="flex flex-col justify-center p-3 font-sans">
               <div className="flex items-center justify-between">
                 <span className="text-[12px] text-gray-500 flex items-center gap-1">
-                  {stadium.rank_ratio ? (
+                  {stadium.star ? (
                     <GiRoundStar className="text-red-600 text-[15px]" />
                   ) : (
                     ""
                   )}
-                  {stadium.rank_ratio || "Bu hali yangi"}
+                  {stadium.star || "Bu hali yangi"}
                 </span>
                 <span className="text-xs px-1 pb-0.5 text-white bg-green-600">
-                  {stadium.rank_ratio ? "" : "Yangi"}
+                  {stadium.star ? "" : "Yangi"}
                 </span>
               </div>
               <h3 className="text-sm mt-3 mb-1">{stadium.title}</h3>

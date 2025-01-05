@@ -107,8 +107,7 @@ const OrdersPage = () => {
                         />
                         <div className="flex justify-between items-center my-2">
                           <p className="text-red-700 text-sm flex items-center gap-1">
-                            <Star /> {item.stadion?.rank_ratio}{" "}
-                            <span>({item.stadion?.comment_count})</span>
+                            <Star /> {item.stadion?.star}{" "}
                           </p>
                           <p className="text-sm">{item?.stadion?.price} so'm</p>
                         </div>
