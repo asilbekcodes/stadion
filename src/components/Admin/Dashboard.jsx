@@ -5,6 +5,7 @@ import { FaHandHoldingDollar } from "react-icons/fa6";
 import axios from "axios";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import { Adminconfig } from "../../helpers/token/admintoken";
+import Calendar from "./Calendar";
 
 const Dashboard = () => {
   const [date, setDate] = useState({});
@@ -46,22 +47,45 @@ const Dashboard = () => {
     }
   }, [selectedStadion]);
 
-  const activities = [
-    {
-      date: '25',
-      dateText: 'yan',
-      time: 'asilbek coder',
-      title: 'Meeting for campaign with sales team',
-      avatarCount: 5,
-    },
-    {
-      date: '20',
-      dateText: 'yan',
-      time: 'asilbek coder',
-      title: 'Adding a new event with attachments',
-      avatarCount: 3,
-    },
-  ];
+  const [comments, setComments] = useState([]);
+
+  const getComments = () => {
+    axios
+      .get(`${baseUrl}/stadion/stadion-review/${selectedStadion}/`)
+      .then((res) => {
+        setComments(res.data);
+      })
+      .catch((err) =>
+        console.error("Stadionlar ro'yxatini olishda xato:", err)
+      );
+  };
+
+  useEffect(() => {
+    if (selectedStadion) {
+      getComments();
+    }
+  }, [selectedStadion]);
+
+  const formatDate = (dateString) => {
+    const months = [
+      "yan",
+      "fev",
+      "mar",
+      "apr",
+      "may",
+      "iyn",
+      "iyl",
+      "avg",
+      "sen",
+      "okt",
+      "noy",
+      "dek",
+    ];
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    return { day, month };
+  };
 
   return (
     <div className="md:p-8 p-4 grow dark:bg-gray-900">
@@ -123,37 +147,15 @@ const Dashboard = () => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Calendar Attendance */}
-        <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
-          <div className="flex justify-between">
-            <h2 className="text-lg font-bold mb-4">Calendar </h2>
-            <h2 className="text-lg font-bold mb-4">Yanvar</h2>
-          </div>
-          <div>
-            <div className="grid grid-cols-7 gap-2 text-center text-sm text-gray-700">
-              {/* Days */}
-              {[...Array(31).keys()].map((day) => (
-                <div
-                  key={day}
-                  className={`p-2 rounded ${
-                    day >= 8 && day <= 20
-                      ? "bg-yellow-300 text-gray-800 font-semibold"
-                      : "bg-gray-100 dark:bg-gray-300"
-                  }`}
-                >
-                  {day + 1}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <Calendar />
 
         <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
           <h2 className="text-lg font-bold mb-4">Top users</h2>
           <div className="flex justify-between">
             {/* Student 1 */}
-            <div className="bg-green-500 w-40 p-4 rounded-lg shadow-md text-center text-white relative">
+            <div className="bg-green-500 w-40 p-4 rounded-lg shadow-md text-center text-white">
               {/* Profile Image */}
-              <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border-2 border-white">
+              <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border-2 border-white mt-3">
                 <img
                   src="https://via.placeholder.com/150"
                   alt="Kenzi Mohamd"
@@ -162,21 +164,20 @@ const Dashboard = () => {
               </div>
 
               {/* Name */}
-              <h3 className="mt-3 font-bold text-lg">Kenzi Mohamd</h3>
+              <h3 className="mt-5 font-bold text-lg">Kenzi Mohamd</h3>
 
               {/* Percentage */}
-              <p className="text-2xl font-bold">15 ta</p>
+              <p className="text-2xl font-bold mt-2">15 ta</p>
 
               {/* Rank */}
-              <div className="bg-green-600 mt-2 px-4 py-1 rounded-lg text-sm">
+              <div className="bg-green-600 mt-7 px-4 py-1 rounded-lg text-sm">
                 1st
               </div>
             </div>
-
-            {/* Student 2 */}
-            <div className="bg-purple-500 w-40 p-4 rounded-lg shadow-md text-center text-white relative">
+                {/* Student 2 */}
+                <div className="bg-purple-500 w-40 p-4 rounded-lg shadow-md text-center text-white ">
               {/* Profile Image */}
-              <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border-2 border-white">
+              <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border-2 border-white mt-3">
                 <img
                   src="https://via.placeholder.com/150"
                   alt="Kenzi Mohamd"
@@ -185,21 +186,21 @@ const Dashboard = () => {
               </div>
 
               {/* Name */}
-              <h3 className="mt-3 font-bold text-lg">Kenzi Mohamd</h3>
+              <h3 className="mt-5 font-bold text-lg">Kenzi Mohamd</h3>
 
               {/* Percentage */}
-              <p className="text-2xl font-bold">12 ta</p>
+              <p className="text-2xl font-bold mt-2">12 ta</p>
 
               {/* Rank */}
-              <div className="bg-purple-600 mt-2 px-4 py-1 rounded-lg text-sm">
+              <div className="bg-purple-600 mt-7 px-4 py-1 rounded-lg text-sm">
                 2nd
               </div>
             </div>
 
             {/* Student 3 */}
-            <div className="bg-yellow-300 w-40 p-4 rounded-lg shadow-md text-center text-white relative">
+            <div className="bg-yellow-300 w-40 p-4 rounded-lg shadow-md text-center text-white">
               {/* Profile Image */}
-              <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border-2 border-white">
+              <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border-2 border-white mt-3">
                 <img
                   src="https://via.placeholder.com/150"
                   alt="Kenzi Mohamd"
@@ -208,13 +209,13 @@ const Dashboard = () => {
               </div>
 
               {/* Name */}
-              <h3 className="mt-3 font-bold text-lg">Kenzi Mohamd</h3>
+              <h3 className="mt-5 font-bold text-lg">Kenzi Mohamd</h3>
 
               {/* Percentage */}
-              <p className="text-2xl font-bold">8 ta</p>
+              <p className="text-2xl font-bold mt-2">8 ta</p>
 
               {/* Rank */}
-              <div className="bg-yellow-600 mt-2 px-4 py-1 rounded-lg text-sm">
+              <div className="bg-yellow-600 mt-7 px-4 py-1 rounded-lg text-sm">
                 3rd
               </div>
             </div>
@@ -262,26 +263,29 @@ const Dashboard = () => {
         <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
           <h2 className="text-lg font-semibold mb-4">Commit</h2>
           <ul className="space-y-4">
-            {activities.map((activity) => (
-              <li key={activity.title} className="flex items-center">
-                <div className="flex-shrink-0 mr-4">
-                  <p className=" dark:bg-gray-200 bg-gray-100 text-lg text-black rounded-md py-1 px-4 font-semibold">
-                    {activity.date}
-                    <p className="font-normal text-xs">
-                      {activity.dateText}
-                    </p>
-                  </p>
-                </div>
-                <div className="flex-grow">
-                  <p className="text-[13px] dark:text-gray-200 text-gray-600">{activity.time}</p>
-                  <p className="font-medium text-sm">{activity.title}</p>
-                </div>
-              </li>
-            ))}
+            {comments &&
+              comments.map((item) => {
+                const { day, month } = formatDate(item.created_at);
+                return (
+                  <li key={item.title} className="flex items-center">
+                    <div className="flex-shrink-0 mr-4">
+                      <p className=" dark:bg-gray-200 bg-gray-100 text-lg text-black rounded-md py-1 px-4 font-semibold">
+                        {day}
+                        <p className="font-semibold text-xs">{month}</p>
+                      </p>
+                    </div>
+                    <div className="flex-grow">
+                      <p className="text-[13px] dark:text-gray-200 text-gray-600">
+                        {item.user.first_name + " " + item.user.last_name}
+                      </p>
+                      <p className="font-medium text-sm">{item.comment}</p>
+                    </div>
+                  </li>
+                );
+              })
+            }
           </ul>
         </div>
-
-        {/* Top Students */}
       </div>
     </div>
   );
