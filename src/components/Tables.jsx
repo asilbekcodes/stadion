@@ -55,7 +55,7 @@ const Tables = ({ columns, rows }) => {
       </Table>
 
       {/* Kichik ekranlarda kartochkalar ko'rinadi */}
-      <div className="sm:hidden space-y-4 p-2">
+      <div className="sm:hidden space-y-4">
         {rows.map((row, rowIndex) => (
           <div
             key={rowIndex}

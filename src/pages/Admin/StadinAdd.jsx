@@ -117,16 +117,16 @@ const StadinAdd = ({ stadionCount }) => {
   return (
     <Layout className={"bg-black"}>
       {/* Add Stadion Button */}
-      <div className="p-2">
+      <div className="p-4 md:p-8">
         <button
           onClick={addStadion}
-          className="flex items-center gap-2 m-4 bg-slate-700 text-white px-4 py-2 rounded-full transition"
+          className="flex items-center gap-2 bg-slate-700 text-white px-4 py-2 rounded-full transition"
         >
           Stadion qo`shish
         </button>
       </div>
 
-      <div className="p-5">
+      <div className="px-4 md:px-8">
         {/* Table for Larger Screens */}
         <div className="hidden sm:block relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">

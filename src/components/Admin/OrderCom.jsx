@@ -133,8 +133,8 @@ function OrderCom({ onOrderCount }) {
   }));
 
   return (
-    <div className="p-8 dark:bg-slate-900">
-      <h2 className="text-2xl mb-4 text-white">Orders</h2>
+    <div className="md:p-8 p-4 dark:bg-slate-900">
+      <h2 className="md:text-2xl text-xl mb-4 text-white">Orders</h2>
       <Tables columns={columns} rows={data} />
 
       {/* Tasdiqlash yoki bekor qilish modal */}
