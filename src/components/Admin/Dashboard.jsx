@@ -12,10 +12,10 @@ const Dashboard = () => {
   const [selectedStadion, setSelectedStadion] = useState("");
   const [getSaved, setGetSaved] = useState([]);
 
-  const fetchDate = (stadionId) => {
-    if (!stadionId) return; // Agar stadion tanlanmagan bo'lsa, funksiyani qaytarib yuboramiz
+  const fetchDate = () => {
+    if (!selectedStadion) return; // Agar stadion tanlanmagan bo'lsa, funksiyani qaytarib yuboramiz
     axios
-      .get(`${baseUrl}order/stadion-statistika/${stadionId}/`, Adminconfig)
+      .get(`${baseUrl}order/stadion-statistika/${selectedStadion}/`, Adminconfig)
       .then((res) => {
         setDate(res.data);
       })

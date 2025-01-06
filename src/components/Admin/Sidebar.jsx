@@ -34,6 +34,11 @@ const Sidebar = () => {
     },
     {
       icon: <TbCalendarTime />,
+      title: 'History',
+      pathName: 'history',
+    },
+    {
+      icon: <TbCalendarTime />,
       title: 'Times',
       pathName: 'times',
     },

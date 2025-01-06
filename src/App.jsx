@@ -21,6 +21,7 @@ import { useEffect } from "react";
 import Statistika from "./pages/Admin/Statistika";
 import Times_Pages from "./pages/Admin/Times";
 import Times from "./components/Admin/Times";
+import History from "./pages/Admin/History";
 
 function App() {
   const navigate = useNavigate();
@@ -108,6 +109,14 @@ function App() {
         element={
           <ThemeContextProvider>
             <Times />
+          </ThemeContextProvider>
+        }
+      />
+      <Route
+        path="/history"
+        element={
+          <ThemeContextProvider>
+            <History />
           </ThemeContextProvider>
         }
       />
