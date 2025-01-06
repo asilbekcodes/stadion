@@ -4,7 +4,12 @@ import axios from "axios";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import { Adminconfig } from "../../helpers/token/admintoken";
 import Calendar from "./Calendar";
-import { AiOutlineCalendar, AiOutlineClockCircle, AiOutlineStar, AiOutlineStop } from "react-icons/ai";
+import {
+  AiOutlineCalendar,
+  AiOutlineClockCircle,
+  AiOutlineStar,
+  AiOutlineStop,
+} from "react-icons/ai";
 
 const Dashboard = () => {
   const [date, setDate] = useState({});
@@ -14,7 +19,10 @@ const Dashboard = () => {
   const fetchDate = () => {
     if (!selectedStadion) return; // Agar stadion tanlanmagan bo'lsa, funksiyani qaytarib yuboramiz
     axios
-      .get(`${baseUrl}order/stadion-statistika/${selectedStadion}/`, Adminconfig)
+      .get(
+        `${baseUrl}order/stadion-statistika/${selectedStadion}/`,
+        Adminconfig
+      )
       .then((res) => {
         setDate(res.data);
       })
@@ -33,16 +41,19 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (getSaved.length === 1) {
-      setSelectedStadion(getSaved[0].id); // Agar faqat bitta stadion bo'lsa, uni avtomatik tanlang
+    Malumot(); // Birinchi marta chaqiriladi
+  }, []);
+
+  useEffect(() => {
+    if (Array.isArray(getSaved) && getSaved.length > 0) {
+      setSelectedStadion(getSaved[0]?.id);
     }
-    fetchDate(selectedStadion);
-    Malumot();
-  }, [getSaved.length, selectedStadion]);
+  }, [getSaved]);
 
   useEffect(() => {
     if (selectedStadion) {
-      fetchDate(selectedStadion);
+      fetchDate();
+      getComments();
     }
   }, [selectedStadion]);
 
@@ -120,7 +131,7 @@ const Dashboard = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 my-6 gap-4">
         <Card
-          icon={<AiOutlineCalendar  />}
+          icon={<AiOutlineCalendar />}
           title="Bugungi zakazlar soni"
           value={
             date.zakazlar_soni > 0
@@ -129,12 +140,12 @@ const Dashboard = () => {
           }
         />
         <Card
-          icon={<AiOutlineStar  />}
+          icon={<AiOutlineStar />}
           title="Tasdiqlangan bronlar"
           value={`${date.tasdiqlangan_bronlar || 0} ta`}
         />
         <Card
-          icon={<AiOutlineStop  />}
+          icon={<AiOutlineStop />}
           title="Bekor qilingan bronlar"
           value={`${date.bekorqilingan_bronlar || 0} ta`}
         />
@@ -146,7 +157,7 @@ const Dashboard = () => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Calendar Attendance */}
-        <Calendar />
+        <Calendar selectedStadion={selectedStadion} />
 
         <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
           <h2 className="text-lg font-bold mb-4">Top users</h2>
@@ -173,8 +184,8 @@ const Dashboard = () => {
                 1st
               </div>
             </div>
-                {/* Student 2 */}
-                <div className="bg-purple-500 w-40 p-4 rounded-lg shadow-md text-center text-white ">
+            {/* Student 2 */}
+            <div className="bg-purple-500 w-40 p-4 rounded-lg shadow-md text-center text-white ">
               {/* Profile Image */}
               <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border-2 border-white mt-3">
                 <img
@@ -262,13 +273,13 @@ const Dashboard = () => {
         <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
           <h2 className="text-lg font-semibold mb-4">Commit</h2>
           <ul className="space-y-4">
-            {comments &&
+            {comments && comments.length > 0 ? (
               comments.map((item) => {
                 const { day, month } = formatDate(item.created_at);
                 return (
                   <li key={item.title} className="flex items-center">
                     <div className="flex-shrink-0 mr-4">
-                      <p className=" dark:bg-gray-200 bg-gray-100 text-lg text-black rounded-md py-1 px-4 font-semibold">
+                      <p className="dark:bg-gray-200 bg-gray-100 text-lg text-black rounded-md py-1 px-4 font-semibold">
                         {day}
                         <p className="font-semibold text-xs">{month}</p>
                       </p>
@@ -282,7 +293,9 @@ const Dashboard = () => {
                   </li>
                 );
               })
-            }
+            ) : (
+              <p className="text-center text-gray-500">Malumot yo'q</p>
+            )}
           </ul>
         </div>
       </div>

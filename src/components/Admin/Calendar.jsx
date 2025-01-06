@@ -1,11 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { baseUrl } from "../../helpers/api/baseUrl";
+import { Adminconfig } from "../../helpers/token/admintoken";
 
-const Calendar = () => {
+const Calendar = ({ selectedStadion }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [dataGet, setDataGet] = useState({});
+
+  const getDays = () => {
+    if (!selectedStadion) return;
+    axios
+      .get(
+        `${baseUrl}stadion/statistika-oy/?stadion_id=${selectedStadion}&data=${currentYear}-${
+          currentMonth + 1
+        }`,
+        Adminconfig
+      )
+      .then((res) => {
+        setDataGet(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   useEffect(() => {
-    // Update the current month and year every minute
+    getDays();
+  }, [selectedStadion, currentMonth, currentYear]);
+
+  useEffect(() => {
     const updateMonth = () => {
       const now = new Date();
       setCurrentMonth(now.getMonth());
@@ -13,26 +37,25 @@ const Calendar = () => {
     };
 
     const intervalId = setInterval(updateMonth, 60000);
-
     return () => clearInterval(intervalId);
   }, []);
 
   const months = [
-    'Yanvar',
-    'Fevral',
-    'Mart',
-    'Aprel',
-    'May',
-    'Iyun',
-    'Iyul',
-    'Avgust',
-    'Sentyabr',
-    'Oktyabr',
-    'Noyabr',
-    'Dekabr',
+    "Yanvar",
+    "Fevral",
+    "Mart",
+    "Aprel",
+    "May",
+    "Iyun",
+    "Iyul",
+    "Avgust",
+    "Sentyabr",
+    "Oktyabr",
+    "Noyabr",
+    "Dekabr",
   ];
 
-  const daysOfWeek = ['Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh', 'Ya'];
+  const daysOfWeek = ["Du", "Se", "Ch", "Pa", "Ju", "Sh", "Ya"];
 
   const getDaysInMonth = (month, year) => {
     return new Date(year, month + 1, 0).getDate();
@@ -48,23 +71,39 @@ const Calendar = () => {
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
 
     let days = [];
-    // Haftaning birinchi kuni dushanba bo'lishi uchun shift
-    const adjustedFirstDay = (firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1);
+    const adjustedFirstDay = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
 
     for (let i = 0; i < adjustedFirstDay; i++) {
-      days.push(<div key={`empty-${i}`} className="p-2 rounded bg-gray-100 dark:bg-gray-300"></div>);
+      days.push(
+        <div
+          key={`empty-${i}`}
+          className="p-2 rounded bg-gray-100 dark:bg-gray-300"
+        ></div>
+      );
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
-      const isToday = i === getCurrentDay() && currentMonth === new Date().getMonth();
+      const isToday =
+        i === getCurrentDay() && currentMonth === new Date().getMonth();
+      const dayData = dataGet[i] || { bron: 0 };
+
       days.push(
         <div
           key={i}
-          className={`p-2 rounded ${
-            isToday ? 'bg-yellow-300 text-gray-800 font-semibold' : 'bg-gray-100 dark:bg-gray-300'
+          className={`w-full p-2 rounded ${
+            isToday
+              ? "bg-yellow-300 text-gray-800 font-semibold"
+              : "bg-gray-100 dark:bg-gray-300"
           }`}
         >
-          {i}
+          <div className="relative">
+            <div className="absolute top-0 right-0 bg-red-600 text-white rounded-full px-1">
+              <div className="text-xs font-bold">
+                {dayData.bron > 0 ? `${dayData.bron}` : ""}
+              </div>
+            </div>
+            <div>{i}</div>
+          </div>
         </div>
       );
     }
@@ -81,7 +120,10 @@ const Calendar = () => {
       <div>
         <div className="grid grid-cols-7 gap-2 text-center text-sm text-gray-700">
           {daysOfWeek.map((day) => (
-            <div key={day} className="p-2 rounded font-bold bg-gray-100 dark:bg-gray-50">
+            <div
+              key={day}
+              className="p-2 rounded font-bold bg-gray-100 dark:bg-gray-50"
+            >
               {day}
             </div>
           ))}
