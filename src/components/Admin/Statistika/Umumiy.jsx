@@ -3,6 +3,8 @@ import Card from "../Card";
 import axios from "axios";
 import { baseUrl } from "../../../helpers/api/baseUrl";
 import { Adminconfig } from "../../../helpers/token/admintoken";
+import { MdOutlineSportsSoccer } from "react-icons/md";
+import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
 
 function Umumiy() {
   const [umumiyData, setUmumiyData] = React.useState([]);
@@ -24,9 +26,9 @@ function Umumiy() {
         Umumiy statistika
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-6 gap-4">
-        <Card icon="📊" title="Stadionlar soni" value={umumiyData.stadion_count} />
-        <Card icon={"📊"} title="Bronlar soni" value={umumiyData.bron_count} />
-        <Card icon={"📊"} title="Olingan daromat" value={umumiyData.price} />
+        <Card icon={<MdOutlineSportsSoccer /> } title="Stadionlar soni" value={umumiyData.stadion_count} />
+        <Card icon={<FaShoppingCart />} title="Bronlar soni" value={umumiyData.bron_count} />
+        <Card icon={<FaMoneyBillWave />} title="Olingan daromat" value={umumiyData.price} />
       </div>
     </div>
   );

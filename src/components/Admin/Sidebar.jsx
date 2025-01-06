@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { FaBars, FaChartPie, FaClipboardList, FaPlusCircle, FaUserCircle } from 'react-icons/fa';
+import { FaBars, FaChartPie, FaClipboardList, FaPlusCircle, FaRegCalendarAlt, FaUserCircle } from 'react-icons/fa';
 import { TbCalendarTime } from "react-icons/tb";
 import { NavLink } from 'react-router-dom';
-import { AiOutlineLineChart } from "react-icons/ai";
+import { AiOutlineCalendar, AiOutlineLineChart } from "react-icons/ai";
+import { BsClockHistory } from 'react-icons/bs';
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -33,12 +34,12 @@ const Sidebar = () => {
       pathName: 'orders',
     },
     {
-      icon: <TbCalendarTime />,
+      icon: <FaRegCalendarAlt   />,
       title: 'History',
       pathName: 'history',
     },
     {
-      icon: <TbCalendarTime />,
+      icon: <BsClockHistory />,
       title: 'Times',
       pathName: 'times',
     },

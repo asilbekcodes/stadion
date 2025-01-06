@@ -14,6 +14,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { AiOutlineCalendar } from "react-icons/ai";
+import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
 
 // Kerakli komponentlarni ro'yxatdan o'tkazish
 ChartJS.register(
@@ -133,14 +135,14 @@ function Kunlik({ kunlikDateChange, kunlikDate }) {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-6 gap-4">
-        <Card icon="📅" title="Sana" value={kunlikDate} />
+        <Card icon={<AiOutlineCalendar />} title="Sana" value={kunlikDate} />
         <Card
-          icon="🛒"
+          icon={<FaShoppingCart />}
           title="Bronlar soni"
           value={dataKunlik?.bron_count || 0}
         />
         <Card
-          icon="💰"
+          icon={<FaMoneyBillWave />}
           title="Olingan daromat"
           value={`${dataKunlik?.daromat || 0} so'm`}
         />

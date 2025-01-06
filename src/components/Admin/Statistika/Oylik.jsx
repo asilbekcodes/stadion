@@ -13,6 +13,8 @@ import {
 import axios from "axios";
 import { baseUrl } from "../../../helpers/api/baseUrl";
 import { Adminconfig } from "../../../helpers/token/admintoken";
+import { AiOutlineCalendar } from "react-icons/ai";
+import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
 
 ChartJS.register(
   BarElement,
@@ -161,14 +163,14 @@ function Oylik({ selectedDate, handleDateChange }) {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-6 gap-4">
-        <Card icon="📅" title="Oy" value={selectedDate} />
+        <Card icon={<AiOutlineCalendar />} title="Oy" value={selectedDate} />
         <Card
-          icon="🛒"
+          icon={<FaShoppingCart />}
           title="Bronlar soni"
           value={`${oylikData?.bron_count || 0} ta`} // Umumiy bronlar soni
         />
         <Card
-          icon="💰"
+          icon={<FaMoneyBillWave />}
           title="Olingan daromat"
           value={`${oylikData?.daromad || 0} so'm`} // Daromad qiymati
         />

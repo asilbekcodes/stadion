@@ -13,6 +13,8 @@ import {
 import axios from "axios";
 import { baseUrl } from "../../../helpers/api/baseUrl";
 import { Adminconfig } from "../../../helpers/token/admintoken";
+import { AiOutlineCalendar } from "react-icons/ai";
+import { FaMoneyBillWave, FaShoppingCart } from "react-icons/fa";
 ChartJS.register(
   BarElement,
   CategoryScale,
@@ -167,14 +169,14 @@ function Yillik({ selectedYear, handleYearChange }) {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-6 gap-4">
-        <Card icon="📅" title="Yil" value={selectedYear} />
+        <Card icon={<AiOutlineCalendar />} title="Yil" value={selectedYear} />
         <Card
-          icon="🛒"
+          icon={<FaShoppingCart />}
           title="Bronlar soni"
           value={`${yillikData?.bron_count || 0} ta`}
         />
         <Card
-          icon="💰"
+          icon={<FaMoneyBillWave />}
           title="Olingan daromat"
           value={`${yillikData?.daromad || 0} so'm`}
         />

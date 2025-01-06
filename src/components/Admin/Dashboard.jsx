@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
-import { FaClipboardList, FaStar } from "react-icons/fa";
-import { FaHandHoldingDollar } from "react-icons/fa6";
 import axios from "axios";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import { Adminconfig } from "../../helpers/token/admintoken";
 import Calendar from "./Calendar";
+import { AiOutlineCalendar, AiOutlineClockCircle, AiOutlineStar, AiOutlineStop } from "react-icons/ai";
 
 const Dashboard = () => {
   const [date, setDate] = useState({});
@@ -121,7 +120,7 @@ const Dashboard = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 my-6 gap-4">
         <Card
-          icon={<FaClipboardList />}
+          icon={<AiOutlineCalendar  />}
           title="Bugungi zakazlar soni"
           value={
             date.zakazlar_soni > 0
@@ -130,17 +129,17 @@ const Dashboard = () => {
           }
         />
         <Card
-          icon={<FaStar />}
+          icon={<AiOutlineStar  />}
           title="Tasdiqlangan bronlar"
           value={`${date.tasdiqlangan_bronlar || 0} ta`}
         />
         <Card
-          icon={<FaHandHoldingDollar />}
+          icon={<AiOutlineStop  />}
           title="Bekor qilingan bronlar"
           value={`${date.bekorqilingan_bronlar || 0} ta`}
         />
         <Card
-          icon={<FaHandHoldingDollar />}
+          icon={<AiOutlineClockCircle />}
           title="Kutulayotgan bronlar"
           value={`${date.kutilayotgan_bronlar || 0} ta`}
         />
