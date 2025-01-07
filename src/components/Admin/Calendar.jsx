@@ -97,13 +97,13 @@ const Calendar = ({ selectedStadion }) => {
           }`}
         >
           <div className="relative">
-            <div className="absolute top-0 right-0 bg-red-600 text-white rounded-full px-1">
+            <div className="absolute z-50 top-[-7px] right-[-5px] bg-red-600 text-white rounded-full px-1">
               <div className="text-xs font-bold">
                 {dayData.bron > 0 ? `${dayData.bron}` : ""}
               </div>
             </div>
-            <div>{i}</div>
           </div>
+          <div>{i}</div>
         </div>
       );
     }

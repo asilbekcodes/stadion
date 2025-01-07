@@ -10,6 +10,7 @@ import {
   AiOutlineStar,
   AiOutlineStop,
 } from "react-icons/ai";
+import TopUsers from "./TopUser";
 
 const Dashboard = () => {
   const [date, setDate] = useState({});
@@ -158,79 +159,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Calendar Attendance */}
         <Calendar selectedStadion={selectedStadion} />
-
-        <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
-          <h2 className="text-lg font-bold mb-4">Top users</h2>
-          <div className="flex justify-between">
-            {/* Student 1 */}
-            <div className="bg-green-500 w-40 p-4 rounded-lg shadow-md text-center text-white">
-              {/* Profile Image */}
-              <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border-2 border-white mt-3">
-                <img
-                  src="https://via.placeholder.com/150"
-                  alt="Kenzi Mohamd"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Name */}
-              <h3 className="mt-5 font-bold text-lg">Kenzi Mohamd</h3>
-
-              {/* Percentage */}
-              <p className="text-2xl font-bold mt-2">15 ta</p>
-
-              {/* Rank */}
-              <div className="bg-green-600 mt-7 px-4 py-1 rounded-lg text-sm">
-                1st
-              </div>
-            </div>
-            {/* Student 2 */}
-            <div className="bg-purple-500 w-40 p-4 rounded-lg shadow-md text-center text-white ">
-              {/* Profile Image */}
-              <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border-2 border-white mt-3">
-                <img
-                  src="https://via.placeholder.com/150"
-                  alt="Kenzi Mohamd"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Name */}
-              <h3 className="mt-5 font-bold text-lg">Kenzi Mohamd</h3>
-
-              {/* Percentage */}
-              <p className="text-2xl font-bold mt-2">12 ta</p>
-
-              {/* Rank */}
-              <div className="bg-purple-600 mt-7 px-4 py-1 rounded-lg text-sm">
-                2nd
-              </div>
-            </div>
-
-            {/* Student 3 */}
-            <div className="bg-yellow-300 w-40 p-4 rounded-lg shadow-md text-center text-white">
-              {/* Profile Image */}
-              <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border-2 border-white mt-3">
-                <img
-                  src="https://via.placeholder.com/150"
-                  alt="Kenzi Mohamd"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Name */}
-              <h3 className="mt-5 font-bold text-lg">Kenzi Mohamd</h3>
-
-              {/* Percentage */}
-              <p className="text-2xl font-bold mt-2">8 ta</p>
-
-              {/* Rank */}
-              <div className="bg-yellow-600 mt-7 px-4 py-1 rounded-lg text-sm">
-                3rd
-              </div>
-            </div>
-          </div>
-        </div>
+        <TopUsers data={date}/>
 
         {/* Educational Stage */}
         <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
