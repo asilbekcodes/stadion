@@ -45,7 +45,7 @@ function History() {
               <table className="w-full text-sm text-left text-gray-800 dark:text-gray-300 m">
                 <thead className="text-xs text-black border-y dark:border-gray-200 border-gray-800  uppercase bg-gray-50 dark:bg-gray-800 dark:text-white">
                   <tr>
-                    <th scope="col" className="pr-6 py-3">
+                    <th scope="col" className="pr-6 pl-2 py-3">
                       id
                     </th>
                     <th scope="col" className="pr-6 py-3">
@@ -64,7 +64,7 @@ function History() {
                 </thead>
                 <tbody className="border-b border-gray-800 dark:border-gray-200">
                   <tr className="bg-white dark:bg-gray-800">
-                    <th scope="row" className="pr-6 py-3">
+                    <th scope="row" className="pr-6 pl-2 py-3">
                       {index + 1}
                     </th>
                     <td className="pr-6 py-3">{item.user.first_name + ' ' + item.user.last_name}</td>

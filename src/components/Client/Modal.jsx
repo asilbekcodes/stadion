@@ -44,8 +44,7 @@ function ModalComponent({ isOpen, onClose }) {
         onClose();
       })
       .catch((err) => {
-        console.log(err);
-        message.error("Telefon raqam yuborilmadi.");
+        message.error(err.response.data.message);
       });
   };
 
@@ -70,8 +69,7 @@ function ModalComponent({ isOpen, onClose }) {
         }
       })
       .catch((err) => {
-        console.log(err);
-        message.error("Kod noto‘g‘ri.");
+        message.error(err.response.data.message);
       });
   };
 
@@ -86,12 +84,10 @@ function ModalComponent({ isOpen, onClose }) {
         message.success("Ism muvaffaqiyatli yuborildi!");
         localStorage.setItem("userToken", res.data.access);
         setIsModalNameOpen(false);
-        console.log(res);
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => {
-        console.log(err);
-        message.error("Xatolik yuz berdi.");
+        message.error(err.response.data.message);
       });
   };
 
@@ -99,8 +95,7 @@ function ModalComponent({ isOpen, onClose }) {
     axios
       .post(`${baseUrl}user/resend-sms/`, { phone_number: phoneNumber })
       .then((res) => {
-        console.log(res);
-        toast.success("Qayta yuborildi");
+        toast.success(res.data.message);
         setTimer(300); // 5 daqiqa hisoblagichni qayta o'rnatish
       })
       .catch((err) => console.log(err));
@@ -167,6 +162,8 @@ function ModalComponent({ isOpen, onClose }) {
             width: "100%",
             height: "40px",
             borderRadius: "5px",
+            position: "relative",
+            right: "8px",
           },
         }}
         cancelButtonProps={{ style: { display: "none" } }}
@@ -193,7 +190,7 @@ function ModalComponent({ isOpen, onClose }) {
           <span className="text-lg">{formatTime(timer)}</span>
           <button
             onClick={resentSms}
-            className="p-2 text-white bg-green-600"
+            className="px-2 py-1 rounded-md text-white bg-green-600 hover:bg-green-500"
           >
             Kodni qayta yuborish
           </button>

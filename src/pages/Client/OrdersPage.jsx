@@ -47,7 +47,7 @@ const OrdersPage = () => {
 
       {/* Asosiy kontent */}
       {data.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start h-[75vh] gap-4 mx-auto px-4 py-8 lg:px-40">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start min-h-[75vh] gap-4 mx-auto px-4 py-8 lg:px-40">
           {data &&
             data.map((item, index) => (
               <Card
