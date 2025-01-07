@@ -11,6 +11,7 @@ import {
   AiOutlineStop,
 } from "react-icons/ai";
 import TopUsers from "./TopUser";
+import User from "./User";
 
 const Dashboard = () => {
   const [date, setDate] = useState({});
@@ -98,6 +99,11 @@ const Dashboard = () => {
     return { day, month };
   };
 
+  const [showAll, setShowAll] = useState(false);
+
+  // Faqat 5 ta element ko'rsatish uchun
+  const visibleComments = showAll ? comments : comments.slice(0, 5);
+
   return (
     <div className="md:p-8 p-4 grow dark:bg-gray-900">
       <div className="flex justify-between items-center">
@@ -159,51 +165,15 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Calendar Attendance */}
         <Calendar selectedStadion={selectedStadion} />
-        <TopUsers data={date}/>
-
-        {/* Educational Stage */}
-        <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
-          <h2 className="text-lg font-bold mb-4 ">Users</h2>
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 m">
-            <thead className="text-xs text-gray-700 border-t border-gray-200 border-b  uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
-              <tr>
-                <th scope="col" className="pr-6 py-3">
-                  id
-                </th>
-                <th scope="col" className="pr-6 py-3">
-                  Ism
-                </th>
-                <th scope="col" className="pr-6 py-3">
-                  familiya
-                </th>
-                <th scope="col" className="pr-6 py-3">
-                  tel
-                </th>
-                <th scope="col" className="pr-6 py-3">
-                  bron soni
-                </th>
-              </tr>
-            </thead>
-            <tbody className="border-b border-gray-200">
-              <tr className="bg-white dark:bg-gray-700">
-                <th scope="row" className="pr-6 py-3">
-                  1
-                </th>
-                <td className="pr-6 py-3">Mohamd</td>
-                <td className="pr-6 py-3">Kenzi</td>
-                <td className="pr-6 py-3">+998 99 999 99 99</td>
-                <td className="pr-6 py-3">5 ta</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <TopUsers data={date} />
+        <User data={date} />
 
         {/* Activities & Events */}
         <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
           <h2 className="text-lg font-semibold mb-4">Commit</h2>
           <ul className="space-y-4">
             {comments && comments.length > 0 ? (
-              comments.map((item) => {
+              visibleComments.map((item) => {
                 const { day, month } = formatDate(item.created_at);
                 return (
                   <li key={item.title} className="flex items-center">
@@ -223,9 +193,20 @@ const Dashboard = () => {
                 );
               })
             ) : (
-              <p className="text-center text-gray-500">Malumot yo'q</p>
+              <p className="text-center text-gray-500">Ma'lumot yo'q</p>
             )}
           </ul>
+          {/* Tugma */}
+          {comments.length > 5 && (
+            <div className="text-end">
+              <button
+                onClick={() => setShowAll((prev) => !prev)}
+                className="dark:text-white  rounded focus:outline-none"
+              >
+                {showAll ? "Kamroq ko'rsatish" : "Hammasini ko'rish"}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
