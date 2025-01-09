@@ -173,14 +173,14 @@ const Dashboard = () => {
           <h2 className="text-lg font-semibold mb-4">Commit</h2>
           <ul className="space-y-4">
             {comments && comments.length > 0 ? (
-              visibleComments.map((item) => {
+              visibleComments.map((item, index) => {
                 const { day, month } = formatDate(item.created_at);
                 return (
-                  <li key={item.title} className="flex items-center">
+                  <li key={index} className="flex items-center">
                     <div className="flex-shrink-0 mr-4">
-                      <p className="dark:bg-gray-200 bg-gray-100 text-lg text-black rounded-md py-1 px-4 font-semibold">
+                      <p className="dark:bg-gray-200 flex items-center flex-col bg-gray-100 text-lg text-black rounded-md py-1 px-4 font-semibold">
                         {day}
-                        <p className="font-semibold text-xs">{month}</p>
+                        <span className="font-semibold text-xs block">{month}</span>
                       </p>
                     </div>
                     <div className="flex-grow">

@@ -4,6 +4,7 @@ import Umumiy from "../../components/Admin/Statistika/Umumiy";
 import Kunlik from "../../components/Admin/Statistika/Kunlik";
 import Oylik from "../../components/Admin/Statistika/Oylik";
 import Yillik from "../../components/Admin/Statistika/Yillik";
+import Kunlar from "../../components/Admin/Statistika/Kunlar";
 
 function Statistika() {
   const [activeTab, setActiveTab] = useState("1"); // Default: Oylik
@@ -44,8 +45,9 @@ function Statistika() {
           {[
             { key: "1", label: "Umumiy" },
             { key: "2", label: "Kunlik" },
-            { key: "3", label: "Oylik" },
-            { key: "4", label: "Yillik" },
+            { key: "3", label: "Kunlar" },
+            { key: "4", label: "Oylik" },
+            { key: "5", label: "Yillik" },
           ].map((tab) => (
             <button
               key={tab.key}
@@ -71,12 +73,15 @@ function Statistika() {
             />
           )}
           {activeTab === "3" && (
+            <Kunlar/>
+          )}
+          {activeTab === "4" && (
             <Oylik
               selectedDate={selectedDate}
               handleDateChange={handleDateChange}
             />
           )}
-          {activeTab === "4" && (
+          {activeTab === "5" && (
             <Yillik
               selectedYear={selectedYear}
               handleYearChange={handleYearChange}

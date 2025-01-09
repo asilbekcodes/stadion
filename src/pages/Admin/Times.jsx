@@ -108,14 +108,14 @@ const Times_Pages = () => {
       hours.push(
         <div
           key={hour}
-          className={`flex items-center justify-center border rounded-lg py-4 cursor-pointer shadow-sm text-center ${
+          className={`flex items-center justify-center border rounded-lg py-4 shadow-sm text-center ${
             isPast
-              ? "bg-gray-300 text-gray-800 cursor-not-allowed dark:bg-gray-800 dark:text-gray-100"
+              ? "bg-gray-300 text-gray-800 cursor-not-allowed dark:bg-red-900 dark:text-gray-100"
               : isSelected
-              ? "bg-green-600 text-white"
+              ? "bg-green-600 text-white cursor-pointer"
               : isBooked
-              ? "bg-gray-300 text-black cursor-not-allowed dark:bg-gray-800 dark:text-gray-100"
-              : "bg-white text-black dark:bg-gray-900 dark:text-gray-100"
+              ? "bg-gray-300 text-black cursor-not-allowed dark:bg-gray-500 dark:text-gray-100 "
+              : "bg-white text-black dark:bg-gray-900 dark:text-gray-100 cursor-pointer"
           }`}
           onClick={() => !isBooked && !isPast && handleHourClick(hour)}
         >
