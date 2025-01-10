@@ -5,6 +5,26 @@ import Card from "../Card";
 import { baseUrl } from "../../../helpers/api/baseUrl";
 import axios from "axios";
 import { Adminconfig } from "../../../helpers/token/admintoken";
+import { Bar } from "react-chartjs-2";
+
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function Kunlar({
   kunlarDateChange,
@@ -14,6 +34,32 @@ function Kunlar({
 }) {
   const [getSaved, setgetSaved] = useState([]);
   const [selectedStadion, setSelectedStadion] = useState("");
+  const [kunDate, setKunDate] = useState({});
+  const [chartLabels, setChartLabels] = useState([]);
+  const [chartDataValues, setChartDataValues] = useState([]);
+
+  const fetchkunlar = () => {
+    if (selectedStadion && kunlarDate && kunlarDays) {
+      axios
+        .get(
+          `${baseUrl}stadion/statistika-kunlar/?stadion_id=${selectedStadion}&date_to=${kunlarDate}&date_from=${kunlarDays}`,
+          Adminconfig
+        )
+        .then((res) => {
+          setKunDate(res.data);
+
+          // Diagramma uchun ma'lumotlarni tayyorlash
+          const labels = Object.keys(res.data).filter((key) =>
+            key.includes("-")
+          ); // Sana kalitlarini olish
+          const bronValues = labels.map((key) => res.data[key].bron || 0);
+
+          setChartLabels(labels);
+          setChartDataValues(bronValues);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
 
   const Malumot = () => {
     axios
@@ -30,9 +76,49 @@ function Kunlar({
 
   useEffect(() => {
     if (getSaved.length === 1) {
-      setSelectedStadion(getSaved[0].id); // Agar faqat bitta stadion bo'lsa, uni avtomatik tanlang
+      setSelectedStadion(getSaved[0].id);
     }
   }, [getSaved]);
+
+  useEffect(() => {
+    fetchkunlar();
+  }, [selectedStadion, kunlarDate, kunlarDays]);
+
+  const chartData = {
+    labels: chartLabels,
+    datasets: [
+      {
+        label: "Kunlar bo'yicha bronlar soni",
+        data: chartDataValues,
+        backgroundColor: "rgba(59, 130, 246, 0.8)",
+        borderColor: "rgba(59, 130, 246, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: "top",
+        labels: {
+          color: "rgba(55, 65, 81)",
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: { color: "rgba(55, 65, 81)" },
+        grid: { color: "rgba(229, 231, 235)" },
+      },
+      y: {
+        ticks: { color: "rgba(55, 65, 81)" },
+        grid: { color: "rgba(229, 231, 235)" },
+      },
+    },
+  };
 
   return (
     <div>
@@ -79,18 +165,23 @@ function Kunlar({
         <Card
           icon={<FaShoppingCart />}
           title="Bronlar soni"
-          //   value={dataKunlik?.bron_count || 0}
+          value={kunDate?.bron_count || 0}
         />
         <Card
           icon={<FaMoneyBillWave />}
           title="Olingan daromat"
-          //   value={`${dataKunlik?.daromat || 0} so'm`}
+          value={`${kunDate?.daromat || 0} so'm`}
         />
       </div>
       <div className="mb-10">
         <h2 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-4">
           Bronlar soni
         </h2>
+        <Bar
+          className="dark:bg-gray-800 bg-white p-5"
+          data={chartData}
+          options={chartOptions}
+        />
       </div>
     </div>
   );
