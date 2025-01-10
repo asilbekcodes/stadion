@@ -183,6 +183,50 @@ function Kunlar({
           options={chartOptions}
         />
       </div>
+      <div>
+        <h1 className="text-lg mb-4 text-gray-900 dark:text-gray-100">
+          Bronlar (kunlar bo'yicha)
+        </h1>
+        <table className="min-w-full border border-gray-200 dark:border-gray-700">
+          <thead className="bg-gray-100 dark:bg-gray-800">
+            <tr>
+              <th className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                Sana (Kunlar)
+              </th>
+              <th className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                Bronlar soni
+              </th>
+              <th className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                Bron summasi
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(kunDate)
+              .filter(([key]) => key.includes("-"))
+              .map(([day, data], index) => (
+                <tr
+                  key={day}
+                  className={`${
+                    index % 2 === 0
+                      ? "bg-white dark:bg-gray-800"
+                      : "bg-gray-50 dark:bg-gray-700"
+                  }`}
+                >
+                  <td className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                    {day}
+                  </td>
+                  <td className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                    {data.bron || 0} ta
+                  </td>
+                  <td className="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                    {data.price || 0} so'm
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
