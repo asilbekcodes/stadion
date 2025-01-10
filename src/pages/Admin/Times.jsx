@@ -114,7 +114,7 @@ const Times_Pages = () => {
               : isSelected
               ? "bg-green-600 text-white cursor-pointer"
               : isBooked
-              ? "bg-gray-300 text-black cursor-not-allowed dark:bg-gray-500 dark:text-gray-100 "
+              ? "bg-gray-300 text-black cursor-not-allowed dark:bg-red-900 dark:text-gray-100 "
               : "bg-white text-black dark:bg-gray-900 dark:text-gray-100 cursor-pointer"
           }`}
           onClick={() => !isBooked && !isPast && handleHourClick(hour)}

@@ -17,6 +17,15 @@ function Statistika() {
     new Date().toISOString().slice(0, 10) // Bugungi kun ("YYYY-MM-DD" formatida)
   );
 
+  const [kunlarDate, setKunlarDate] = useState(
+    new Date().toISOString().slice(0, 10)
+  );
+
+  const [kunlarDays, setKunlarDays] = useState(
+    // new Date().toISOString().slice(0, 10)
+    []
+  );
+
   const kunlikDateChange = (event) => {
     setKunlikDate(event.target.value);
   };
@@ -31,6 +40,14 @@ function Statistika() {
 
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value); // Tanlangan yillik qiymatini yangilash
+  };
+
+  const handleKunlikDateChange = (event) => {
+    setKunlarDate(event.target.value);
+  };
+
+  const handleKunlikDaysChange = (event) => {
+    setKunlarDays(event.target.value);
   };
 
   return (
@@ -73,7 +90,12 @@ function Statistika() {
             />
           )}
           {activeTab === "3" && (
-            <Kunlar/>
+            <Kunlar
+              kunlarDateChange={handleKunlikDateChange}
+              kunlarDate={kunlarDate}
+              kunlarDaysChange={handleKunlikDaysChange}
+              kunlarDays={kunlarDays}
+            />
           )}
           {activeTab === "4" && (
             <Oylik
