@@ -126,7 +126,7 @@ function Kunlar({
         <h2 className="text-lg font-medium text-gray-800 dark:text-gray-100">
           Kunlar orasidagi statistika
         </h2>
-        <div className="flex gap-4 mb-5 items-center">
+        <div className="md:flex block gap-4 mb-5 items-center">
           <select
             className="p-1 border rounded dark:bg-gray-800 dark:text-gray-100"
             value={selectedStadion}
@@ -146,7 +146,7 @@ function Kunlar({
             type="date"
             value={kunlarDate}
             onChange={kunlarDateChange}
-            className="p-1 border rounded dark:bg-gray-800 dark:text-gray-100"
+            className="p-1 border my-2 md:my-0 rounded dark:bg-gray-800 dark:text-gray-100"
           />
           <input
             type="date"

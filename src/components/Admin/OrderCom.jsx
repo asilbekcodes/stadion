@@ -133,9 +133,15 @@ function OrderCom({ onOrderCount }) {
   }));
 
   return (
-    <div className="md:p-8 p-4 dark:bg-slate-900">
-      <h2 className="md:text-2xl text-xl mb-4 text-white">Orders</h2>
-      <Tables columns={columns} rows={data} />
+    <div className="md:p-8 p-4 dark:bg-slate-900 min-h-screen">
+      <h2 className="md:text-2xl text-xl mb-4 text-black dark:text-white">Orders</h2>
+      {getOrder.length === 0 ? (
+        <div className="text-center text-black text-lg dark:text-white">
+          Hech qanday buyurtmalar topilmadi
+        </div>
+      ) : (
+        <Tables columns={columns} rows={data} />
+      )}
 
       {/* Tasdiqlash yoki bekor qilish modal */}
       {openModal && (
@@ -150,8 +156,7 @@ function OrderCom({ onOrderCount }) {
             <p className="text-center my-4">
               Siz foydalanuvchini bron vaqtini{" "}
               <span className="text-green-500">Tasdiqlash</span> yoki{" "}
-              <span className="text-red-500">Bekor qilish</span>ni
-              xohlaysizmi?
+              <span className="text-red-500">Bekor qilish</span>ni xohlaysizmi?
             </p>
             <div className="flex gap-4 flex-col justify-center">
               <button
@@ -180,11 +185,14 @@ function OrderCom({ onOrderCount }) {
               <button
                 onClick={CloseUserModal}
                 className="text-white text-3xl  cursor-pointer"
-              ><IoIosClose />
+              >
+                <IoIosClose />
               </button>
             </div>
             <div className="flex flex-col p-4 text-md">
-              <p className="text-white">Ism: {selectedUser?.first_name || "Noma'lum"}</p>
+              <p className="text-white">
+                Ism: {selectedUser?.first_name || "Noma'lum"}
+              </p>
               <p className="text-white">Familiya: {selectedUser?.last_name}</p>
               <p className="text-white">
                 Telefon: {selectedUser?.phone_number || "Noma'lum"}

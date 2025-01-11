@@ -52,13 +52,13 @@ function Statistika() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-4 md:p-8">
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-3 md:p-8">
         <h1 className="text-xl md:text-2xl mb-3 text-gray-800 dark:text-gray-100">
           Statistika
         </h1>
 
         {/* Tabs Navigation */}
-        <div className="flex space-x-4 border-b border-gray-300 dark:border-gray-700">
+        <div className="flex space-x-0 md:space-x-5 border-b border-gray-300 dark:border-gray-700">
           {[
             { key: "1", label: "Umumiy" },
             { key: "2", label: "Kunlik" },

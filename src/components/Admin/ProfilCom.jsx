@@ -59,7 +59,7 @@ function ProfilCom() {
   };
 
   return (
-    <div className="p-4 md:p-8 bg-white dark:bg-gray-900 dark:text-gray-100 min-h-screen">
+    <div className="p-4 md:p-8 bg-gray-100 dark:bg-gray-900 dark:text-gray-100 min-h-screen">
       <h1 className="md:text-2xl text-xl dark:text-gray-100">Profil</h1>
       <Tabs
         activeKey={activeTab}

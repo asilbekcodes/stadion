@@ -44,7 +44,7 @@ function History() {
 
   return (
     <Layout>
-      <div className="md:p-8 p-4 dark:bg-gray-900 bg-gray-50">
+      <div className="md:p-8 p-4 dark:bg-gray-900 bg-gray-100 min-h-screen">
         <h2 className="md:text-2xl text-xl">History</h2>
         {historys && historys.length > 0 ? (
           historys.map((item, index) => (
@@ -87,7 +87,7 @@ function History() {
             </div>
           ))
         ) : (
-          <p className="mt-4 text-gray-600 flex justify-center dark:text-gray-400">Ma'lumot yo'q</p>
+          <p className="text-center text-black text-lg dark:text-white">Ma'lumot yo'q</p>
         )}
       </div>
     </Layout>

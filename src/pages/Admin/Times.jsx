@@ -143,7 +143,7 @@ const Times_Pages = () => {
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-4 md:p-8">
         <div className="md:flex justify-between items-center ">
           <h1 className="text-xl md:text-2xl mb-3 text-gray-800 dark:text-gray-100">
-            Stadion va vaqtlarni boshqarish
+            Stadion vaqtlarni boshqarish
           </h1>
           <select
             className="p-2 border rounded dark:bg-gray-800 dark:text-gray-100"
