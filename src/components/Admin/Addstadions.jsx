@@ -11,8 +11,6 @@ const StadionAdds = ({ addStadion }) => {
   const locationRef = useRef(null);
   const capacityRef = useRef(null);
   const imgRef = useRef(null);
-  const startTimeRef = useRef(null);
-  const endTimeRef = useRef(null);
   const address = useRef(null);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -83,8 +81,6 @@ const StadionAdds = ({ addStadion }) => {
     }
 
     formData.append("address", address.current.value);
-    formData.append("start_time", startTimeRef.current.value);
-    formData.append("end_time", endTimeRef.current.value);
     formData.append("latitude", latitude);
     formData.append("longitude", longitude);
     formData.append("kiyinish_xonasi", facilities.kiyinish);
@@ -93,18 +89,15 @@ const StadionAdds = ({ addStadion }) => {
     formData.append("parkofka", true);
     formData.append("forma", facilities.formal);
     formData.append("user", getSaved.id);
-    console.log(getSaved.id);
 
     axios
       .post(`${baseUrl}stadion/add-stadion/`, formData, Adminconfig)
       .then((res) => {
-        console.log(res.data);
         toast.success("Stadion muvaffaqiyatli qo'shildi!");
         addStadion();
         window.location.reload();
       })
       .catch((err) => {
-        console.error(err);
         toast.error("Xatolik yuz berdi!");
       })
       .finally(() => {
@@ -178,24 +171,6 @@ const StadionAdds = ({ addStadion }) => {
               <input
                 type="file"
                 ref={imgRef}
-                className="w-full px-4 py-2 border rounded-md bg-slate-800 text-white"
-                required
-              />
-            </div>
-            <div>
-              <label className="block mb-2 text-white">Boshlanish vaqti:</label>
-              <input
-                type="time"
-                ref={startTimeRef}
-                className="w-full px-4 py-2 border rounded-md bg-slate-800 text-white"
-                required
-              />
-            </div>
-            <div>
-              <label className="block mb-2 text-white">Tugash vaqti:</label>
-              <input
-                type="time"
-                ref={endTimeRef}
                 className="w-full px-4 py-2 border rounded-md bg-slate-800 text-white"
                 required
               />

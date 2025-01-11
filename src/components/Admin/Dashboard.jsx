@@ -108,7 +108,7 @@ const Dashboard = () => {
     <div className="md:p-8 p-4 grow dark:bg-gray-900">
       <div className="flex justify-between items-center">
         <h2 className="md:text-2xl text-xl">Dashboard</h2>
-        <div className="flex items-center">
+        <div>
           <select
             className="p-1 border rounded dark:bg-gray-800 dark:text-gray-100 mr-5"
             value={selectedStadion}
@@ -124,16 +124,6 @@ const Dashboard = () => {
                 </option>
               ))}
           </select>
-          <p className="font-semibold text-blue-700 dark:text-green-500 text-xl hidden md:block">
-            Ish vaqti:{" "}
-            <span className="font-normal text-black dark:text-white text-lg">
-              {selectedStadion
-                ? `${date.start_time?.slice(0, 5) || "--"} dan ${
-                    date.end_time?.slice(0, 5) || "--"
-                  } gacha`
-                : ""}
-            </span>
-          </p>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 my-6 gap-4">

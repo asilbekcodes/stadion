@@ -17,8 +17,6 @@ const StadinAdd = ({ stadionCount }) => {
   const title = useRef(null);
   const description = useRef(null);
   const price = useRef(null);
-  const startTime = useRef(null);
-  const endTime = useRef(null);
 
   // Checkbox State
   const [facilities, setFacilities] = useState({
@@ -87,8 +85,6 @@ const StadinAdd = ({ stadionCount }) => {
       title: title.current.value,
       description: description.current.value,
       price: price.current.value,
-      start_time: startTime.current.value,
-      end_time: endTime.current.value,
       kiyinish_xonasi: facilities.kiyinish,
       dush: facilities.yuvinish,
       forma: facilities.formal,
@@ -136,10 +132,7 @@ const StadinAdd = ({ stadionCount }) => {
                   Stadion nomi
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Boshlanish vaqti
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Tugash vaqti
+                  Stadion haqida ma'lumot
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Narxi
@@ -163,10 +156,13 @@ const StadinAdd = ({ stadionCount }) => {
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      {item.title}
+                      "{item.title}
                     </th>
-                    <td className="px-6 py-4">{item.start_time}</td>
-                    <td className="px-6 py-4">{item.end_time}</td>
+                    <td className="px-6 py-4">
+                      {item.description.length > 30
+                        ? item.description.slice(0, 30) + "..."
+                        : item.description}
+                    </td>
                     <td className="px-6 py-4">{item.price} so'm</td>
                     <td className="px-6 py-4">{item.address}</td>
                     <td className="px-6 py-4 flex gap-3 text-right">
@@ -195,39 +191,43 @@ const StadinAdd = ({ stadionCount }) => {
             getMalumot.map((item, index) => (
               <div
                 key={index}
-                className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700"
+                className="p-4 mb-4 flex flex-col gap-3 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700"
               >
-                <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                <p className="text-sm text-gray-900 dark:text-white flex items-center gap-2 justify-between">
+                  <span className="font-semibold">Stadion nomi:</span>
                   {item.title}
                 </p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  <span className="font-semibold">Boshlanish vaqti:</span>{" "}
-                  {item.start_time}
+                <p className="text-sm text-gray-700 dark:text-white flex items-center gap-2 justify-between">
+                  <span className="font-semibold">Stadion haqida</span>{" "}
+                  {item.description.length > 20
+                    ? item.description.slice(0, 20) + "..."
+                    : item.description}
                 </p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  <span className="font-semibold">Tugash vaqti:</span>{" "}
-                  {item.end_time}
-                </p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
+                <p className="text-sm text-gray-700 dark:text-white flex items-center gap-2 justify-between">
                   <span className="font-semibold">Narxi:</span> {item.price}{" "}
                   so'm
                 </p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
+                <p className="text-sm text-gray-700 dark:text-white flex items-center gap-2 justify-between">
                   <span className="font-semibold">Manzili:</span> {item.address}
                 </p>
-                <div className="flex gap-3 items-center ">
-                  <button
-                    onClick={() => ModalOpen(item)}
-                    className="mt-2 text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    Tahrirlash
-                  </button>
-                  <button
-                    onClick={() => deleteStadion(item)}
-                    className="mt-2 font-medium text-red-600 dark:text-red-500 hover:underline"
-                  >
-                    Delete
-                  </button>
+                <div className="flex justify-between gap-3 items-center ">
+                  <p className="font-semibold text-sm text-gray-700 dark:text-white">
+                    Action
+                  </p>
+                  <div>
+                    <button
+                      onClick={() => ModalOpen(item)}
+                      className="mt-2 text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      <FaEdit className="w-5 h-5 mr-1" />
+                    </button>
+                    <button
+                      onClick={() => deleteStadion(item)}
+                      className="mt-2 font-medium text-red-600 dark:text-red-500 hover:underline"
+                    >
+                      <FaTrash className="w-5 h-5 mr-1" />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -274,28 +274,6 @@ const StadinAdd = ({ stadionCount }) => {
                   type="number"
                   ref={price}
                   defaultValue={selectedItem.price}
-                  className="w-full px-4 py-2 border rounded-md bg-slate-800 text-white"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block mb-2 text-white">
-                  Boshlanish vaqti:
-                </label>
-                <input
-                  type="time"
-                  ref={startTime}
-                  defaultValue={selectedItem.start_time}
-                  className="w-full px-4 py-2 border rounded-md bg-slate-800 text-white"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block mb-2 text-white">Tugash vaqti:</label>
-                <input
-                  type="time"
-                  ref={endTime}
-                  defaultValue={selectedItem.end_time}
                   className="w-full px-4 py-2 border rounded-md bg-slate-800 text-white"
                   required
                 />
