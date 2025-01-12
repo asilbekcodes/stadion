@@ -4,7 +4,7 @@ import axios from "axios";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import { Adminconfig } from "../../helpers/token/admintoken";
 import dayjs from "dayjs";
-import { message, Modal, Input, } from "antd";
+import { message, Modal, Input } from "antd";
 import { BsPencil } from "react-icons/bs";
 
 const Times_Pages = () => {
@@ -88,6 +88,19 @@ const Times_Pages = () => {
     return formattedHour.some((slot) => slot.time === timeString);
   };
 
+   // Soatni tanlash yoki olib tashlash funksiyasi
+   const handleHourClick = (hour) => {
+    if (isHourPast(selectedDate, hour)) return;
+
+    if (selectedHours.includes(hour)) {
+      setSelectedHours(selectedHours.filter((h) => h !== hour));
+    } else {
+      setSelectedHours([...selectedHours, hour]);
+    }
+  };
+
+
+
   // Modalni ochish funksiyasi
   const openModal = (hour, priceForHour) => {
     setModalData({ hour, price: priceForHour });
@@ -98,13 +111,6 @@ const Times_Pages = () => {
   const closeModal = () => {
     setIsModalVisible(false);
     setModalData({});
-  };
-
-  // Modalda saqlash funksiyasi
-  const saveChanges = () => {
-    console.log("Saqlangan ma'lumotlar:", modalData);
-    message.success("Ma'lumotlar saqlandi!");
-    closeModal();
   };
 
   // Soatlar ro'yxatini render qilish
@@ -159,6 +165,25 @@ const Times_Pages = () => {
     getData();
   }, [selectedStadion]);
 
+  const editPrice = () => {
+    const data = {
+      time: modalData.hour,
+      price: modalData.price,
+    };
+    axios
+      .post(
+        `${baseUrl}stadion/edit-price/${selectedStadion}/`,
+        data,
+        Adminconfig
+      )
+      .then(() => {
+        message.success("Narx muvaffaqiyatli o'zgartirildi!");
+        getData();
+        closeModal();
+      })
+      .catch(() => message.error("Narx o'zgartirishda xatolik yuz berdi!"));
+  };
+
   return (
     <Layout>
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-4 md:p-8">
@@ -191,12 +216,21 @@ const Times_Pages = () => {
           />
         </div>
         {renderHours()}
+        {selectedHours.length > 0 && (
+          <div className="mt-4 text-center">
+            <button
+              className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-500"
+              onClick={postBooking}
+            >
+              Tanlangan vaqtlar: {selectedHours.length} soat
+            </button>
+          </div>
+        )}
 
         {/* Modal */}
         <Modal
           title="Narxni tahrirlash"
           visible={isModalVisible}
-          darkMode
           onCancel={closeModal}
           width={400}
           footer={[
@@ -208,7 +242,7 @@ const Times_Pages = () => {
             </button>,
             <button
               className="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded"
-              onClick={saveChanges}
+              onClick={editPrice}
             >
               Saqlash
             </button>,
