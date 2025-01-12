@@ -9,10 +9,10 @@ import { message } from "antd";
 const Times_Pages = () => {
   const [getSaved, setgetSaved] = useState([]);
   const [selectedStadion, setSelectedStadion] = useState("");
-  const [stadionDetails, setStadionDetails] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [selectedHours, setSelectedHours] = useState([]);
   const [bookedSlots, setBookedSlots] = useState({});
+  const [price, setPrice] = useState(null);
 
   // Stadionlarni olish
   const Malumot = () => {
@@ -33,8 +33,8 @@ const Times_Pages = () => {
       axios
         .get(`${baseUrl}order/stadion/${selectedStadion}/`, Adminconfig)
         .then((res) => {
-          setStadionDetails(res.data.stadion);
           setBookedSlots(res.data.brons);
+          setPrice(res.data.prices);
         })
         .catch((err) => console.log(err));
     }
@@ -93,17 +93,13 @@ const Times_Pages = () => {
 
   // Soatlar ro'yxatini render qilish
   const renderHours = () => {
-    if (!stadionDetails) return null;
-
-    const { start_time, end_time, price } = stadionDetails;
-    const startHour = parseInt(start_time.split(":")[0]);
-    const endHour = parseInt(end_time.split(":")[0]);
-
     const hours = [];
-    for (let hour = startHour; hour < endHour; hour++) {
+    for (let hour = 0; hour < 24; hour++) {
       const isBooked = isHourBooked(selectedDate, hour);
       const isPast = isHourPast(selectedDate, hour);
       const isSelected = selectedHours.includes(hour);
+
+      const priceForHour = price?.find((p) => p.time === hour)?.price || 0;
 
       hours.push(
         <div
@@ -114,7 +110,7 @@ const Times_Pages = () => {
               : isSelected
               ? "bg-green-600 text-white cursor-pointer"
               : isBooked
-              ? "bg-gray-300 text-black cursor-not-allowed dark:bg-red-900 dark:text-gray-100 "
+              ? "bg-gray-300 text-black cursor-not-allowed dark:bg-red-900 dark:text-gray-100"
               : "bg-white text-black dark:bg-gray-900 dark:text-gray-100 cursor-pointer"
           }`}
           onClick={() => !isBooked && !isPast && handleHourClick(hour)}
@@ -122,7 +118,7 @@ const Times_Pages = () => {
           <span>
             {hour}:00 - {hour + 1}:00
           </span>
-          <span className="ml-2">{price} so'm</span>
+          <span className="ml-2">{priceForHour} so'm</span>
         </div>
       );
     }

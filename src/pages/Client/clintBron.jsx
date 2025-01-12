@@ -19,7 +19,9 @@ function ClintBron() {
   };
 
   const [stadion, setStadion] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [selectedDate, setSelectedDate] = useState(
+    dayjs().format("YYYY-MM-DD")
+  );
   const [selectedHours, setSelectedHours] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [isPhone, setIsPhone] = useState(false);
@@ -32,7 +34,7 @@ function ClintBron() {
     axios
       .get(`${baseUrl}order/stadion/${resultId}/`)
       .then((res) => {
-        setStadion(res.data.stadion);
+        setStadion(res.data.prices);
         setBookedSlots(res.data.brons);
       })
       .catch((err) => console.error(err));
@@ -73,19 +75,19 @@ function ClintBron() {
     }
   };
 
-// Bron qilingan soatlarni tekshirish
-const isHourBooked = (date, hour) => {
-  const bookingsForDate = bookedSlots[date] || [];
-  // Soatni "HH:00-HH:00" formatiga o'tkazish
-  const timeString = `${hour.toString().padStart(2, '0')}:00-${(hour + 1).toString().padStart(2, '0')}:00`;
-  
-  return bookingsForDate.some(booking => booking.time === timeString);
-};
+  // Bron qilingan soatlarni tekshirish
+  const isHourBooked = (date, hour) => {
+    const bookingsForDate = bookedSlots[date] || [];
+    // Soatni "HH:00-HH:00" formatiga o'tkazish
+    const timeString = `${hour.toString().padStart(2, "0")}:00-${(hour + 1)
+      .toString()
+      .padStart(2, "0")}:00`;
+
+    return bookingsForDate.some((booking) => booking.time === timeString);
+  };
   // Soatlar ro'yxatini ko'rsatish
   const renderHours = () => {
     if (!stadion) return null;
-
-    const { price } = stadion;
 
     const hours = [];
     for (let hour = 0; hour < 24; hour++) {
@@ -94,6 +96,9 @@ const isHourBooked = (date, hour) => {
         selectedDate === dayjs().format("YYYY-MM-DD") && hour <= dayjs().hour();
       const isBooked = isHourBooked(selectedDate, hour);
       const isSelected = selectedHours.includes(hour);
+
+      // Soatning narxini `prices` massividan olish
+      const hourPrice = stadion?.find((price) => price.time === hour)?.price || 0;
 
       hours.push(
         <div
@@ -110,7 +115,7 @@ const isHourBooked = (date, hour) => {
           <span>
             {hour}:00 - {nextHour}:00
           </span>
-          <span className="ml-2">{price} so'm</span>
+          <span className="ml-2">{hourPrice} so'm</span>
         </div>
       );
     }
@@ -131,7 +136,7 @@ const isHourBooked = (date, hour) => {
   // Tanlangan soatlar soni va umumiy narxni hisoblash
   const calculateTotalPrice = () => {
     if (!stadion) return 0;
-    return selectedHours.length * stadion.price;
+    return selectedHours.length * stadion.find((price) => price.time === 0)?.price;
   };
 
   // O'tib ketgan kunlarni 'disabled' qilish
