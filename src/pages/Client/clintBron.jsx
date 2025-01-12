@@ -19,13 +19,13 @@ function ClintBron() {
   };
 
   const [stadion, setStadion] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(
-    dayjs().format("YYYY-MM-DD")
-  );
+  const [selectedDate, setSelectedDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [selectedHours, setSelectedHours] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [isPhone, setIsPhone] = useState(false);
   const [bookedSlots, setBookedSlots] = useState({});
+  const [isRate, setIsRate] = useState(false);
+  const [rating, setRating] = useState(0);
 
   // Stadion ma'lumotlarini olish
   const getStadion = () => {
@@ -73,27 +73,25 @@ function ClintBron() {
     }
   };
 
-  // Bron qilingan soatlarni tekshirish
-  const isHourBooked = (date, hour) => {
-    const formattedHour = `${hour}:00-${hour + 1}:00`;
-    return bookedSlots[date]?.some((slot) => slot.time === formattedHour);
-  };
-
+// Bron qilingan soatlarni tekshirish
+const isHourBooked = (date, hour) => {
+  const bookingsForDate = bookedSlots[date] || [];
+  // Soatni "HH:00-HH:00" formatiga o'tkazish
+  const timeString = `${hour.toString().padStart(2, '0')}:00-${(hour + 1).toString().padStart(2, '0')}:00`;
+  
+  return bookingsForDate.some(booking => booking.time === timeString);
+};
   // Soatlar ro'yxatini ko'rsatish
   const renderHours = () => {
     if (!stadion) return null;
 
-    const { start_time, end_time, price } = stadion;
-    const startHour = parseInt(start_time.split(":")[0]);
-    const endHour = parseInt(end_time.split(":")[0]);
-
-    const currentHour = dayjs().hour();
-    const isToday = selectedDate === dayjs().format("YYYY-MM-DD");
+    const { price } = stadion;
 
     const hours = [];
-    for (let hour = startHour; hour < endHour; hour++) {
+    for (let hour = 0; hour < 24; hour++) {
       const nextHour = hour + 1;
-      const isDisabled = isToday && hour <= currentHour;
+      const isDisabled =
+        selectedDate === dayjs().format("YYYY-MM-DD") && hour <= dayjs().hour();
       const isBooked = isHourBooked(selectedDate, hour);
       const isSelected = selectedHours.includes(hour);
 
@@ -150,8 +148,6 @@ function ClintBron() {
       setIsPhone(true);
     }
   };
-  const [isRate, setIsRate] = useState(false);
-  const [rating, setRating] = useState(0);
 
   // Reytingni yuborish uchun funksiya
   const postRank = () => {
@@ -159,7 +155,7 @@ function ClintBron() {
       .post(
         `${baseUrl}common/rank-stadion/`,
         {
-          rank: rating, // Yulduzcha qiymatini yuboramiz
+          rank: rating,
           stadion: resultId,
         },
         userConfig
@@ -171,7 +167,6 @@ function ClintBron() {
       })
       .catch(() => message.error("Reytingni saqlashda xatolik yuz berdi!"));
   };
-
 
   return (
     <div>
@@ -257,7 +252,14 @@ function ClintBron() {
         }}
         cancelButtonProps={{ style: { display: "none" } }}
       >
-        <h3 style={{ fontSize: "15px", marginBottom: "10px", marginTop: "20px", textAlign: "center" }}>
+        <h3
+          style={{
+            fontSize: "15px",
+            marginBottom: "10px",
+            marginTop: "20px",
+            textAlign: "center",
+          }}
+        >
           Fikrlaringiz biz uchun muhim! Iltimos, reytingingizni bildiring.
         </h3>
         <div className="text-center my-5">
