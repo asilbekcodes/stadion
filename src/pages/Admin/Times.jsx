@@ -5,11 +5,14 @@ import { baseUrl } from "../../helpers/api/baseUrl";
 import { Adminconfig } from "../../helpers/token/admintoken";
 import dayjs from "dayjs";
 import { message } from "antd";
+import { BsPencil } from "react-icons/bs";
 
 const Times_Pages = () => {
   const [getSaved, setgetSaved] = useState([]);
   const [selectedStadion, setSelectedStadion] = useState("");
-  const [selectedDate, setSelectedDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [selectedDate, setSelectedDate] = useState(
+    dayjs().format("YYYY-MM-DD")
+  );
   const [selectedHours, setSelectedHours] = useState([]);
   const [bookedSlots, setBookedSlots] = useState({});
   const [price, setPrice] = useState(null);
@@ -76,8 +79,11 @@ const Times_Pages = () => {
 
   // Bron qilingan soatlarni tekshirish
   const isHourBooked = (date, hour) => {
-    const formattedHour = `${hour}:00-${hour + 1}:00`;
-    return bookedSlots[date]?.some((slot) => slot.time === formattedHour);
+    const formattedHour = bookedSlots[date] || [];
+    const timeString = `${hour.toString().padStart(2, "0")}:00-${(hour + 1)
+      .toString()
+      .padStart(2, "0")}:00`;
+    return formattedHour.some((slot) => slot.time === timeString);
   };
 
   // Soatni tanlash yoki olib tashlash funksiyasi
@@ -104,7 +110,7 @@ const Times_Pages = () => {
       hours.push(
         <div
           key={hour}
-          className={`flex items-center justify-center border rounded-lg py-4 shadow-sm text-center ${
+          className={`relative flex items-center justify-center border rounded-lg py-4 shadow-sm text-center ${
             isPast
               ? "bg-gray-300 text-gray-800 cursor-not-allowed dark:bg-red-900 dark:text-gray-100"
               : isSelected
@@ -119,11 +125,17 @@ const Times_Pages = () => {
             {hour}:00 - {hour + 1}:00
           </span>
           <span className="ml-2">{priceForHour} so'm</span>
+
+          <BsPencil className="absolute top-2 right-2 cursor-pointer" />
         </div>
       );
     }
 
-    return <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">{hours}</div>;
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        {hours}
+      </div>
+    );
   };
 
   useEffect(() => {
