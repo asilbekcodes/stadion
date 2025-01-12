@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Tabs } from "antd";
 import { UserOutlined, PhoneOutlined, IdcardOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { toast } from "react-toastify"; // Toastify kutubxonasini ishlatish tavsiya qilinadi
+import { toast } from "react-toastify";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import { Adminconfig } from "../../helpers/token/admintoken";
 
@@ -10,19 +10,24 @@ const { TabPane } = Tabs;
 
 function ProfilCom() {
   const [activeTab, setActiveTab] = useState("1");
-  const [getProfil, setgetProfil] = useState(null); // Backend ma'lumotlari uchun holat
+  const [getProfil, setgetProfil] = useState(null);
+  const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
+  const [verificationCode, setVerificationCode] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [newPhoneNumber, setNewPhoneNumber] = useState("");
+  const [currentPhoneNumber, setCurrentPhoneNumber] = useState("");
 
   const onChange = (key) => {
     setActiveTab(key);
   };
 
-  // Backenddan ma'lumotlarni olish funksiyasi
   const handleProfil = () => {
     axios
       .get(`${baseUrl}user/user-info/`, Adminconfig)
       .then((res) => {
         setgetProfil(res.data);
-        console.log(res.data);
+        setCurrentPhoneNumber(res.data.phone_number);
+        setNewPhoneNumber(res.data.phone_number);
       })
       .catch((err) => console.log(err));
   };
@@ -31,32 +36,108 @@ function ProfilCom() {
     handleProfil();
   }, []);
 
-  // Ma'lumotlarni o'zgartirish uchun ref'lar
   const first_name = useRef(null);
   const last_name = useRef(null);
-  const phone_number = useRef(null);
 
-  // Ma'lumotlarni yangilash funksiyasi
-  const pullProfil = (e) => {
-    e.preventDefault();
-    const data = {
-      first_name: first_name.current.value,
-      last_name: last_name.current.value,
-      phone_number: phone_number.current.value,
-    };
-
-    axios
-      .put(`${baseUrl}user/user-info/`, data, Adminconfig)
-      .then((res) => {
-        console.log(res);
-        toast.success("Ma'lumotlar muvaffaqiyatli o'zgartirildi!");
-        handleProfil(); // Yangilangan ma'lumotlarni qaytadan olish
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Ma'lumotlarni o'zgartirishda xatolik yuz berdi!");
-      });
+  const isPhoneNumberChanged = () => {
+    return newPhoneNumber !== currentPhoneNumber && newPhoneNumber.length > 0;
   };
+
+  const isNameChanged = () => {
+    return first_name.current.value !== getProfil.first_name || last_name.current.value !== getProfil.last_name;
+  };
+
+  const handleProfileUpdate = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    try {
+      // First update name
+      if (!isNameChanged() && !isPhoneNumberChanged()) {
+        toast.info("Hech qanday o'zgarish yo'q");
+        return;
+      }
+      const nameData = {
+        first_name: first_name.current.value,
+        last_name: last_name.current.value,
+      };
+      
+      await axios.put(`${baseUrl}user/user-info/`, nameData, Adminconfig);
+      
+      // If phone number is changed, initiate verification
+      if (isPhoneNumberChanged()) {
+        const phoneData = {
+          phone_number: newPhoneNumber,
+        };
+        await axios.post(`${baseUrl}user/reset-phone-number/`, phoneData, Adminconfig);
+        setIsVerificationModalOpen(true);
+        toast.success("Tasdiqlash kodi yuborildi");
+      } else {
+        toast.success("Ma'lumotlar muvaffaqiyatli yangilandi");
+        handleProfil();
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Ma'lumotlarni yangilashda xatolik yuz berdi");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const verifyPhoneNumber = async () => {
+    setIsLoading(true);
+    try {
+      const verificationData = {
+        phone_number: newPhoneNumber,
+        code: verificationCode
+      };
+      
+      await axios.post(`${baseUrl}user/verify-reset-phone-number/`, verificationData, Adminconfig);
+      toast.success("Barcha ma'lumotlar muvaffaqiyatli yangilandi");
+      setIsVerificationModalOpen(false);
+      handleProfil();
+    } catch (err) {
+      console.log(err);
+      toast.error("Tasdiqlash kodida xatolik");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const VerificationModal = () => (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-96">
+        <h2 className="text-xl font-semibold mb-4 dark:text-gray-100">
+          Telefon raqamini tasdiqlash
+        </h2>
+        <p className="text-gray-600 dark:text-gray-300 mb-4">
+          <span className="font-semibold">{newPhoneNumber}</span> raqamiga yuborilgan tasdiqlash kodini kiriting
+        </p>
+        <input
+          type="text"
+          className="w-full p-2 border rounded mb-4 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+          placeholder="Tasdiqlash kodi"
+          value={verificationCode}
+          onChange={(e) => setVerificationCode(e.target.value)}
+        />
+        <div className="flex justify-end gap-2">
+          <button
+            onClick={() => setIsVerificationModalOpen(false)}
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-600 rounded"
+          >
+            Bekor qilish
+          </button>
+          <button
+            onClick={verifyPhoneNumber}
+            disabled={isLoading}
+            className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-blue-300"
+          >
+            {isLoading ? "Yuklanmoqda..." : "Tasdiqlash"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="p-4 md:p-8 bg-gray-100 dark:bg-gray-900 dark:text-gray-100 min-h-screen">
@@ -130,8 +211,7 @@ function ProfilCom() {
             <p className="text-gray-600 dark:text-gray-300 mb-4">
               Bu yerda hisobingiz ma'lumotlarini o'zgartirishingiz mumkin.
             </p>
-            <form className="space-y-4" onSubmit={pullProfil}>
-              {/* Ism */}
+            <form className="space-y-4" onSubmit={handleProfileUpdate}>
               <div>
                 <label
                   htmlFor="first_name"
@@ -148,7 +228,6 @@ function ProfilCom() {
                 />
               </div>
 
-              {/* Familya */}
               <div>
                 <label
                   htmlFor="last_name"
@@ -165,7 +244,6 @@ function ProfilCom() {
                 />
               </div>
 
-              {/* Telefon raqami */}
               <div>
                 <label
                   htmlFor="phone_number"
@@ -176,23 +254,24 @@ function ProfilCom() {
                 <input
                   type="text"
                   id="phone_number"
-                  ref={phone_number}
+                  value={newPhoneNumber}
+                  onChange={(e) => setNewPhoneNumber(e.target.value)}
                   className="mt-1 block w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
-                  defaultValue={getProfil?.phone_number || ""}
                 />
               </div>
 
-              {/* Submit tugmasi */}
               <button
                 type="submit"
-                className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 dark:bg-blue-400 dark:hover:bg-blue-500"
+                disabled={isLoading}
+                className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 dark:bg-blue-400 dark:hover:bg-blue-500 disabled:bg-blue-300"
               >
-                O'zgartirish
+                {isLoading ? "Yuklanmoqda..." : "O'zgartirish"}
               </button>
             </form>
           </div>
         </TabPane>
       </Tabs>
+      {isVerificationModalOpen && <VerificationModal />}
     </div>
   );
 }
