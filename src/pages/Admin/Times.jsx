@@ -4,7 +4,7 @@ import axios from "axios";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import { Adminconfig } from "../../helpers/token/admintoken";
 import dayjs from "dayjs";
-import { message } from "antd";
+import { message, Modal, Input, } from "antd";
 import { BsPencil } from "react-icons/bs";
 
 const Times_Pages = () => {
@@ -16,6 +16,8 @@ const Times_Pages = () => {
   const [selectedHours, setSelectedHours] = useState([]);
   const [bookedSlots, setBookedSlots] = useState({});
   const [price, setPrice] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false); // Modal holati
+  const [modalData, setModalData] = useState({}); // Modal uchun ma'lumotlar
 
   // Stadionlarni olish
   const Malumot = () => {
@@ -86,15 +88,23 @@ const Times_Pages = () => {
     return formattedHour.some((slot) => slot.time === timeString);
   };
 
-  // Soatni tanlash yoki olib tashlash funksiyasi
-  const handleHourClick = (hour) => {
-    if (isHourPast(selectedDate, hour)) return;
+  // Modalni ochish funksiyasi
+  const openModal = (hour, priceForHour) => {
+    setModalData({ hour, price: priceForHour });
+    setIsModalVisible(true);
+  };
 
-    if (selectedHours.includes(hour)) {
-      setSelectedHours(selectedHours.filter((h) => h !== hour));
-    } else {
-      setSelectedHours([...selectedHours, hour]);
-    }
+  // Modalni yopish funksiyasi
+  const closeModal = () => {
+    setIsModalVisible(false);
+    setModalData({});
+  };
+
+  // Modalda saqlash funksiyasi
+  const saveChanges = () => {
+    console.log("Saqlangan ma'lumotlar:", modalData);
+    message.success("Ma'lumotlar saqlandi!");
+    closeModal();
   };
 
   // Soatlar ro'yxatini render qilish
@@ -126,7 +136,10 @@ const Times_Pages = () => {
           </span>
           <span className="ml-2">{priceForHour} so'm</span>
 
-          <BsPencil className="absolute top-2 right-2 cursor-pointer" />
+          <BsPencil
+            className="absolute top-2 right-2 cursor-pointer"
+            onClick={() => openModal(hour, priceForHour)}
+          />
         </div>
       );
     }
@@ -178,16 +191,42 @@ const Times_Pages = () => {
           />
         </div>
         {renderHours()}
-        {selectedHours.length > 0 && (
-          <div className="mt-4 text-center">
+
+        {/* Modal */}
+        <Modal
+          title="Narxni tahrirlash"
+          visible={isModalVisible}
+          darkMode
+          onCancel={closeModal}
+          width={400}
+          footer={[
             <button
-              className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-500"
-              onClick={postBooking}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 mr-2 py-1 rounded"
+              onClick={closeModal}
             >
-              Tanlangan vaqtlar: {selectedHours.length} soat
-            </button>
-          </div>
-        )}
+              Bekor qilish
+            </button>,
+            <button
+              className="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded"
+              onClick={saveChanges}
+            >
+              Saqlash
+            </button>,
+          ]}
+        >
+          <p className="my-3">
+            Soat: {modalData.hour}:00 - {modalData.hour + 1}:00
+          </p>
+          <Input
+            type="number"
+            className="mb-3"
+            placeholder="Narxni kiriting"
+            value={modalData.price}
+            onChange={(e) =>
+              setModalData({ ...modalData, price: e.target.value })
+            }
+          />
+        </Modal>
       </div>
     </Layout>
   );
