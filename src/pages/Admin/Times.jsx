@@ -8,7 +8,7 @@ import { message, Modal, Input } from "antd";
 import { BsPencil } from "react-icons/bs";
 
 const Times_Pages = () => {
-  const [getSaved, setgetSaved] = useState([]);
+  const [getSaved, setGetSaved] = useState([]);
   const [selectedStadion, setSelectedStadion] = useState("");
   const [selectedDate, setSelectedDate] = useState(
     dayjs().format("YYYY-MM-DD")
@@ -16,36 +16,36 @@ const Times_Pages = () => {
   const [selectedHours, setSelectedHours] = useState([]);
   const [bookedSlots, setBookedSlots] = useState({});
   const [price, setPrice] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false); // Modal holati
-  const [modalData, setModalData] = useState({}); // Modal uchun ma'lumotlar
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalData, setModalData] = useState({});
 
-  // Stadionlarni olish
-  const Malumot = () => {
+  // Fetch stadion data
+  const fetchStadions = () => {
     axios
       .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
       .then((res) => {
-        setgetSaved(res.data);
-        if (res.data.length > 0) {
+        setGetSaved(res.data || []);
+        if (res.data?.length > 0) {
           setSelectedStadion(res.data[0].id);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
-  // Stadion va bron qilingan vaqtlarni olish
-  const getData = () => {
+  // Fetch booking and pricing data for the selected stadion
+  const fetchStadionData = () => {
     if (selectedStadion) {
       axios
         .get(`${baseUrl}order/stadion/${selectedStadion}/`, Adminconfig)
         .then((res) => {
-          setBookedSlots(res.data.brons);
-          setPrice(res.data.prices);
+          setBookedSlots(res.data?.brons || {});
+          setPrice(res.data?.prices || []);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     }
   };
 
-  // POST so'rovi orqali vaqtlarni bron qilish
+  // Book selected hours
   const postBooking = () => {
     const brons = selectedHours.map((hour) => ({
       bron: hour.toString(),
@@ -55,116 +55,64 @@ const Times_Pages = () => {
     axios
       .post(
         `${baseUrl}order/stadion/${selectedStadion}/`,
-        { brons: brons },
+        { brons },
         Adminconfig
       )
       .then(() => {
         message.success("Vaqtlar muvaffaqiyatli bron qilindi!");
-        getData();
+        fetchStadionData();
         setSelectedHours([]);
       })
       .catch(() => message.error("Bron qilishda xatolik yuz berdi!"));
   };
 
-  // Sana tanlanganda ishlovchi funksiya
+  // Handle date change
   const onDateChange = (e) => {
     setSelectedDate(e.target.value);
     setSelectedHours([]);
   };
 
-  // O'tgan vaqtlarni tekshirish
+  // Check if the hour is in the past
   const isHourPast = (date, hour) => {
     const now = dayjs();
     const selectedDateTime = dayjs(`${date} ${hour}:00`, "YYYY-MM-DD HH:mm");
     return selectedDateTime.isBefore(now);
   };
 
-  // Bron qilingan soatlarni tekshirish
+  // Check if the hour is already booked
   const isHourBooked = (date, hour) => {
-    const formattedHour = bookedSlots[date] || [];
-    const timeString = `${hour.toString().padStart(2, "0")}:00-${(hour + 1)
-      .toString()
-      .padStart(2, "0")}:00`;
-    return formattedHour.some((slot) => slot.time === timeString);
+    const bookingsForDate = bookedSlots[date] || [];
+    const timeString =
+      hour === 23
+        ? "23:00-00:00"
+        : `${hour.toString().padStart(2, "0")}:00-${(hour + 1)
+            .toString()
+            .padStart(2, "0")}:00`;
+    return bookingsForDate.some((slot) => slot.time === timeString);
   };
 
-   // Soatni tanlash yoki olib tashlash funksiyasi
-   const handleHourClick = (hour) => {
+  // Handle hour selection
+  const handleHourClick = (hour) => {
     if (isHourPast(selectedDate, hour)) return;
 
-    if (selectedHours.includes(hour)) {
-      setSelectedHours(selectedHours.filter((h) => h !== hour));
-    } else {
-      setSelectedHours([...selectedHours, hour]);
-    }
+    setSelectedHours((prev) =>
+      prev.includes(hour) ? prev.filter((h) => h !== hour) : [...prev, hour]
+    );
   };
 
-
-
-  // Modalni ochish funksiyasi
+  // Open modal to edit price
   const openModal = (hour, priceForHour) => {
     setModalData({ hour, price: priceForHour });
     setIsModalVisible(true);
   };
 
-  // Modalni yopish funksiyasi
+  // Close modal
   const closeModal = () => {
     setIsModalVisible(false);
     setModalData({});
   };
 
-  // Soatlar ro'yxatini render qilish
-  const renderHours = () => {
-    const hours = [];
-    for (let hour = 0; hour < 24; hour++) {
-      const isBooked = isHourBooked(selectedDate, hour);
-      const isPast = isHourPast(selectedDate, hour);
-      const isSelected = selectedHours.includes(hour);
-
-      const priceForHour = price?.find((p) => p.time === hour)?.price || 0;
-
-      hours.push(
-        <div
-          key={hour}
-          className={`relative flex items-center justify-center border rounded-lg py-4 shadow-sm text-center ${
-            isPast
-              ? "bg-gray-300 text-gray-800 cursor-not-allowed dark:bg-red-900 dark:text-gray-100"
-              : isSelected
-              ? "bg-green-600 text-white cursor-pointer"
-              : isBooked
-              ? "bg-gray-300 text-black cursor-not-allowed dark:bg-red-900 dark:text-gray-100"
-              : "bg-white text-black dark:bg-gray-900 dark:text-gray-100 cursor-pointer"
-          }`}
-          onClick={() => !isBooked && !isPast && handleHourClick(hour)}
-        >
-          <span>
-            {hour}:00 - {hour + 1}:00
-          </span>
-          <span className="ml-2">{priceForHour} so'm</span>
-
-          <BsPencil
-            className="absolute top-2 right-2 cursor-pointer"
-            onClick={() => openModal(hour, priceForHour)}
-          />
-        </div>
-      );
-    }
-
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-        {hours}
-      </div>
-    );
-  };
-
-  useEffect(() => {
-    Malumot();
-  }, []);
-
-  useEffect(() => {
-    getData();
-  }, [selectedStadion]);
-
+  // Update price for a specific hour
   const editPrice = () => {
     const data = {
       time: modalData.hour,
@@ -178,17 +126,64 @@ const Times_Pages = () => {
       )
       .then(() => {
         message.success("Narx muvaffaqiyatli o'zgartirildi!");
-        getData();
+        fetchStadionData();
         closeModal();
       })
       .catch(() => message.error("Narx o'zgartirishda xatolik yuz berdi!"));
   };
 
+  // Render hour slots
+  const renderHours = () => {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        {Array.from({ length: 24 }, (_, hour) => {
+          const isBooked = isHourBooked(selectedDate, hour);
+          const isPast = isHourPast(selectedDate, hour);
+          const isSelected = selectedHours.includes(hour);
+          const priceForHour = price?.find((p) => p.time === hour)?.price || 0;
+
+          return (
+            <div
+              key={hour}
+              className={`relative flex items-center justify-center border rounded-lg py-4 shadow-sm text-center ${
+                isPast
+                  ? "bg-gray-300 text-gray-800 cursor-not-allowed dark:bg-red-900 dark:text-gray-100"
+                  : isSelected
+                  ? "bg-green-600 text-white cursor-pointer"
+                  : isBooked
+                  ? "bg-gray-300 text-black cursor-not-allowed dark:bg-red-900 dark:text-gray-100"
+                  : "bg-white text-black dark:bg-gray-900 dark:text-gray-100 cursor-pointer"
+              }`}
+              onClick={() => !isBooked && !isPast && handleHourClick(hour)}
+            >
+              <span>
+                {hour}:00 - {hour === 23 ? "00" : hour + 1}:00
+              </span>
+              <span className="ml-2">{priceForHour} so'm</span>
+              <BsPencil
+                className="absolute top-2 right-2 cursor-pointer"
+                onClick={() => openModal(hour, priceForHour)}
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    fetchStadions();
+  }, []);
+
+  useEffect(() => {
+    fetchStadionData();
+  }, [selectedStadion]);
+
   return (
     <Layout>
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-4 md:p-8">
-        <div className="md:flex justify-between items-center ">
-          <h1 className="text-xl md:text-2xl mb-3 text-gray-800 dark:text-gray-100">
+        <div className="md:flex justify-between items-center">
+          <h1 className="text-xl md:text-2xl mb-3">
             Stadion vaqtlarni boshqarish
           </h1>
           <select
@@ -199,12 +194,11 @@ const Times_Pages = () => {
             <option disabled value="">
               Stadion tanlang
             </option>
-            {Array.isArray(getSaved) &&
-              getSaved.map((stadion) => (
-                <option key={stadion.id} value={stadion.id}>
-                  {stadion.title}
-                </option>
-              ))}
+            {getSaved.map((stadion) => (
+              <option key={stadion.id} value={stadion.id}>
+                {stadion.title}
+              </option>
+            ))}
           </select>
         </div>
         <div className="my-5">
@@ -219,7 +213,7 @@ const Times_Pages = () => {
         {selectedHours.length > 0 && (
           <div className="mt-4 text-center">
             <button
-              className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-500"
+              className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-md"
               onClick={postBooking}
             >
               Tanlangan vaqtlar: {selectedHours.length} soat
@@ -235,25 +229,26 @@ const Times_Pages = () => {
           width={400}
           footer={[
             <button
-              className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 mr-2 py-1 rounded"
+              className="bg-gray-300 px-3 py-1 mr-2 rounded"
               onClick={closeModal}
             >
               Bekor qilish
             </button>,
             <button
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded"
+              className="bg-green-500 px-4 py-1 rounded text-white"
               onClick={editPrice}
             >
               Saqlash
             </button>,
           ]}
         >
-          <p className="my-3">
-            Soat: {modalData.hour}:00 - {modalData.hour + 1}:00
+          <p className="my-3 font-semibold">
+            Soat: {modalData.hour}:00 -{" "}
+            {modalData.hour === 23 ? "00" : modalData.hour + 1}:00
           </p>
           <Input
             type="number"
-            className="mb-3"
+            className="w-full p-2 border rounded mb-4"
             placeholder="Narxni kiriting"
             value={modalData.price}
             onChange={(e) =>
