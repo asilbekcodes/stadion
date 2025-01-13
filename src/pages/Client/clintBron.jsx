@@ -29,148 +29,135 @@ function ClintBron() {
   const [isRate, setIsRate] = useState(false);
   const [rating, setRating] = useState(0);
 
-  // Stadion ma'lumotlarini olish
-  const getStadion = () => {
-    axios
-      .get(`${baseUrl}order/stadion/${resultId}/`)
-      .then((res) => {
-        setStadion(res.data.prices);
-        setBookedSlots(res.data.brons);
-      })
-      .catch((err) => console.error(err));
+  useEffect(() => {
+    getStadion();
+  }, [resultId]);
+
+  const getStadion = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}order/stadion/${resultId}/`);
+      setStadion(response.data.prices);
+      setBookedSlots(response.data.brons);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  // POST so'rovini yuborish
-  const postStadion = () => {
+  const postStadion = async () => {
     const brons = selectedHours.map((hour) => ({
       bron: hour.toString(),
       date: selectedDate,
     }));
 
-    axios
-      .post(
+    try {
+      await axios.post(
         `${baseUrl}order/stadion/${resultId}/`,
-        { brons: brons },
+        { brons },
         userConfig
-      )
-      .then(() => {
-        message.success("Muvaffaqiyatli bron qilindi!");
-        getStadion();
-        setSelectedHours([]);
-        setIsRate(true);
-      })
-      .catch(() => message.error(`Bron qilishda xatolik yuz berdi!`));
-  };
-
-  useEffect(() => {
-    getStadion();
-  }, [resultId]);
-
-  // Soatni bosilganda ishlovchi funksiya
-  const handleHourClick = (hour) => {
-    if (selectedHours.includes(hour)) {
-      setSelectedHours(selectedHours.filter((h) => h !== hour));
-    } else {
-      setSelectedHours([...selectedHours, hour]);
+      );
+      message.success("Muvaffaqiyatli bron qilindi!");
+      getStadion();
+      setSelectedHours([]);
+      setIsRate(true);
+    } catch (error) {
+      message.error("Bron qilishda xatolik yuz berdi!");
     }
   };
 
-  // Bron qilingan soatlarni tekshirish
+  const handleHourClick = (hour) => {
+    setSelectedHours((prevHours) =>
+      prevHours.includes(hour)
+        ? prevHours.filter((h) => h !== hour)
+        : [...prevHours, hour]
+    );
+  };
+
   const isHourBooked = (date, hour) => {
     const bookingsForDate = bookedSlots[date] || [];
-    // Soatni "HH:00-HH:00" formatiga o'tkazish
-    const timeString = `${hour.toString().padStart(2, "0")}:00-${(hour + 1)
-      .toString()
-      .padStart(2, "0")}:00`;
-
+    const timeString =
+      hour === 23
+        ? "23:00-00:00"
+        : `${hour.toString().padStart(2, "0")}:00-${(hour + 1)
+            .toString()
+            .padStart(2, "0")}:00`;
     return bookingsForDate.some((booking) => booking.time === timeString);
   };
-  // Soatlar ro'yxatini ko'rsatish
+
+  const formatTimeRange = (hour) => {
+    const startHour = hour.toString().padStart(2, "0");
+    const endHour = hour === 23 ? "00" : (hour + 1).toString().padStart(2, "0");
+    return `${startHour}:00 - ${endHour}:00`;
+  };
+
   const renderHours = () => {
     if (!stadion) return null;
 
-    const hours = [];
-    for (let hour = 0; hour < 24; hour++) {
-      const nextHour = hour + 1;
-      const isDisabled =
-        selectedDate === dayjs().format("YYYY-MM-DD") && hour <= dayjs().hour();
-      const isBooked = isHourBooked(selectedDate, hour);
-      const isSelected = selectedHours.includes(hour);
-
-      // Soatning narxini `prices` massividan olish
-      const hourPrice = stadion?.find((price) => price.time === hour)?.price || 0;
-
-      hours.push(
-        <div
-          key={hour}
-          className={`flex items-center justify-center border border-gray-500 rounded-lg py-4 cursor-pointer shadow-sm text-center ${
-            isSelected
-              ? "bg-green-600 text-white"
-              : isDisabled || isBooked
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-white"
-          }`}
-          onClick={() => !isDisabled && !isBooked && handleHourClick(hour)}
-        >
-          <span>
-            {hour}:00 - {nextHour}:00
-          </span>
-          <span className="ml-2">{hourPrice} so'm</span>
-        </div>
-      );
-    }
     return (
       <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-        {hours}
+        {Array.from({ length: 24 }, (_, hour) => {
+          const isDisabled =
+            selectedDate === dayjs().format("YYYY-MM-DD") &&
+            hour <= dayjs().hour();
+          const isBooked = isHourBooked(selectedDate, hour);
+          const isSelected = selectedHours.includes(hour);
+          const hourPrice =
+            stadion?.find((price) => price.time === hour)?.price || 0;
+
+          return (
+            <div
+              key={hour}
+              className={`flex items-center justify-center border border-gray-500 rounded-lg py-4 cursor-pointer shadow-sm text-center ${
+                isSelected
+                  ? "bg-green-600 text-white"
+                  : isDisabled || isBooked
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-white"
+              }`}
+              onClick={() => !isDisabled && !isBooked && handleHourClick(hour)}
+            >
+              <span>{formatTimeRange(hour)}</span>
+              <span className="ml-2">{hourPrice} so'm</span>
+            </div>
+          );
+        })}
       </div>
     );
   };
 
-  // Sana tanlanganda ishlaydigan funksiya
   const onDateSelect = (value) => {
-    const formattedDate = value.format("YYYY-MM-DD");
-    setSelectedDate(formattedDate);
+    setSelectedDate(value.format("YYYY-MM-DD"));
     setSelectedHours([]);
   };
 
-  // Tanlangan soatlar soni va umumiy narxni hisoblash
   const calculateTotalPrice = () => {
     if (!stadion) return 0;
-    return selectedHours.length * stadion.find((price) => price.time === 0)?.price;
+    return selectedHours.reduce((total, hour) => {
+      const hourPrice =
+        stadion?.find((price) => price.time === hour)?.price || 0;
+      return total + hourPrice;
+    }, 0);
   };
 
-  // O'tib ketgan kunlarni 'disabled' qilish
-  const disabledDate = (current) => {
-    return current && current < dayjs().startOf("day");
-  };
+  const disabledDate = (current) => current && current < dayjs().startOf("day");
 
-  // Modal ochish yoki boshqa modalga yo'naltirish
   const handleOpenModal = () => {
     const userToken = localStorage.getItem("userToken");
-    if (userToken) {
-      setOpenModal(true);
-    } else {
-      setIsPhone(true);
-    }
+    userToken ? setOpenModal(true) : setIsPhone(true);
   };
 
-  // Reytingni yuborish uchun funksiya
-  const postRank = () => {
-    axios
-      .post(
+  const postRank = async () => {
+    try {
+      await axios.post(
         `${baseUrl}common/rank-stadion/`,
-        {
-          rank: rating,
-          stadion: resultId,
-        },
+        { rank: rating, stadion: resultId },
         userConfig
-      )
-      .then(() => {
-        message.success("Reytingingiz muvaffaqiyatli saqlandi!");
-        setIsRate(false);
-        getStadion();
-      })
-      .catch(() => message.error("Reytingni saqlashda xatolik yuz berdi!"));
+      );
+      message.success("Reytingingiz muvaffaqiyatli saqlandi!");
+      setIsRate(false);
+      getStadion();
+    } catch (error) {
+      message.error("Reytingni saqlashda xatolik yuz berdi!");
+    }
   };
 
   return (
@@ -185,7 +172,7 @@ function ClintBron() {
           />
         </div>
         <p className="mt-4 text-center text-lg font-semibold">
-          Tanlangan sana: {selectedDate || dayjs().format("YYYY-MM-DD")}
+          Tanlangan sana: {selectedDate}
         </p>
         {renderHours()}
         {selectedHours.length > 0 && (
