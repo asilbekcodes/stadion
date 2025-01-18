@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Main from "./pages/Client/Main";
 import NotFound from "./pages/Notfount";
 import About from "./pages/Client/About";
@@ -69,6 +69,19 @@ function App() {
   useEffect(() => {
     RoleAuth();
   }, []);
+
+  const location = useLocation();
+  
+  useEffect(() => {
+    sessionStorage.setItem('lastPage', location.pathname);
+  }, [location]);
+
+  useEffect(() => {
+    const lastPage = sessionStorage.getItem('lastPage');
+    if (lastPage) {
+      navigate(lastPage);
+    }
+  }, [navigate]);
   return (
     <Routes>
       {/* Client page routes */}
