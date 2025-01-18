@@ -9,23 +9,23 @@ const Footers = () => {
           {/* Logotip va qisqacha matn */}
           <div className="text-center md:text-left">
             <a href="/#">
-              <h1 className="text-2xl font-bold text-black">StadionBook</h1>
+              <h1 className="text-2xl font-bold text-black">Stadion Top</h1>
             </a>
             <p className="text-sm">Stadionlarni osongina bron qiling!</p>
           </div>
 
           {/* Navigatsiya bo‘limi */}
           <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 text-center">
-            <a href="#home" className="hover:text-gray-600 transition">
+            <a href="#" className="hover:text-gray-600 transition">
               Asosiy
             </a>
-            <a href="#about" className="hover:text-gray-600 transition">
+            <a href="#" className="hover:text-gray-600 transition">
               Biz haqimizda
             </a>
-            <a href="#stadiums" className="hover:text-gray-600 transition">
+            <a href="#" className="hover:text-gray-600 transition">
               Stadionlar
             </a>
-            <a href="#contact" className="hover:text-gray-600 transition">
+            <a href="#" className="hover:text-gray-600 transition">
               Aloqa
             </a>
           </div>

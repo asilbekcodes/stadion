@@ -24,6 +24,37 @@ import Times from "./components/Admin/Times";
 import History from "./pages/Admin/History";
 
 function App() {
+  const checkTokenExpiration = () => {
+    const userToken = localStorage.getItem('userToken');
+    const adminToken = localStorage.getItem('adminToken');
+    
+    // User tokenini tekshirish
+    if (userToken) {
+      const decodedUserToken = JSON.parse(atob(userToken.split('.')[1]));
+      const currentTime = Date.now() / 1000;
+      
+      if (decodedUserToken.exp < currentTime) {
+        localStorage.removeItem('userToken');
+        window.location.reload();
+      }
+    }
+    
+    // Admin tokenini tekshirish
+    if (adminToken) {
+      const decodedAdminToken = JSON.parse(atob(adminToken.split('.')[1]));
+      const currentTime = Date.now() / 1000;
+      
+      if (decodedAdminToken.exp < currentTime) {
+        localStorage.removeItem('adminToken');
+        window.location.href = '/auth/login';
+      }
+    }
+  };
+
+  useEffect(() => {
+    checkTokenExpiration();
+  }, []);
+
   const navigate = useNavigate();
   function RoleAuth() {
     if (
