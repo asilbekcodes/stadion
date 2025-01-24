@@ -84,7 +84,7 @@ function ModalComponent({ isOpen, onClose }) {
         message.success("Ism muvaffaqiyatli yuborildi!");
         localStorage.setItem("userToken", res.data.access);
         setIsModalNameOpen(false);
-        // window.location.reload();
+        window.location.reload();
       })
       .catch((err) => {
         message.error(err.response.data.message);

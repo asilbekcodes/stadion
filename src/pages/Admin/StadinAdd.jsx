@@ -6,6 +6,7 @@ import { baseUrl } from "../../helpers/api/baseUrl";
 import { IoClose } from "react-icons/io5";
 import { Adminconfig } from "../../helpers/token/admintoken";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const StadinAdd = ({ stadionCount }) => {
   const [getAdd, setGetadd] = useState(false);
@@ -34,12 +35,40 @@ const StadinAdd = ({ stadionCount }) => {
       [name]: checked,
     }));
   };
+  const imgRef = useRef()
 
-  // Add Stadion Button
+  // Tasvirlarni yuborish
+  const postPhoto = () => {
+    const formData = new FormData();
+  
+    if (!imgRef.current || imgRef.current.files.length === 0) {
+      toast.error("Iltimos, stadion rasmini tanlang!");
+      return;
+    }
+  
+    formData.append("image", imgRef.current.files[0]);
+  
+    axios
+      .post(
+        `${baseUrl}stadion/stadion-images/${selectedItem.id}/add/`,
+        formData,
+        Adminconfig
+      )
+      .then((res) => {
+        console.log(res);
+        toast.success("Rasmlar muvaffaqiyatli yuborildi");
+        imgRef.current.value = ""; // Faylni tozalash
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("Rasm yuklashda xatolik yuz berdi.");
+      });
+  };
+
+
   function addStadion() {
     setGetadd(!getAdd);
   }
-
   // Modal Open
   function ModalOpen(item) {
     setSelectedItem(item);
@@ -118,7 +147,7 @@ const StadinAdd = ({ stadionCount }) => {
             onClick={addStadion}
             className="flex items-center gap-2 bg-slate-500 dark:bg-slate-700 text-white px-4 py-2 rounded-full transition"
           >
-            Stadion qo`shish
+            Stadion qoshish
           </button>
         </div>
 
@@ -242,7 +271,7 @@ const StadinAdd = ({ stadionCount }) => {
                   </div>
                 </div>
               ))
-            ): (
+            ) : (
               <p className="text-center text-black dark:text-white">
                 Siz hali stadion qo'shmagansiz
               </p>
@@ -341,11 +370,22 @@ const StadinAdd = ({ stadionCount }) => {
                       />
                       <span className="ml-2">Yoritish</span>
                     </div>
+                    <div className="flex flex-col gap-3">
+                      <p className="text-center text-xl">Qo'shimcha rasm qo'shish</p>
+                      <div className="flex gap-3 items-center">
+                        <input
+                          className="w-full px-2 py-2 border rounded-md bg-slate-800 text-white"
+                          type="file"
+                          ref={imgRef}
+                        />
+                      </div>
+                    </div>
+
                   </div>
                 </div>
                 <button
                   type="submit"
-                  onClick={updateStadion}
+                  onClick={() => { updateStadion(); postPhoto() }}
                   className="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
                 >
                   Saqlash
