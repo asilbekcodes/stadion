@@ -65,7 +65,7 @@ function ModalComponent({ isOpen, onClose }) {
         } else {
           setIsCodeModalOpen(false);
           localStorage.setItem("userToken", data.access);
-          // window.location.reload();
+          window.location.reload();
         }
       })
       .catch((err) => {

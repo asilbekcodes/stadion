@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Main from "./pages/Client/Main";
 import NotFound from "./pages/Notfount";
 import About from "./pages/Client/About";
@@ -24,6 +24,37 @@ import Times from "./components/Admin/Times";
 import History from "./pages/Admin/History";
 
 function App() {
+  const checkTokenExpiration = () => {
+    const userToken = localStorage.getItem('userToken');
+    const adminToken = localStorage.getItem('adminToken');
+    
+    // User tokenini tekshirish
+    if (userToken) {
+      const decodedUserToken = JSON.parse(atob(userToken.split('.')[1]));
+      const currentTime = Date.now() / 1000;
+      
+      if (decodedUserToken.exp < currentTime) {
+        localStorage.removeItem('userToken');
+        window.location.reload();
+      }
+    }
+    
+    // Admin tokenini tekshirish
+    if (adminToken) {
+      const decodedAdminToken = JSON.parse(atob(adminToken.split('.')[1]));
+      const currentTime = Date.now() / 1000;
+      
+      if (decodedAdminToken.exp < currentTime) {
+        localStorage.removeItem('adminToken');
+        window.location.href = '/auth/login';
+      }
+    }
+  };
+
+  useEffect(() => {
+    checkTokenExpiration();
+  }, []);
+
   const navigate = useNavigate();
   function RoleAuth() {
     if (
@@ -38,6 +69,19 @@ function App() {
   useEffect(() => {
     RoleAuth();
   }, []);
+
+  const location = useLocation();
+  
+  useEffect(() => {
+    sessionStorage.setItem('lastPage', location.pathname);
+  }, [location]);
+
+  useEffect(() => {
+    const lastPage = sessionStorage.getItem('lastPage');
+    if (lastPage) {
+      navigate(lastPage);
+    }
+  }, [navigate]);
   return (
     <Routes>
       {/* Client page routes */}
