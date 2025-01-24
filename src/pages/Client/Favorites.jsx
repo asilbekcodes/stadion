@@ -99,7 +99,7 @@ function Favorites() {
               <p className="text-xl font-semibold text-gray-700">
                 Sevimlilar ro'yxati bo'sh
               </p>
-              <Link to={"/"}>
+              <Link to={"/main"}>
                 <Button className="mt-4 bg-green-500 hover:bg-green-600 text-white">
                   Stadionlarni ko'rish
                 </Button>
