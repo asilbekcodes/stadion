@@ -1,42 +1,71 @@
 // import React from "react";
-import { BottomNavigation, BottomNavigationAction, useMediaQuery } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import ReceiptIcon from "@mui/icons-material/Receipt";
-import PersonIcon from "@mui/icons-material/Person";
 import { Link, useLocation } from "react-router-dom";
-import {  Favorite } from "@mui/icons-material";
+import { FaHome, FaReceipt, FaHeart, FaUser } from "react-icons/fa";
+import ModalComponent from "./Modal";
+import { useState } from "react";
 
 const Footer = () => {
-  const location = useLocation(); // Hozirgi yo'nalishni olish
+  const location = useLocation();
   const currentPath = location.pathname;
 
   // Ekran o'lchami uchun media query (desktopda yashirish uchun)
-  const isDesktop = useMediaQuery("(min-width:1024px)");
+  const isDesktop = window.innerWidth >= 1024;
 
-  // Footerni yashirish uchun
   if (isDesktop) return null;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <div className="pb-20 bg-gray-100">
-      <BottomNavigation
-        value={currentPath}
-        showLabels
-        sx={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          boxShadow: "0 -1px 5px rgba(0, 0, 0, 0.1)",
-          borderTop: "1px solid #e0e0e0",
-          backgroundColor: "#fff",
-          zIndex: 1000,
-        }}
-      >
-        <BottomNavigationAction component={Link} to="/" value="/" label="Bosh sahifa" icon={<HomeIcon />} />
-        <BottomNavigationAction component={Link} to="/ordersPage" value="/ordersPage" label="Buyurtmalar" icon={<ReceiptIcon />} />
-        <BottomNavigationAction component={Link} to="/favorites" value="/favorites" label="Sevimlilar" icon={<Favorite  />} />
-        <BottomNavigationAction component={Link} to="/client/profil" value="/client/profil" label="Profil" icon={<PersonIcon />} />
-      </BottomNavigation>
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-300 shadow-md z-50">
+      <div className="flex justify-around py-2 text-sm text-gray-700">
+        <Link
+          to="/"
+          className={`flex flex-col items-center ${
+            currentPath === "/" ? "text-blue-500" : ""
+          }`}
+        >
+          <FaHome className="text-xl mb-1" />
+          <span>Bosh sahifa</span>
+        </Link>
+        <Link
+          to="/ordersPage"
+          className={`flex flex-col items-center ${
+            currentPath === "/ordersPage" ? "text-blue-500" : ""
+          }`}
+        >
+          <FaReceipt className="text-xl mb-1" />
+          <span>Buyurtmalar</span>
+        </Link>
+        <Link
+          to="/favorites"
+          className={`flex flex-col items-center ${
+            currentPath === "/favorites" ? "text-blue-500" : ""
+          }`}
+        >
+          <FaHeart className="text-xl mb-1" />
+          <span>Sevimlilar</span>
+        </Link>
+        <Link
+          onClick={() => {
+            if (!localStorage.getItem("userToken")) {
+              setIsModalOpen(true);
+            }
+          }}
+          to={localStorage.getItem("userToken") ? "/client/profil" : "#"}
+          className={`flex flex-col items-center ${
+            currentPath === "/client/profil" ? "text-blue-500" : ""
+          }`}
+        >
+          <FaUser className="text-xl mb-1" />
+          <span>Profil</span>
+        </Link>
+      </div>
+      <div>
+        <ModalComponent 
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      </div>
     </div>
   );
 };
