@@ -101,6 +101,7 @@ function Profils() {
   function removeItem() {
     localStorage.removeItem("userToken");
     navigate("/");
+    window.location.reload("");
   }
 
   useEffect(() => {
