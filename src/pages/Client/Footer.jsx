@@ -1,4 +1,5 @@
 import React from "react";
+import logo1 from "../../assets/logo 1.svg";
 
 const Footers = () => {
   return (
@@ -9,7 +10,7 @@ const Footers = () => {
           {/* Logotip va qisqacha matn */}
           <div className="text-center md:text-left">
             <a href="/#">
-              <h1 className="text-2xl font-bold text-black">Stadion Top</h1>
+              <img src={logo1} alt="Stadion logo" />
             </a>
             <p className="text-sm">Stadionlarni osongina bron qiling!</p>
           </div>

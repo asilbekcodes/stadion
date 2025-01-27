@@ -4,6 +4,7 @@ import { FaHeart, FaSearch, FaShoppingBag, FaUser, FaUserShield } from "react-ic
 import { Link } from "react-router-dom";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import Modal from "./Modal";
+import logo1 from "../../assets/logo 1.svg"
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -37,7 +38,9 @@ const Navbar = () => {
     <nav className="flex items-center justify-between bg-gray-50 p-3 lg:px-40 lg:py-6">
       {/* Kompyuter versiyasi */}
       <div className="hidden lg:flex items-center justify-between w-full">
-        <Link to={"/"} className="w-32 h-10 bg-gray-300"></Link>
+        <Link to={"/"} className="w-32 h-16">
+          <img src={logo1} alt="logo" />
+        </Link>
         <div className="w-[200px] lg:w-[350px] xl:w-[500px] flex items-center relative">
           <input
             type="search"

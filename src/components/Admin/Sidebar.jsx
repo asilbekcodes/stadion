@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { FaBars, FaChartPie, FaClipboardList, FaPlusCircle, FaRegCalendarAlt, FaUserCircle } from 'react-icons/fa';
-import { TbCalendarTime } from "react-icons/tb";
 import { NavLink } from 'react-router-dom';
-import { AiOutlineCalendar, AiOutlineLineChart } from "react-icons/ai";
+import { AiOutlineLineChart } from "react-icons/ai";
 import { BsClockHistory } from 'react-icons/bs';
 
 const Sidebar = () => {
@@ -65,7 +64,7 @@ const Sidebar = () => {
         className={`bg-gray-100 text-gray-900 h-screen p-4 fixed top-0 left-0 w-64 border-r border-gray-300 dark:bg-gray-900 dark:text-white dark:border-gray-600 z-40 
           ${isSidebarOpen ? 'block' : 'hidden'} md:block`}
       >
-        <h1 className="text-2xl font-bold mt-4 text-center italic">Admin</h1>
+        <h1 className="text-2xl font-bold mt-4 text-center italic">Stadion Top</h1>
         <ul className="flex flex-col mt-5 text-xl">
           {data.map((item, index) => (
             <NavLink
