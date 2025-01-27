@@ -57,7 +57,7 @@ const Footer = () => {
           }`}
         >
           <FaUser className="text-xl mb-1" />
-          <span>Profil</span>
+          <span>{locolStorage.getItem("userToken") ? "Profil" : "Kirish"}</span>
         </Link>
       </div>
       <div>
