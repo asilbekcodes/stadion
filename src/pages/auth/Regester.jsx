@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import logo from "../../assets/logo 1.svg";
 
 function Regester() {
   const nemeRef = useRef();
@@ -65,10 +66,7 @@ function Regester() {
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="flex flex-col lg:flex-row w-full lg:w-5/6 lg:h-5/6 bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="lg:w-3/5 w-full flex flex-col items-center justify-center bg-gray-50 p-8">
-            <img alt="Logo" className="w-30 lg:w-48 mb-4 lg:mb-8" />
-            <div className="w-40 lg:w-60">
-              <img alt="Phone Illustration" />
-            </div>
+            <img className="w-44 lg:w-96" src={logo} alt="" />
           </div>
 
           <div className="flex justify-center items-center w-full lg:w-3/5 p-6 lg:p-8">

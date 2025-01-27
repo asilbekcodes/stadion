@@ -9,7 +9,7 @@ const Footers = () => {
         <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
           {/* Logotip va qisqacha matn */}
           <div className="text-center md:text-left">
-            <a href="/#">
+            <a href="/#" className="flex items-center justify-center md:justify-start">
               <img src={logo1} alt="Stadion logo" />
             </a>
             <p className="text-sm">Stadionlarni osongina bron qiling!</p>

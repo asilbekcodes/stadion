@@ -237,13 +237,6 @@ function About() {
           />
         </div>
         <div className="w-full md:w-[500px] font-sans">
-          <p className="font-bold pb-1 pt-5">Vaqti</p>
-          <p className="flex items-center gap-2 pb-5">
-            {result.start_time && result.start_time.slice(0, 5)}
-            <span> - {result.end_time && result.end_time.slice(0, 5)}</span>
-          </p>
-          <p className="font-bold py-1">Manzil</p>
-          <p>{result.address}</p>
           <p className="font-bold py-5">Kontakt</p>
           <p>{result.user.phone_number}</p>
         </div>
