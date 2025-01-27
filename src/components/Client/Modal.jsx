@@ -12,7 +12,7 @@ function ModalComponent({ isOpen, onClose }) {
   const [isModalNameOpen, setIsModalNameOpen] = useState(false);
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
-  const [timer, setTimer] = useState(); 
+  const [timer, setTimer] = useState();
 
   useEffect(() => {
     if (isCodeModalOpen && timer > 0) {
@@ -40,7 +40,7 @@ function ModalComponent({ isOpen, onClose }) {
         const data = res.data;
         setUserId(data.user_id);
         setIsCodeModalOpen(true);
-        setTimer(res.data.expire_time*60); // 5 daqiqa hisoblagichni qayta o'rnatish
+        setTimer(res.data.expire_time * 60); // 5 daqiqa hisoblagichni qayta o'rnatish
         onClose();
       })
       .catch((err) => {
@@ -190,7 +190,9 @@ function ModalComponent({ isOpen, onClose }) {
           <span className="text-lg">{formatTime(timer)}</span>
           <button
             onClick={resentSms}
-            className="px-2 py-1 rounded-md text-white bg-green-600 hover:bg-green-500"
+            disabled={timer > 0} // Vaqt tugamaguncha disable bo'ladi
+            className={`px-2 py-1 rounded-md text-white ${timer > 0 ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-500"
+              }`}
           >
             Kodni qayta yuborish
           </button>
