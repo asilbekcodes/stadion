@@ -28,6 +28,8 @@ function About() {
 
   const [comment, setComment] = useState("");
 
+  const [mainImage, setMainImage] = useState(result.photo);
+
   const stadionReviews = () => {
     axios
       .get(`${baseUrl}stadion/stadion-review/${resultId}/`)
@@ -79,7 +81,8 @@ function About() {
         <div className="w-full md:w-[500px]">
           <img
             className="w-full h-60 md:h-96 rounded-none md:rounded-md shadow-sm mb-4"
-            src={result.photo}
+            src={mainImage || result.photo}
+            alt="Asosiy rasm"
           />
           <button
             className="absolute top-4 left-4 text-xl cursor-pointer bg-white p-2 rounded-full md:hidden"
@@ -92,9 +95,10 @@ function About() {
               ? result.images.map((img) => (
                   <img
                     key={img.id}
-                    className="h-20 w-full rounded-md"
+                    className="h-20 w-full rounded-md cursor-pointer"
                     src={img.image}
                     alt="Stadion rasm"
+                    onClick={() => setMainImage(img.image)}
                   />
                 ))
               : ""}
@@ -107,9 +111,7 @@ function About() {
               <span className="text-red-500 text-lg">
                 <FaStar />
               </span>
-              <span className="text-gray-500">
-                {result.star}{" "}
-              </span>
+              <span className="text-gray-500">{result.star} </span>
             </div>
             <h2 className="text-2xl md:text-[32px] font-semibold">
               {result.title}

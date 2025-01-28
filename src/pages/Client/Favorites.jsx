@@ -48,15 +48,7 @@ function Favorites() {
                   key={stadium.id}
                   className="flex flex-col rounded-lg border border-gray-200 bg-white shadow-sm"
                 >
-                  {/* Stadion rasmi */}
                   <div className="relative">
-                    <img
-                      className="rounded-t-lg h-[200px] md:h-[150px] w-full object-cover"
-                      src={stadium.photo || img}
-                      alt={stadium.name || "Favorite Stadium"}
-                    />
-
-                    {/* Yurakcha ikonkasini rasmning ustiga joylashtirish */}
                     <button
                       onClick={() => handleRemoveFavorite(stadium.id)}
                       className="absolute top-2 right-2 bg-white p-1 rounded-full shadow-md cursor-pointer"
@@ -65,32 +57,39 @@ function Favorites() {
                     </button>
                   </div>
 
-                  {/* Stadion ismi rasmning ostiga joylashadi */}
-                  <div className="flex flex-col justify-center p-3 font-sans">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[12px] text-gray-500 flex items-center gap-1">
-                        {stadium.rank_ratio ? (
-                          <GiRoundStar className="text-red-600 text-[15px]" />
-                        ) : (
-                          ""
-                        )}
-                        {stadium.rank_ratio || "Bu hali yangi"}
-                      </span>
-                      <span className="text-xs px-1 pb-0.5 text-white bg-green-600">
-                        {stadium.rank_ratio ? "" : "Yangi"}
-                      </span>
+                  <Link to={`/about/${stadium.id}`}>
+                    <img
+                      className="rounded-t-lg h-[200px] md:h-[150px] w-full object-cover"
+                      src={stadium.photo || img}
+                      alt={stadium.name || "Favorite Stadium"}
+                    />
+                    {/* Stadion ismi rasmning ostiga joylashadi */}
+                    <div className="flex flex-col justify-center p-3 font-sans">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[12px] text-gray-500 flex items-center gap-1">
+                          {stadium.rank_ratio ? (
+                            <GiRoundStar className="text-red-600 text-[15px]" />
+                          ) : (
+                            ""
+                          )}
+                          {stadium.rank_ratio || "Bu hali yangi"}
+                        </span>
+                        <span className="text-xs px-1 pb-0.5 text-white bg-green-600">
+                          {stadium.rank_ratio ? "" : "Yangi"}
+                        </span>
+                      </div>
+                      <h3 className="text-sm mt-3 mb-1">{stadium.title}</h3>
+                      <p className="text-xs flex items-center gap-1">
+                        <span className="text-green-500">
+                          <IoLocationOutline />
+                        </span>
+                        {stadium.address || "Manzil kiritilmagan"}
+                      </p>
+                      <p className="text-sm font-semibold mt-5">
+                        {stadium.price || "0"} So`m
+                      </p>
                     </div>
-                    <h3 className="text-sm mt-3 mb-1">{stadium.title}</h3>
-                    <p className="text-xs flex items-center gap-1">
-                      <span className="text-green-500">
-                        <IoLocationOutline />
-                      </span>
-                      {stadium.address || "Manzil kiritilmagan"}
-                    </p>
-                    <p className="text-sm font-semibold mt-5">
-                      {stadium.price || "0"} So`m
-                    </p>
-                  </div>
+                  </Link>
                 </div>
               ))}
             </div>
