@@ -6,11 +6,11 @@ const TopUsers = ({ data }) => {
       <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
         <h2 className="text-lg font-bold mb-4">Top users</h2>
         {topUser && topUser.length > 0 ? (
-          <div className="flex gap-5">
+          <div className="flex gap-5 justify-center flex-wrap">
             {topUser.map((user, index) => (
               <div
                 key={index}
-                className={`w-40 p-4 rounded-lg shadow-md text-center text-white ${
+                className={`w-36 md:w-40 p-4 rounded-lg shadow-md text-center text-white ${
                   index === 0
                     ? "bg-green-500"
                     : index === 1
