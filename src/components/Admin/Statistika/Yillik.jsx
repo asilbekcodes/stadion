@@ -30,8 +30,8 @@ function Yillik({ selectedYear, handleYearChange }) {
   const [getYear, setGetYear] = useState([]);
   const [bronYear, setBronYear] = useState([]);
 
-  const startYear = 2000;
-  const endYear = 2100;
+  const startYear = 2025;
+  const endYear = 2035;
   const years = Array.from(
     { length: endYear - startYear + 1 },
     (_, i) => startYear + i
