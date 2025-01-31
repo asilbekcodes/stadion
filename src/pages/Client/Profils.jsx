@@ -231,7 +231,7 @@ function Profils() {
         <button
           onClick={handleProfileUpdate}
           disabled={isLoading}
-          className="p-2 rounded-lg text-md mt-4 bg-blue-500 hover:bg-blue-600 transition duration-200 ease-in-out w-max font-semibold text-white disabled:bg-blue-300"
+          className="p-2 rounded-lg text-md mt-4 bg-gray-500 hover:bg-gray-700 transition duration-200 ease-in-out w-max font-semibold text-white disabled:bg-blue-300"
         >
           {isLoading ? "Yuklanmoqda..." : "Ma'lumotlarni yangilash"}
         </button>

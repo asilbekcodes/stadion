@@ -159,7 +159,7 @@ const Times_Pages = () => {
               <span>
                 {hour}:00 - {hour === 23 ? "00" : hour + 1}:00
               </span>
-              <span className="ml-2">{priceForHour} so'm</span>
+              <span className="ml-2">{priceForHour ? priceForHour.toLocaleString("ru-Ru") : "0"} so'm</span>
               <BsPencil
                 className="absolute top-2 right-2 cursor-pointer"
                 onClick={() => openModal(hour, priceForHour)}
@@ -216,7 +216,7 @@ const Times_Pages = () => {
               className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-md"
               onClick={postBooking}
             >
-              Tanlangan vaqtlar: {selectedHours.length} soat
+              Tanlangan vaqtlar: {selectedHours.length} soat {}
             </button>
           </div>
         )}

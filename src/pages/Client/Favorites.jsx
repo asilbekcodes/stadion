@@ -86,7 +86,7 @@ function Favorites() {
                         {stadium.address || "Manzil kiritilmagan"}
                       </p>
                       <p className="text-sm font-semibold mt-5">
-                        {stadium.price || "0"} So`m
+                        {stadium.price ? stadium.price.toLocaleString("ru-Ru") : "0"} So`m
                       </p>
                     </div>
                   </Link>

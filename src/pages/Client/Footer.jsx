@@ -12,7 +12,7 @@ const Footers = () => {
             <a href="/#" className="flex items-center justify-center md:justify-start">
               <img src={logo1} alt="Stadion logo" />
             </a>
-            <p className="text-sm">Stadionlarni osongina bron qiling!</p>
+            <p className="text-sm">Stadionlarni osongina buyurtma qiling!</p>
           </div>
 
           {/* Navigatsiya bo‘limi */}
@@ -83,7 +83,7 @@ const Footers = () => {
 
         {/* Mualliflik huquqi */}
         <div className="mt-6 text-center text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} StadionBook. Barcha huquqlar
+          &copy; {new Date().getFullYear()} Stadion Top barcha huquqlar
           himoyalangan.
         </div>
       </div>

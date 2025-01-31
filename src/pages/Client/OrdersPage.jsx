@@ -75,9 +75,9 @@ const OrdersPage = () => {
                       }`}
                     >
                       {item.status === "K"
-                        ? "Kutulmoqda"
+                        ? "Kutilmoqda"
                         : item.status === "B"
-                        ? "Bekor qilindi"
+                        ? "Bekor qilingan"
                         : item.status === "T"
                         ? "Tasdiqlangan"
                         : "Noma'lum"}
@@ -109,7 +109,7 @@ const OrdersPage = () => {
                           <p className="text-red-700 text-sm flex items-center gap-1">
                             <Star /> {item.stadion?.star}{" "}
                           </p>
-                          <p className="text-sm">{item?.stadion?.price} so'm</p>
+                          <p className="text-sm">{item?.stadion?.price ? item?.stadion?.price.toLocaleString("ru-Ru") : "0"} so'm</p>
                         </div>
                         <p className="text-sm">{item.stadion?.title || "Stadion nomi yuq"}</p>
                         <p className="text-sm text-gray-500">
@@ -125,11 +125,11 @@ const OrdersPage = () => {
       ) : (
         <div className="flex flex-col justify-center items-center text-center p-4 rounded-md h-[80vh] ">
           <p className="text-xl font-semibold text-gray-700">
-            Sizda zakaz hali mavjud emas.
+            Sizda buyurtmalar mavjud emas.
           </p>
           <Link to={"/"}>
             <Button className="mt-4 bg-green-500 hover:bg-green-600 text-white">
-              Stadion bron qilish
+              Stadion buyurtma qilish
             </Button>
           </Link>
         </div>

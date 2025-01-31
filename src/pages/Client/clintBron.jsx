@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import ModalComponent from "../../components/Client/Modal";
 import { userConfig } from "../../helpers/token/userToken";
 import Footers from "./Footer";
+import Footer from "../../components/Client/Footer";
 
 function ClintBron() {
   const { resultId } = useParams();
@@ -116,7 +117,7 @@ function ClintBron() {
               onClick={() => !isDisabled && !isBooked && handleHourClick(hour)}
             >
               <span>{formatTimeRange(hour)}</span>
-              <span className="ml-2">{hourPrice} so'm</span>
+              <span className="ml-2">{hourPrice ? hourPrice.toLocaleString("ru-Ru") : "0"} so'm</span>
             </div>
           );
         })}
@@ -176,13 +177,13 @@ function ClintBron() {
         </p>
         {renderHours()}
         {selectedHours.length > 0 && (
-          <div className="mt-4 text-center md:bg-slate-50 bg-white md:static md:text-center fixed bottom-0 md:pt-2 pt-6 rounded-t-3xl pb-3 left-0 right-0 flex justify-center z-50 md:justify-center">
+          <div className="mt-6 text-center md:bg-slate-50 rounded-3xl pb-3">
             <button
-              className="bg-green-600 text-white max-w-max w-full px-10 py-4 rounded-lg shadow-md hover:bg-green-500"
+              className="bg-green-600 text-white max-w-max py-4 md:px-10 px-5 rounded-lg shadow-md hover:bg-green-500"
               onClick={handleOpenModal}
             >
-              Tanlangan vaqtlar: {selectedHours.length} soat,{" "}
-              {calculateTotalPrice()} so'm
+              Tanlangan vaq: {selectedHours.length} soat,{" "}
+              {calculateTotalPrice() ? calculateTotalPrice().toLocaleString("ru-RU") : "0"} so'm
             </button>
           </div>
         )}
@@ -261,6 +262,7 @@ function ClintBron() {
       <ModalComponent isOpen={isPhone} onClose={() => setIsPhone(false)} />
       <div className="pt-10 bg-gray-50">
         <Footers />
+        <Footer />
       </div>
     </div>
   );

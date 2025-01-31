@@ -136,7 +136,7 @@ function About() {
             {/* Kompyuter versiyasi */}
             <div className="hidden md:block">
               <p className="text-base md:text-lg font-bold mt-8 md:mt-20 mb-4">
-                {result.price} so`m
+                {result.price ? result.price.toLocaleString("ru-RU") : "0"} so`m
               </p>
               <div className="flex flex-col md:flex-row justify-between mt-4 md:mt-8 space-y-4 md:space-y-0">
                 <Link to={`/clintBron/${result.id}`}>

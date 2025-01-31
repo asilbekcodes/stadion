@@ -29,17 +29,17 @@ const Sidebar = () => {
     },
     {
       icon: <FaClipboardList />,
-      title: 'Orders',
+      title: 'Buyurtmalar',
       pathName: 'orders',
     },
     {
       icon: <FaRegCalendarAlt   />,
-      title: 'History',
+      title: 'Buyurtmalar tarixi',
       pathName: 'history',
     },
     {
       icon: <BsClockHistory />,
-      title: 'Times',
+      title: 'Vaqtlar',
       pathName: 'times',
     },
     {
