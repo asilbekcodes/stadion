@@ -152,7 +152,7 @@ function ProfilCom() {
       >
         {/* Mening ma'lumotlarim */}
         <TabPane
-          tab={<span className="dark:text-gray-100">Mening ma'lumotlarim</span>}
+          tab={<span className="dark:text-gray-100">Ma'lumotlarim</span>}
           key="1"
         >
           {getProfil ? (
@@ -200,7 +200,7 @@ function ProfilCom() {
         <TabPane
           tab={
             <span className="dark:text-gray-100">
-              Ma'lumotlarni o'zgartirish
+              O'zgartirish
             </span>
           }
           key="2"
@@ -274,7 +274,7 @@ function ProfilCom() {
         <TabPane
           tab={
             <span className="dark:text-gray-100">
-              Qo'shimcha tel raqamlar
+              Telfon raqamlar
             </span>
           }
           key="3"
