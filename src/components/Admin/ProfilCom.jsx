@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import { Adminconfig } from "../../helpers/token/admintoken";
+import Kontact from "./Kontact";
 
 const { TabPane } = Tabs;
 
@@ -269,6 +270,16 @@ function ProfilCom() {
               </button>
             </form>
           </div>
+        </TabPane>
+        <TabPane
+          tab={
+            <span className="dark:text-gray-100">
+              Qo'shimcha tel raqamlar
+            </span>
+          }
+          key="3"
+        >
+          <Kontact />
         </TabPane>
       </Tabs>
       {isVerificationModalOpen && <VerificationModal />}
