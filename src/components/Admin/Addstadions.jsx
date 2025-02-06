@@ -34,6 +34,7 @@ const StadionAdds = ({ addStadion }) => {
     yuvinish: false,
     formal: false,
     yoritish: false,
+    parkofka: false,
   });
 
   const navigate = useNavigate();
@@ -86,7 +87,7 @@ const StadionAdds = ({ addStadion }) => {
     formData.append("kiyinish_xonasi", facilities.kiyinish);
     formData.append("dush", facilities.yuvinish);
     formData.append("yoritish", facilities.yoritish);
-    formData.append("parkofka", true);
+    formData.append("parkofka", facilities.parkofka);
     formData.append("forma", facilities.formal);
     formData.append("user", getSaved.id);
 
@@ -217,6 +218,16 @@ const StadionAdds = ({ addStadion }) => {
                     className="w-4 h-4"
                   />
                   <span className="ml-2 text-white">Yoritish</span>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    name="parkofka"
+                    checked={facilities.parkofka}
+                    onChange={handleCheckboxChange}
+                    className="w-4 h-4"
+                  />
+                  <span className="ml-2 text-white">Parkofka</span>
                 </div>
               </div>
             </div>
