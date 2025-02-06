@@ -147,7 +147,7 @@ const StadinAdd = ({ stadionCount }) => {
             onClick={addStadion}
             className="flex items-center gap-2 bg-slate-500 dark:bg-slate-700 text-white px-4 py-2 rounded-full transition"
           >
-            Stadion qoshish
+            Stadion qo'shish
           </button>
         </div>
 
@@ -216,7 +216,7 @@ const StadinAdd = ({ stadionCount }) => {
                       colSpan={5}
                       className="px-6 py-5 bg-white dark:bg-gray-800 text-center text-gray-500 dark:text-gray-400"
                     >
-                      Siz hali stadion qo'shmagansiz
+                      Siz hali stadion qo'shmagansiz !
                     </td>
                   </tr>
                 )}

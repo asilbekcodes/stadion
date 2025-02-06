@@ -4,7 +4,7 @@ import { FaHeart, FaSearch, FaShoppingBag, FaUser, FaUserShield } from "react-ic
 import { Link } from "react-router-dom";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import Modal from "./Modal";
-import logo1 from "../../assets/logo 1.svg"
+import logo1 from "../../assets/StadionTop.png";
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,7 +39,7 @@ const Navbar = () => {
       {/* Kompyuter versiyasi */}
       <div className="hidden lg:flex items-center justify-between w-full">
         <Link to={"/"} className="w-32 h-16">
-          <img src={logo1} alt="logo" />
+          <img src={logo1} className="relative bottom-7" alt="logo" />
         </Link>
         <div className="w-[200px] lg:w-[350px] xl:w-[500px] flex items-center relative">
           <input
