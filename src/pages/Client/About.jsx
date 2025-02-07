@@ -122,6 +122,12 @@ function About() {
               </span>
               {result.address}
             </p>
+
+            <div className="w-full mb-8 md:mb-0">
+              <p className="font-bold">Tavsif</p>
+              <p className="mt-3">{result.description}</p>
+            </div>
+
             {/* Faqat mobil versiya uchun */}
             <div className="fixed bottom-0 left-0 right-0 w-full bg-white p-4 border-t md:hidden z-50">
               <div className="flex justify-between items-center">
@@ -134,91 +140,77 @@ function About() {
               </div>
             </div>
             {/* Kompyuter versiyasi */}
-            <div className="hidden md:block">
-              <p className="text-base md:text-lg font-bold mt-8 md:mt-20 mb-4">
-                {result.price ? result.price.toLocaleString("ru-RU") : "0"} so`m
-              </p>
-              <div className="flex flex-col md:flex-row justify-between mt-4 md:mt-8 space-y-4 md:space-y-0">
-                <Link to={`/clintBron/${result.id}`}>
-                  <button className="w-full md:w-[200px] lg:w-[230px] xl:w-[280px] bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition duration-300">
-                    Joyni band qilish
-                  </button>
-                </Link>
-                <button className="text-gray-500 w-full md:w-[300px]">
-                  Добавить в <span className="text-lg">🤍</span>
-                </button>
-              </div>
-              <div className="mt-6 md:mt-[20px]">
-                <button className="w-full border border-gray-300 rounded-lg py-3 px-3 text-gray-500">
-                  Инвентарь
-                </button>
+            <div className="w-full mt-5">
+              <p className="font-bold">Sharoitlar</p>
+              <div className="mt-3 font-sans">
+                <div className="flex items-center justify-between">
+                  <p>Kiyinish xonasi:</p>
+                  {result.kiyinish_xonasi ? (
+                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
+                  ) : (
+                    <ImCross className="text-red-500" />
+                  )}
+                </div>
+                <div className="flex items-center justify-between">
+                  <p>Dush:</p>
+                  {result.dush ? (
+                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
+                  ) : (
+                    <ImCross className="text-red-500" />
+                  )}
+                </div>
+                <div className="flex items-center justify-between">
+                  <p>Yoritish:</p>
+                  {result.yoritish ? (
+                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
+                  ) : (
+                    <ImCross className="text-red-500" />
+                  )}
+                </div>
+                <div className="flex items-center justify-between">
+                  <p>Parkovka:</p>
+                  {result.parkofka ? (
+                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
+                  ) : (
+                    <ImCross className="text-red-500" />
+                  )}
+                </div>
+                <div className="flex items-center justify-between">
+                  <p>Forma:</p>
+                  {result.forma ? (
+                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
+                  ) : (
+                    <ImCross className="text-red-500" />
+                  )}
+                </div>
+                <div className="flex items-center justify-between">
+                  <p>Tishli oyoq kiyim:</p>
+                  {result.tishli_oyoqkiyim ? (
+                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
+                  ) : (
+                    <ImCross className="text-red-500" />
+                  )}
+                </div>
+                <div className="flex items-center justify-between">
+                  <p>Stadion usti ochiq:</p>
+                  {result.usti_ochiq_yopiq ? (
+                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
+                  ) : (
+                    <ImCross className="text-red-500" />
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="p-3 lg:px-40 md:pt-20 flex flex-col md:flex-row justify-between bg-gray-50">
-        <div className="w-full md:w-[400px] mb-8 md:mb-0">
-          <p className="font-bold">Tavsif</p>
-          <p className="mt-3">{result.description}</p>
-        </div>
-        <div>
-          <p className="font-bold ">Sport</p>
-          <div className="flex gap-3 mt-3 flex-wrap mb-8 md:mb-0">
-            <input
-              className="border border-black rounded-lg h-10 p-2"
-              type="text"
-            />
-            <input
-              className="border border-black rounded-lg h-10 p-2"
-              type="text"
-            />
-          </div>
-        </div>
-        <div className="w-full md:w-[250px]">
-          <p className="font-bold">Sharoitlar</p>
-          <div className="mt-3 font-sans">
-            <div className="flex items-center justify-between">
-              <p>Kiyinish xonasi:</p>
-              {result.kiyinish_xonasi ? (
-                <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
-              ) : (
-                <ImCross className="text-red-500" />
-              )}
-            </div>
-            <div className="flex items-center justify-between">
-              <p>Dush:</p>
-              {result.dush ? (
-                <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
-              ) : (
-                <ImCross className="text-red-500" />
-              )}
-            </div>
-            <div className="flex items-center justify-between">
-              <p>Yoritish:</p>
-              {result.yoritish ? (
-                <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
-              ) : (
-                <ImCross className="text-red-500" />
-              )}
-            </div>
-            <div className="flex items-center justify-between">
-              <p>Parkovka:</p>
-              {result.parkofka ? (
-                <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
-              ) : (
-                <ImCross className="text-red-500" />
-              )}
-            </div>
-            <div className="flex items-center justify-between">
-              <p>Forma:</p>
-              {result.forma ? (
-                <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
-              ) : (
-                <ImCross className="text-red-500" />
-              )}
-            </div>
+          <div className="hidden md:block">
+            <p className="text-base md:text-lg font-bold my-4">
+              Narxi: {result.price ? result.price.toLocaleString("ru-RU") : "0"} so`m
+            </p>
+            <Link to={`/clintBron/${result.id}`}>
+              <button className="w-full py-3 bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition duration-300">
+                Joyni band qilish
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -335,7 +327,7 @@ function About() {
                   },
                 }}
               >
-                Add a comment
+                Comment qo'shish
               </Box>
             )}
           </Box>
