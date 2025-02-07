@@ -8,11 +8,12 @@ const Footers = () => {
         {/* Tepki qism */}
         <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
           {/* Logotip va qisqacha matn */}
-          <div className="text-center md:text-left">
+          <div className="text-center md:flex items-center gap-2 md:text-left">
             <a href="/#" className="flex items-center justify-center md:justify-start">
               <img src={logo1} className="w-32 h-32" alt="Stadion logo" />
             </a>
-            {/* <p className="text-sm">Stadionlarni osongina buyurtma qiling!</p> */}
+            <p className="text-sm">Stadionlarni osongina buyurtma qiling!</p>
+
           </div>
 
           {/* Navigatsiya bo‘limi */}
@@ -64,7 +65,7 @@ const Footers = () => {
               </svg>
             </a>
             <a
-              href="https://telegram.org"
+              href="https://t.me/StadionTopUz"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-600 transition"
