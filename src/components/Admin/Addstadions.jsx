@@ -5,6 +5,42 @@ import { baseUrl } from "../../helpers/api/baseUrl";
 import { useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { Adminconfig } from "../../helpers/token/admintoken";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMap,
+  useMapEvents,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+
+function MapClick({ onMapClick }) {
+  useMapEvents({
+    click: onMapClick,
+  });
+  return null;
+}
+
+function LocationMarker({ position, setPosition }) {
+  const map = useMap();
+
+  useEffect(() => {
+    map
+      .locate()
+      .on("locationfound", (e) => {
+        setPosition(e.latlng);
+        map.flyTo(e.latlng, map.getZoom());
+      })
+      .on("locationerror", (e) => {
+        console.log(e);
+        // Joylashuv topilmasa, Qarshi markaziga o'rnatamiz
+        setPosition({ lat: 38.8601, lng: 65.7961 });
+        map.flyTo([38.8601, 65.7961], map.getZoom());
+      });
+  }, [map]);
+
+  return position === null ? null : <Marker position={position} />;
+}
 
 const StadionAdds = ({ addStadion }) => {
   const nameRef = useRef(null);
@@ -17,6 +53,8 @@ const StadionAdds = ({ addStadion }) => {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [getSaved, setgetSaved] = useState("");
+  const [isMapOpen, setIsMapOpen] = useState(false);
+  const [position, setPosition] = useState(null);
 
   const Malumot = () => {
     axios
@@ -35,6 +73,8 @@ const StadionAdds = ({ addStadion }) => {
     formal: false,
     yoritish: false,
     parkofka: false,
+    tishli_oyoqkiyim: false,
+    usti_ochiq_yopiq: false,
   });
 
   const navigate = useNavigate();
@@ -48,20 +88,22 @@ const StadionAdds = ({ addStadion }) => {
   };
 
   const handleGetLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-          toast.success("Joylashuv aniqlandi!");
-        },
-        (error) => {
-          console.error("Joylashuv xatosi:", error);
-          toast.error("Joylashuvni aniqlashda xatolik yuz berdi!");
-        }
-      );
+    setIsMapOpen(true);
+  };
+
+  const handleMapClick = (event) => {
+    const { lat, lng } = event.latlng;
+    setPosition({ lat, lng });
+    setLatitude(lat);
+    setLongitude(lng);
+  };
+
+  const handleCloseMap = () => {
+    if (latitude && longitude) {
+      setIsMapOpen(false);
+      toast.success("Joylashuv aniqlandi!");
     } else {
-      toast.error("Brauzer geolokatsiyani qo'llab-quvvatlamaydi.");
+      toast.error("Joylashuvni aniqlang!");
     }
   };
 
@@ -89,6 +131,8 @@ const StadionAdds = ({ addStadion }) => {
     formData.append("yoritish", facilities.yoritish);
     formData.append("parkofka", facilities.parkofka);
     formData.append("forma", facilities.formal);
+    formData.append("tishli_oyoqkiyim", facilities.tishli_oyoqkiyim);
+    formData.append("usti_ochiq_yopiq", facilities.usti_ochiq_yopiq);
     formData.append("user", getSaved.id);
 
     axios
@@ -111,7 +155,9 @@ const StadionAdds = ({ addStadion }) => {
       <div className="relative p-4 w-full max-w-[900px]">
         <div className="p-5 bg-slate-600 rounded-lg max-h-[90vh] overflow-y-auto">
           <div className="flex mb-4 items-center justify-between">
-            <h2 className="text-2xl font-semibold text-white">Stadion Qo‘shish</h2>
+            <h2 className="text-2xl font-semibold text-white">
+              Stadion Qo‘shish
+            </h2>
             <IoClose
               className="text-2xl text-white cursor-pointer"
               onClick={addStadion}
@@ -158,7 +204,9 @@ const StadionAdds = ({ addStadion }) => {
               />
             </div>
             <div>
-              <label className="block mb-2 text-white">Stadion joylashuvi:</label>
+              <label className="block mb-2 text-white">
+                Stadion joylashuvi:
+              </label>
               <button
                 type="button"
                 onClick={handleGetLocation}
@@ -166,6 +214,12 @@ const StadionAdds = ({ addStadion }) => {
               >
                 Joylashuvni aniqlash
               </button>
+              {latitude && longitude && (
+                <p className="mt-2 text-white">
+                  Latitude: {latitude.toFixed(6)}, Longitude:{" "}
+                  {longitude.toFixed(6)}
+                </p>
+              )}
             </div>
             <div>
               <label className="block mb-2 text-white">Stadion rasmi:</label>
@@ -187,7 +241,7 @@ const StadionAdds = ({ addStadion }) => {
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
-                  <span className="ml-2 text-white">Kiyinish xonasi</span>
+                  <span className={`ml-2 text-white  ${!facilities.kiyinish ? "line-through" : ""}`}>Kiyinish xonasi</span>
                 </div>
                 <div>
                   <input
@@ -197,7 +251,7 @@ const StadionAdds = ({ addStadion }) => {
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
-                  <span className="ml-2 text-white">Yuvinish xonasi</span>
+                  <span className={`ml-2 text-white ${!facilities.yuvinish ? "line-through" : ""}`}>Yuvinish xonasi</span>
                 </div>
                 <div>
                   <input
@@ -207,7 +261,7 @@ const StadionAdds = ({ addStadion }) => {
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
-                  <span className="ml-2 text-white">Formalar</span>
+                  <span className={`ml-2 text-white ${!facilities.formal ? "line-through" : ""}`}>Formalar</span>
                 </div>
                 <div>
                   <input
@@ -217,7 +271,17 @@ const StadionAdds = ({ addStadion }) => {
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
-                  <span className="ml-2 text-white">Yoritish</span>
+                  <span className={`ml-2 text-white ${!facilities.yoritish ? "line-through" : ""}`}>Yoritish</span>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    name="tishli_oyoqkiyim"
+                    checked={facilities.tishli_oyoqkiyim}
+                    onChange={handleCheckboxChange}
+                    className="w-4 h-4"
+                  />
+                  <span className={`ml-2 text-white ${!facilities.tishli_oyoqkiyim ? "line-through" : ""}`}>Tishli oyoq kiyim</span>
                 </div>
                 <div>
                   <input
@@ -227,7 +291,17 @@ const StadionAdds = ({ addStadion }) => {
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
-                  <span className="ml-2 text-white">Parkofka</span>
+                  <span className={`ml-2 text-white ${!facilities.parkofka ? "line-through" : ""}`}>Parkofka</span>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    name="usti_ochiq_yopiq"
+                    checked={facilities.usti_ochiq_yopiq}
+                    onChange={handleCheckboxChange}
+                    className="w-4 h-4"
+                  />
+                  <span className={`ml-2 text-white ${!facilities.usti_ochiq_yopiq ? "line-through" : ""}`}>Stadiondi ochiq</span>
                 </div>
               </div>
             </div>
@@ -242,6 +316,29 @@ const StadionAdds = ({ addStadion }) => {
           </div>
         </div>
       </div>
+      {isMapOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="relative p-4 w-full max-w-[600px] h-[400px]">
+            <MapContainer
+              center={position || [38.8601, 65.7961]}
+              zoom={13}
+              style={{ height: "100%", width: "100%" }}
+            >
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <MapClick onMapClick={handleMapClick} />
+              <LocationMarker position={position} setPosition={setPosition} />
+            </MapContainer>
+            <div className="absolute bottom-10 right-10 z-[1000]">
+              <button
+                onClick={handleCloseMap}
+                className="bg-green-500 text-white px-4 py-2 rounded-md"
+              >
+                Belgilash
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
