@@ -3,6 +3,7 @@ import { FaBars, FaChartPie, FaClipboardList, FaPlusCircle, FaRegCalendarAlt, Fa
 import { NavLink } from 'react-router-dom';
 import { AiOutlineLineChart } from "react-icons/ai";
 import { BsClockHistory } from 'react-icons/bs';
+import logo from '../../assets/StadionTopLogo.png';
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -64,7 +65,8 @@ const Sidebar = () => {
         className={`bg-gray-100 text-gray-900 h-screen p-4 fixed top-0 left-0 w-64 border-r border-gray-300 dark:bg-gray-900 dark:text-white dark:border-gray-600 z-40 
           ${isSidebarOpen ? 'block' : 'hidden'} md:block`}
       >
-        <h1 className="text-2xl font-bold mt-4 text-center italic">Stadion Top</h1>
+        {/* <h1 className="text-2xl font-bold mt-4 text-center italic">Stadion Top</h1> */}
+        <img className='h-[70px]' src={logo} alt="" />
         <ul className="flex flex-col mt-5 text-xl">
           {data.map((item, index) => (
             <NavLink
