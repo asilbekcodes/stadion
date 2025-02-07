@@ -274,7 +274,7 @@ function ProfilCom() {
         <TabPane
           tab={
             <span className="dark:text-gray-100">
-              Telfon raqamlar
+              Telefon raqamlar
             </span>
           }
           key="3"
