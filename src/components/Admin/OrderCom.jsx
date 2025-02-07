@@ -134,7 +134,7 @@ function OrderCom({ onOrderCount }) {
 
   return (
     <div className="md:p-8 p-4 dark:bg-slate-900 min-h-screen">
-      <h2 className="md:text-2xl text-xl mb-4 text-black dark:text-white">Orders</h2>
+      <h2 className="md:text-2xl text-xl mb-4 text-black dark:text-white">Buyurtmalar</h2>
       {getOrder.length === 0 ? (
         <div className="text-center text-black text-lg dark:text-white">
           Hech qanday buyurtmalar topilmadi

@@ -129,7 +129,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 my-6 gap-4">
         <Card
           icon={<AiOutlineCalendar />}
-          title="Bugungi zakazlar soni"
+          title="Bugungi buyurtmalar soni"
           value={
             date.zakazlar_soni > 0
               ? `${date.zakazlar_soni} ta`
@@ -138,17 +138,17 @@ const Dashboard = () => {
         />
         <Card
           icon={<AiOutlineStar />}
-          title="Tasdiqlangan bronlar"
+          title="Tasdiqlangan buyurtmalar"
           value={`${date.tasdiqlangan_bronlar || 0} ta`}
         />
         <Card
           icon={<AiOutlineStop />}
-          title="Bekor qilingan bronlar"
+          title="Bekor qilingan buyurtmalar"
           value={`${date.bekorqilingan_bronlar || 0} ta`}
         />
         <Card
           icon={<AiOutlineClockCircle />}
-          title="Kutulayotgan bronlar"
+          title="Kutulayotgan buyurtmalar"
           value={`${date.kutilayotgan_bronlar || 0} ta`}
         />
       </div>

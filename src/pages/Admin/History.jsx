@@ -45,7 +45,7 @@ function History() {
   return (
     <Layout>
       <div className="md:p-8 p-4 dark:bg-gray-900 bg-gray-100 min-h-screen">
-        <h2 className="md:text-2xl text-xl">History</h2>
+        <h2 className="md:text-2xl text-xl">Buyurtmalar tarixi</h2>
         {historys && historys.length > 0 ? (
           historys.map((item, index) => (
             <div key={index}>
