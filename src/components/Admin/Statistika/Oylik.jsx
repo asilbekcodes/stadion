@@ -147,6 +147,7 @@ function Oylik({ selectedDate, handleDateChange }) {
             <option disabled value="">
               Stadion tanlang
             </option>
+            <option value="all">Barcha stadionlar</option>
             {Array.isArray(getStadion) &&
               getStadion.map((stadion) => (
                 <option key={stadion.id} value={stadion.id}>

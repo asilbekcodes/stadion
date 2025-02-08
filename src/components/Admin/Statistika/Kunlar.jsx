@@ -135,6 +135,7 @@ function Kunlar({
             <option disabled value="">
               Stadion tanlang
             </option>
+            <option value="all">Barcha stadionlar</option>
             {Array.isArray(getSaved) &&
               getSaved.map((stadion) => (
                 <option key={stadion.id} value={stadion.id}>

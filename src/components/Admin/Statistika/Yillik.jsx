@@ -149,6 +149,7 @@ function Yillik({ selectedYear, handleYearChange }) {
             <option disabled value="">
               stadion tanlang
             </option>
+            <option value="all">Barcha stadionlar</option>
             {getYear.map((stadion) => (
               <option key={stadion.id} value={stadion.id}>
                 {stadion.title}
