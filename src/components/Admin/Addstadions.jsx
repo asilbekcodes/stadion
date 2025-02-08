@@ -14,6 +14,7 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import RegionSelect from "./RegionSelect";
 
 function MapClick({ onMapClick }) {
   useMapEvents({
@@ -56,6 +57,17 @@ const StadionAdds = ({ addStadion }) => {
   const [getSaved, setgetSaved] = useState("");
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [position, setPosition] = useState(null);
+
+  const [regionId, setRegionId] = useState(null);
+  const [districtId, setDistrictId] = useState(null);
+
+  const handleSelectRegion = (id) => {
+    setRegionId(id);
+  };
+
+  const handleSelectDistrict = (id) => {
+    setDistrictId(id);
+  };
 
   const Malumot = () => {
     axios
@@ -125,6 +137,8 @@ const StadionAdds = ({ addStadion }) => {
     }
 
     formData.append("address", address.current.value);
+    formData.append("viloyat", regionId);
+    formData.append("tuman", districtId);
     formData.append("latitude", latitude);
     formData.append("longitude", longitude);
     formData.append("kiyinish_xonasi", facilities.kiyinish);
@@ -204,6 +218,7 @@ const StadionAdds = ({ addStadion }) => {
                 required
               />
             </div>
+              <RegionSelect onSelectRegion={handleSelectRegion} onSelectDistrict={handleSelectDistrict}/>
             <div>
               <label className="block mb-2 text-white">
                 Stadion joylashuvi:

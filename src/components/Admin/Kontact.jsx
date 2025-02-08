@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 function Kontact() {
   const [phones, setPhones] = useState([]); // phone raqamlar ro'yxati
   const [isModalVisible, setIsModalVisible] = useState(false); // modalni ko'rsatish holati
-  const [newPhone, setNewPhone] = useState(""); // yangi telefon raqami
+  const [newPhone, setNewPhone] = useState("+998"); // yangi telefon raqami
 
   const getPhones = () => {
     axios
@@ -50,7 +50,7 @@ function Kontact() {
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    setNewPhone("");
+    setNewPhone("+998");
   };
 
   const handleAddPhone = () => {
@@ -142,10 +142,13 @@ function Kontact() {
         ]}
       >
         <Input
-          value={newPhone}
-          onChange={(e) => setNewPhone(e.target.value)}
-          placeholder="Telefon raqamini kiriting"
-          className="my-4"
+           value={newPhone}
+           onChange={(e) => {
+             const onlyNumbers = e.target.value.replace(/[^0-9+]/g, ""); // Faqat '+' va raqamlar qoldiriladi
+             setNewPhone(onlyNumbers);
+           }}
+           placeholder="Telefon raqamini kiriting"
+           className="my-4"
         />
       </Modal>
     </div>
