@@ -13,6 +13,7 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 function MapClick({ onMapClick }) {
   useMapEvents({
@@ -233,7 +234,7 @@ const StadionAdds = ({ addStadion }) => {
             <div>
               <label className="block mb-2 text-white">Stadion holati:</label>
               <div className="flex flex-col gap-3">
-                <div>
+                <div className="flex items-center">
                   <input
                     type="checkbox"
                     name="kiyinish"
@@ -241,9 +242,16 @@ const StadionAdds = ({ addStadion }) => {
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
-                  <span className={`ml-2 text-white  ${!facilities.kiyinish ? "line-through" : ""}`}>Kiyinish xonasi</span>
+                  <span className='ml-2 text-white flex items-center gap-2'>
+                    Kiyinish xonasi
+                    {facilities.kiyinish ? (
+                      <FaCheckCircle className="w-5 h-5 text-green-500" />
+                    ) : (
+                      <FaTimesCircle className="w-5 h-5 text-red-500" />
+                    )}
+                  </span>
                 </div>
-                <div>
+                <div className="flex items-center">
                   <input
                     type="checkbox"
                     name="yuvinish"
@@ -251,9 +259,18 @@ const StadionAdds = ({ addStadion }) => {
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
-                  <span className={`ml-2 text-white ${!facilities.yuvinish ? "line-through" : ""}`}>Yuvinish xonasi</span>
+                  <span
+                    className={`ml-2 text-white flex items-center gap-2`}
+                  >
+                    Yuvinish xonasi
+                    {facilities.yuvinish ? (
+                      <FaCheckCircle className="w-5 h-5 text-green-500" />
+                    ) : (
+                      <FaTimesCircle className="w-5 h-5 text-red-500" />
+                    )}
+                  </span>
                 </div>
-                <div>
+                <div className="flex items-center">
                   <input
                     type="checkbox"
                     name="formal"
@@ -261,9 +278,18 @@ const StadionAdds = ({ addStadion }) => {
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
-                  <span className={`ml-2 text-white ${!facilities.formal ? "line-through" : ""}`}>Formalar</span>
+                  <span
+                    className={`ml-2 text-white flex items-center gap-2 `}
+                  >
+                    Formalar
+                    {facilities.formal ? (
+                      <FaCheckCircle className="w-5 h-5 text-green-500" />
+                    ) : (
+                      <FaTimesCircle className="w-5 h-5 text-red-500" />
+                    )}
+                  </span>
                 </div>
-                <div>
+                <div className="flex items-start">
                   <input
                     type="checkbox"
                     name="yoritish"
@@ -271,9 +297,18 @@ const StadionAdds = ({ addStadion }) => {
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
-                  <span className={`ml-2 text-white ${!facilities.yoritish ? "line-through" : ""}`}>Yoritish</span>
+                  <span
+                    className={`ml-2 text-white flex items-center gap-2`}
+                  >
+                    Yoritish
+                    {facilities.yoritish ? (
+                      <FaCheckCircle className="w-5 h-5 text-green-500" />
+                    ) : (
+                      <FaTimesCircle className="w-5 h-5 text-red-500" />
+                    )}
+                  </span>
                 </div>
-                <div>
+                <div className="flex items-center">
                   <input
                     type="checkbox"
                     name="tishli_oyoqkiyim"
@@ -281,9 +316,18 @@ const StadionAdds = ({ addStadion }) => {
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
-                  <span className={`ml-2 text-white ${!facilities.tishli_oyoqkiyim ? "line-through" : ""}`}>Tishli oyoq kiyim</span>
+                  <span
+                    className={`ml-2 text-white flex items-center gap-2`}
+                  >
+                    Tishli butsalarga ruxsat
+                    {facilities.tishli_oyoqkiyim ? (
+                      <FaCheckCircle className="w-5 h-5 text-green-500" />
+                    ) : (
+                      <FaTimesCircle className="w-5 h-5 text-red-500" />
+                    )}
+                  </span>
                 </div>
-                <div>
+                <div className="flex items-center">
                   <input
                     type="checkbox"
                     name="parkofka"
@@ -291,9 +335,18 @@ const StadionAdds = ({ addStadion }) => {
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
-                  <span className={`ml-2 text-white ${!facilities.parkofka ? "line-through" : ""}`}>Parkofka</span>
+                  <span
+                    className={`ml-2 text-white flex items-center gap-2`}
+                  >
+                    Parkofka
+                    {facilities.parkofka ? (
+                      <FaCheckCircle className="w-5 h-5 text-green-500" />
+                    ) : (
+                      <FaTimesCircle className="w-5 h-5 text-red-500" />
+                    )}
+                  </span>
                 </div>
-                <div>
+                <div className="flex items-center">
                   <input
                     type="checkbox"
                     name="usti_ochiq_yopiq"
@@ -301,7 +354,16 @@ const StadionAdds = ({ addStadion }) => {
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
-                  <span className={`ml-2 text-white ${!facilities.usti_ochiq_yopiq ? "line-through" : ""}`}>Stadiondi ochiq</span>
+                  <span
+                    className={`ml-2 text-white flex items-center gap-2`}
+                  >
+                    Stadion usti yopiq
+                    {facilities.usti_ochiq_yopiq ? (
+                      <FaCheckCircle className="w-5 h-5 text-green-500" />
+                    ) : (
+                      <FaTimesCircle className="w-5 h-5 text-red-500" />
+                    )}
+                  </span>
                 </div>
               </div>
             </div>
