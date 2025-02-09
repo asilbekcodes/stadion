@@ -3,10 +3,10 @@ import figlet from 'figlet';
 
 console.clear();
 console.log(
-  figlet.textSync('Stadion', {
+  figlet.textSync('Stadiontop.uz', {
     font: 'Standard', // Shrift turini o'zgartirishingiz mumkin
     horizontalLayout: 'default',
     verticalLayout: 'default',
   })
 );
-console.log('\nStadion Online Platform');
+console.log('\nStadiontop.uz Online Platform');

@@ -401,7 +401,7 @@ const StadionAdds = ({ addStadion }) => {
               zoom={13}
               style={{ height: "100%", width: "100%" }}
             >
-              <TileLayer url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />
+              <TileLayer url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}" />
               <MapClick onMapClick={handleMapClick} />
               <LocationMarker position={position} setPosition={setPosition} />
             </MapContainer>
