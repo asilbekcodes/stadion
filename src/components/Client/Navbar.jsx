@@ -73,7 +73,7 @@ const Navbar = ({ onRegionSelect }) => {
   }));
 
   const RegionDropdown = () => (
-    <div className="flex items-center gap-1 z-50">
+    <div className="flex items-center gap-1 z-40">
       <IoLocationOutline className="text-gray-600" />
       <Dropdown menu={{ items: menuItems }} trigger={["click"]}>
         <a onClick={(e) => e.preventDefault()}>

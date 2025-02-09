@@ -17,14 +17,17 @@ import Favorites from "./pages/Client/Favorites";
 import Profils from "./pages/Client/Profils";
 import Regester from "./pages/auth/Regester";
 import StadinAdd from "./pages/Admin/StadinAdd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Statistika from "./pages/Admin/Statistika";
 import Times_Pages from "./pages/Admin/Times";
 import Times from "./components/Admin/Times";
 import History from "./pages/Admin/History";
+import Loading from "./components/Loading";
 
 function App() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
   function RoleAuth() {
     if (
       localStorage.getItem("adminToken") &&
@@ -40,100 +43,109 @@ function App() {
   }, []);
 
   const location = useLocation();
-  
+
   useEffect(() => {
-    sessionStorage.setItem('lastPage', location.pathname);
+    sessionStorage.setItem("lastPage", location.pathname);
   }, [location]);
 
   useEffect(() => {
-    const lastPage = sessionStorage.getItem('lastPage');
+    const lastPage = sessionStorage.getItem("lastPage");
     if (lastPage) {
       navigate(lastPage);
     }
   }, [navigate]);
-  return (
-    <Routes>
-      {/* Client page routes */}
-      <Route path="/" element={<Home />} />
-      <Route path="/main" element={<Main />} />
-      <Route path="/*" element={<NotFound />} />
-      <Route path="/about/:resultId" element={<About />} />
-      <Route path="/map" element={<Map />} />
-      <Route path="/auth/login" element={<ClintLogin />} />
-      <Route path="/clintCod" element={<ClintCod />} />
-      <Route path="/clint/register" element={<ClintIsm_familiya />} />
-      <Route path="/clintBron/:resultId" element={<ClintBron />} />
-      <Route path="/ordersPage" element={<OrdersPage />} />
-      <Route path="/favorites" element={<Favorites />} />
-      <Route path="/client/profil" element={<Profils />} />
-      <Route path="/auth/register" element={<Regester />} />
 
-      {/* Admin page routes wrapped with ThemeContextProvider */}
-      <Route
-        path="/dashboard"
-        element={
-          <ThemeContextProvider>
-            <Dashboards />
-          </ThemeContextProvider>
-        }
-      />
-      <Route
-        path="/statistika"
-        element={
-          <ThemeContextProvider>
-            <Statistika />
-          </ThemeContextProvider>
-        }
-      />
-      <Route
-        path="/stadionAdd"
-        element={
-          <ThemeContextProvider>
-            <StadinAdd />
-          </ThemeContextProvider>
-        }
-      />
-      <Route
-        path="/orders"
-        element={
-          <ThemeContextProvider>
-            <Orders />
-          </ThemeContextProvider>
-        }
-      />
-      <Route
-        path="/times"
-        element={
-          <ThemeContextProvider>
-            <Times_Pages />
-          </ThemeContextProvider>
-        }
-      />
-      <Route
-        path="/profil"
-        element={
-          <ThemeContextProvider>
-            <Profil />
-          </ThemeContextProvider>
-        }
-      />
-      <Route
-        path="/time_boshqarish"
-        element={
-          <ThemeContextProvider>
-            <Times />
-          </ThemeContextProvider>
-        }
-      />
-      <Route
-        path="/history"
-        element={
-          <ThemeContextProvider>
-            <History />
-          </ThemeContextProvider>
-        }
-      />
-    </Routes>
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, [location]);
+  return (
+    <>
+      {loading && <Loading isLoading={loading} fullScreen />}
+      <Routes>
+        {/* Client page routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/main" element={<Main />} />
+        <Route path="/*" element={<NotFound />} />
+        <Route path="/about/:resultId" element={<About />} />
+        <Route path="/map" element={<Map />} />
+        <Route path="/auth/login" element={<ClintLogin />} />
+        <Route path="/clintCod" element={<ClintCod />} />
+        <Route path="/clint/register" element={<ClintIsm_familiya />} />
+        <Route path="/clintBron/:resultId" element={<ClintBron />} />
+        <Route path="/ordersPage" element={<OrdersPage />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/client/profil" element={<Profils />} />
+        <Route path="/auth/register" element={<Regester />} />
+
+        {/* Admin page routes wrapped with ThemeContextProvider */}
+        <Route
+          path="/dashboard"
+          element={
+            <ThemeContextProvider>
+              <Dashboards />
+            </ThemeContextProvider>
+          }
+        />
+        <Route
+          path="/statistika"
+          element={
+            <ThemeContextProvider>
+              <Statistika />
+            </ThemeContextProvider>
+          }
+        />
+        <Route
+          path="/stadionAdd"
+          element={
+            <ThemeContextProvider>
+              <StadinAdd />
+            </ThemeContextProvider>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <ThemeContextProvider>
+              <Orders />
+            </ThemeContextProvider>
+          }
+        />
+        <Route
+          path="/times"
+          element={
+            <ThemeContextProvider>
+              <Times_Pages />
+            </ThemeContextProvider>
+          }
+        />
+        <Route
+          path="/profil"
+          element={
+            <ThemeContextProvider>
+              <Profil />
+            </ThemeContextProvider>
+          }
+        />
+        <Route
+          path="/time_boshqarish"
+          element={
+            <ThemeContextProvider>
+              <Times />
+            </ThemeContextProvider>
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            <ThemeContextProvider>
+              <History />
+            </ThemeContextProvider>
+          }
+        />
+      </Routes>
+    </>
   );
 }
 
