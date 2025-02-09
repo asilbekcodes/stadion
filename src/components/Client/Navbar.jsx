@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
-  FaHeart,
+  FaRegHeart,
+  FaRegUser,
   FaSearch,
-  FaShoppingBag,
-  FaUser,
-  FaUserShield,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { baseUrl } from "../../helpers/api/baseUrl";
@@ -13,7 +11,8 @@ import Modal from "./Modal";
 import logo1 from "../../assets/StadionTop.png";
 import { IoLocationOutline } from "react-icons/io5";
 import { Dropdown, Space } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { IoIosArrowDown } from "react-icons/io";
+import { AiOutlineShopping } from "react-icons/ai";
 
 const Navbar = ({ onRegionSelect }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,13 +72,13 @@ const Navbar = ({ onRegionSelect }) => {
   }));
 
   const RegionDropdown = () => (
-    <div className="flex items-center gap-1 z-40">
+    <div className="flex items-center gap-1 z-40 cursor-pointer">
       <IoLocationOutline className="text-gray-600" />
       <Dropdown menu={{ items: menuItems }} trigger={["click"]}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
             {selectedRegion}
-            <DownOutlined />
+            <IoIosArrowDown />
           </Space>
         </a>
       </Dropdown>
@@ -169,10 +168,10 @@ const Navbar = ({ onRegionSelect }) => {
               }}
               className="flex items-center text-gray-700 hover:text-black"
             >
-              <FaUser className="mr-1" />
+              <FaRegUser className="mr-1" />
               {localStorage.getItem("userToken") ? "Profil" : "Kirish"}
             </Link>
-            {!localStorage.getItem("userToken") && (
+            {/* {!localStorage.getItem("userToken") && (
               <Link
                 to="/auth/login"
                 className="flex items-center text-gray-700 hover:text-black"
@@ -180,19 +179,19 @@ const Navbar = ({ onRegionSelect }) => {
                 <FaUserShield className="text-xl mr-1" />
                 Admin
               </Link>
-            )}
+            )} */}
             <Link
               to="/favorites"
               className="flex items-center text-gray-700 hover:text-black"
             >
-              <FaHeart className="mr-1" />
+              <FaRegHeart className="mr-1 text-[17px]" />
               Sevimlilar
             </Link>
             <Link
               to="/ordersPage"
               className="flex items-center text-gray-700 hover:text-black"
             >
-              <FaShoppingBag className="mr-1" />
+              <AiOutlineShopping className="mr-1 text-xl" />
               Buyurtmalar
             </Link>
           </div>
