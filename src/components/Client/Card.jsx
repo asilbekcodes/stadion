@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { GiRoundStar } from "react-icons/gi";
 import { baseUrl } from "../../helpers/api/baseUrl";
 
-function Card({ className, classNames, classNm }) {
+function Card({ className, classNames, classNm, selectedRegionId }) {
   const [stadiums, setStadiums] = useState([]); // Stadionlar ro'yxati
   const [favorites, setFavorites] = useState([]); // Sevimli stadionlar ro'yxati
 
@@ -19,7 +19,9 @@ function Card({ className, classNames, classNm }) {
   // API orqali stadionlarni olish
   const getCard = () => {
     axios
-      .get(`${baseUrl}stadion/all-stadion/`)
+      .get(`${baseUrl}stadion/all-stadion/`, {
+        params: { tuman: selectedRegionId },
+      }) 
       .then((res) => {
         const storedLikes = getStoredData("stadiums");
 
@@ -41,7 +43,7 @@ function Card({ className, classNames, classNm }) {
   // Sahifa birinchi yuklanganda API chaqirish
   useEffect(() => {
     getCard();
-  }, []);
+  }, [selectedRegionId]);
 
   // Like holatini o'zgartiruvchi funksiya
   const handleLikeClick = (index) => {

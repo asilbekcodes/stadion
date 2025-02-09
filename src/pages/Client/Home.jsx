@@ -32,9 +32,15 @@ function Home() {
 
     fetchMarkers();
   }, []);
+
+  const [selectedRegionId, setSelectedRegionId] = useState(null)
+
+  const handleRegionSelect = (regionId) => {
+    setSelectedRegionId(regionId)
+  }
   return (
     <div>
-      <Navbar />
+      <Navbar onRegionSelect={handleRegionSelect}/>
       <div className="min-h-screen bg-gray-50 p-4 lg:px-40">
         <div className="hidden lg:block">
           <BannerCarousel />
@@ -55,6 +61,7 @@ function Home() {
             </div>
           </div>
           <Card
+            selectedRegionId={selectedRegionId}
             className={"overflow-x-scroll md:overflow-x-hidden"}
             classNames={
               "grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-[330px] gap-y-5 sm:gap-5"
@@ -75,6 +82,7 @@ function Home() {
               </Link>
             </div>
             <Card
+              selectedRegionId={selectedRegionId}
               className={"overflow-x-scroll md:overflow-x-hidden"}
               classNames={
                 "grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-[330px] gap-y-5 sm:gap-5"
