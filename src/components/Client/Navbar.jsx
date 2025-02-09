@@ -109,9 +109,6 @@ const Navbar = ({ onRegionSelect }) => {
             <span className="text-sm text-gray-700 cursor-pointer">
               Savol-javob
             </span>
-            <span className="text-sm text-gray-700 cursor-pointer">
-              Buyurtmalarim
-            </span>
 
             {/* Til tanlash */}
             <div className="flex items-center space-x-1 cursor-pointer">
@@ -202,20 +199,20 @@ const Navbar = ({ onRegionSelect }) => {
         </div>
 
         {/* Telefon versiyasi */}
-        <div className="relative w-full lg:hidden">
+        <div className="flex items-center justify-between gap-2 w-full lg:hidden">
           <input
             type="search"
             id="search-mobile"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="py-3 pl-10 pr-3 w-full bg-gray-100 text-sm text-gray-900 rounded-lg border border-gray-300 outline-none"
+            className="py-3 pl-10 pr-3 ml-4 w-full bg-gray-100 text-sm text-gray-900 rounded-lg border border-gray-300 outline-none"
             placeholder="Qidirish..."
             required
           />
-          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+          <FaSearch className="absolute top-4 left-7" />
           {/* Filtrlash natijalarini ko'rsatish */}
           {filteredData.length > 0 && (
-            <ul className="absolute top-14 left-0 w-full bg-white shadow-lg rounded-lg z-10 max-h-52 overflow-y-auto">
+            <ul className="absolute top-14 left-0 w-full bg-white shadow-lg rounded-lg z-50 max-h-52 overflow-y-auto">
               {filteredData.map((item) => (
                 <Link to={`/about/${item.id}`} key={item.id}>
                   <li
@@ -228,6 +225,9 @@ const Navbar = ({ onRegionSelect }) => {
               ))}
             </ul>
           )}
+          <button className="py-3 px-2 mr-4 bg-gray-100 text-sm text-gray-900 rounded-lg border border-gray-300">
+            <RegionDropdown />
+          </button>
         </div>
         <div className="z-50">
           <Modal
