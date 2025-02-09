@@ -1,58 +1,66 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import { FaHeart, FaSearch, FaShoppingBag, FaUser, FaUserShield } from "react-icons/fa"
-import { Link } from "react-router-dom"
-import { baseUrl } from "../../helpers/api/baseUrl"
-import Modal from "./Modal"
-import logo1 from "../../assets/StadionTop.png"
-import { IoLocationOutline } from "react-icons/io5"
-import { Dropdown, Space } from "antd"
-import { DownOutlined } from "@ant-design/icons"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  FaHeart,
+  FaSearch,
+  FaShoppingBag,
+  FaUser,
+  FaUserShield,
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { baseUrl } from "../../helpers/api/baseUrl";
+import Modal from "./Modal";
+import logo1 from "../../assets/StadionTop.png";
+import { IoLocationOutline } from "react-icons/io5";
+import { Dropdown, Space } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 
 const Navbar = ({ onRegionSelect }) => {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [data, setData] = useState([])
-  const [filteredData, setFilteredData] = useState([])
-  const [isPhoneModalOpen, setIsPhoneModalOpen] = React.useState(false)
-  const [regions, setRegions] = useState([])
-  const [selectedRegion, setSelectedRegion] = useState("Viloyatlar")
+  const [searchTerm, setSearchTerm] = useState("");
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [isPhoneModalOpen, setIsPhoneModalOpen] = React.useState(false);
+  const [regions, setRegions] = useState([]);
+  const [selectedRegion, setSelectedRegion] = useState("Viloyatlar");
 
   // Backenddan ma'lumotlarni olish
   useEffect(() => {
     axios
       .get(`${baseUrl}stadion/all-stadion/`)
       .then((response) => {
-        setData(response.data)
+        setData(response.data);
       })
-      .catch((error) => console.error("Error fetching data:", error))
-  }, [])
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
 
   // Qidiruv natijalarini filtrlash
   useEffect(() => {
     if (searchTerm.trim() === "") {
-      setFilteredData([])
+      setFilteredData([]);
     } else {
-      const results = data.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()))
-      setFilteredData(results)
+      const results = data.filter((item) =>
+        item.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredData(results);
     }
-  }, [searchTerm, data])
+  }, [searchTerm, data]);
 
   useEffect(() => {
     axios
       .get(`${baseUrl}utils/viloyatlar/`)
       .then((response) => {
-        setRegions(response.data)
+        setRegions(response.data);
       })
       .catch((error) => {
-        console.error("Xatolik yuz berdi:", error)
-      })
-  }, [])
+        console.error("Xatolik yuz berdi:", error);
+      });
+  }, []);
 
   const handleRegionSelect = (district) => {
-    if (!district.id) return; 
-    setSelectedRegion(district.name)
-    onRegionSelect(district.id )
-  }
+    if (!district.id) return;
+    setSelectedRegion(district.name);
+    onRegionSelect(district.id);
+  };
 
   const menuItems = regions.map((region) => ({
     key: region.id,
@@ -62,7 +70,7 @@ const Navbar = ({ onRegionSelect }) => {
       label: district.name,
       onClick: () => handleRegionSelect(district),
     })),
-  }))
+  }));
 
   const RegionDropdown = () => (
     <div className="flex items-center gap-1 z-50">
@@ -76,35 +84,51 @@ const Navbar = ({ onRegionSelect }) => {
         </a>
       </Dropdown>
     </div>
-  )
+  );
 
   return (
     <div>
-      <nav className="flex items-center justify-between p-3 lg:px-40 lg:py-2 border-b bg-gray-100">
-        {/* Chap taraf */}
-        <div className="flex items-center space-x-6">
-          <RegionDropdown />
-          <span className="text-sm text-gray-700 cursor-pointer">Stadionlar</span>
-        </div>
-
-        {/* O'ng taraf */}
-        <div className="flex items-center space-x-4">
-          <span className="text-sm text-blue-700 cursor-pointer">Admin bo'lish</span>
-          <span className="text-sm text-blue-700 cursor-pointer">Stadion qo'shish</span>
-          <span className="text-sm text-gray-700 cursor-pointer">Savol-javob</span>
-          <span className="text-sm text-gray-700 cursor-pointer">Buyurtmalarim</span>
-
-          {/* Til tanlash */}
-          <div className="flex items-center space-x-1 cursor-pointer">
-            <span className="text-sm text-gray-700">O'zbekcha</span>
+      <div className="hidden md:block">
+        <nav className="flex items-center justify-between p-3 lg:px-40 lg:py-2 border-b bg-gray-100">
+          {/* Chap taraf */}
+          <div className="flex items-center space-x-6">
+            <RegionDropdown />
+            <span className="text-sm text-gray-700 cursor-pointer">
+              Stadionlar
+            </span>
           </div>
-        </div>
-      </nav>
+
+          {/* O'ng taraf */}
+          <div className="flex items-center space-x-4">
+            <span className="text-sm text-blue-700 cursor-pointer">
+              Admin bo'lish
+            </span>
+            <span className="text-sm text-blue-700 cursor-pointer">
+              Stadion qo'shish
+            </span>
+            <span className="text-sm text-gray-700 cursor-pointer">
+              Savol-javob
+            </span>
+            <span className="text-sm text-gray-700 cursor-pointer">
+              Buyurtmalarim
+            </span>
+
+            {/* Til tanlash */}
+            <div className="flex items-center space-x-1 cursor-pointer">
+              <span className="text-sm text-gray-700">O'zbekcha</span>
+            </div>
+          </div>
+        </nav>
+      </div>
       <nav className="flex items-center justify-between bg-gray-50 pb-3 lg:px-40 lg:pb-6">
         {/* Kompyuter versiyasi */}
         <div className="hidden lg:flex items-center justify-between w-full">
           <Link to={"/"} className="w-32 h-16">
-            <img src={logo1 || "/placeholder.svg"} className="relative bottom-7" alt="logo" />
+            <img
+              src={logo1 || "/placeholder.svg"}
+              className="relative bottom-7"
+              alt="logo"
+            />
           </Link>
           <div className="w-[200px] lg:w-[350px] xl:w-[500px] flex items-center relative">
             <input
@@ -127,7 +151,10 @@ const Navbar = ({ onRegionSelect }) => {
               <ul className="absolute top-12 left-0 w-full bg-white shadow-lg rounded-lg z-10 max-h-52 overflow-y-auto">
                 {filteredData.map((item) => (
                   <Link to={`/about/${item.id}`} key={item.id}>
-                    <li className="hover:cursor-pointer hover:bg-gray-50 p-2" onClick={() => setSearchTerm(item.title)}>
+                    <li
+                      className="hover:cursor-pointer hover:bg-gray-50 p-2"
+                      onClick={() => setSearchTerm(item.title)}
+                    >
                       {item.title}
                     </li>
                   </Link>
@@ -140,7 +167,7 @@ const Navbar = ({ onRegionSelect }) => {
               to={localStorage.getItem("userToken") ? "/client/profil" : "#"}
               onClick={() => {
                 if (!localStorage.getItem("userToken")) {
-                  setIsPhoneModalOpen(true)
+                  setIsPhoneModalOpen(true);
                 }
               }}
               className="flex items-center text-gray-700 hover:text-black"
@@ -149,16 +176,25 @@ const Navbar = ({ onRegionSelect }) => {
               {localStorage.getItem("userToken") ? "Profil" : "Kirish"}
             </Link>
             {!localStorage.getItem("userToken") && (
-              <Link to="/auth/login" className="flex items-center text-gray-700 hover:text-black">
+              <Link
+                to="/auth/login"
+                className="flex items-center text-gray-700 hover:text-black"
+              >
                 <FaUserShield className="text-xl mr-1" />
                 Admin
               </Link>
             )}
-            <Link to="/favorites" className="flex items-center text-gray-700 hover:text-black">
+            <Link
+              to="/favorites"
+              className="flex items-center text-gray-700 hover:text-black"
+            >
               <FaHeart className="mr-1" />
               Sevimlilar
             </Link>
-            <Link to="/ordersPage" className="flex items-center text-gray-700 hover:text-black">
+            <Link
+              to="/ordersPage"
+              className="flex items-center text-gray-700 hover:text-black"
+            >
               <FaShoppingBag className="mr-1" />
               Buyurtmalar
             </Link>
@@ -182,7 +218,10 @@ const Navbar = ({ onRegionSelect }) => {
             <ul className="absolute top-14 left-0 w-full bg-white shadow-lg rounded-lg z-10 max-h-52 overflow-y-auto">
               {filteredData.map((item) => (
                 <Link to={`/about/${item.id}`} key={item.id}>
-                  <li className="hover:cursor-pointer hover:bg-gray-50 p-2" onClick={() => setSearchTerm(item.title)}>
+                  <li
+                    className="hover:cursor-pointer hover:bg-gray-50 p-2"
+                    onClick={() => setSearchTerm(item.title)}
+                  >
                     {item.title}
                   </li>
                 </Link>
@@ -191,12 +230,14 @@ const Navbar = ({ onRegionSelect }) => {
           )}
         </div>
         <div className="z-50">
-          <Modal isOpen={isPhoneModalOpen} onClose={() => setIsPhoneModalOpen(false)} />
+          <Modal
+            isOpen={isPhoneModalOpen}
+            onClose={() => setIsPhoneModalOpen(false)}
+          />
         </div>
       </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
-
+export default Navbar;
