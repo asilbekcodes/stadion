@@ -7,13 +7,17 @@ import { baseUrl } from "../../helpers/api/baseUrl";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
-import { IoIosArrowBack, IoMdCheckmarkCircleOutline } from "react-icons/io";
-import { ImCross } from "react-icons/im";
+import { IoIosArrowBack } from "react-icons/io";
 import MapComponent from "../../components/MapComponent";
 import CommitLog from "../../components/Client/CommitLog";
 import { Box, TextField, Button } from "@mui/material";
 import { userConfig } from "../../helpers/token/userToken";
 import Footers from "./Footer";
+import icon1 from "../../assets/icons/Vector.svg";
+import icon2 from "../../assets/icons/Group.svg";
+import icon3 from "../../assets/icons/Group 1703.svg";
+import icon4 from "../../assets/icons/Group (1).svg";
+import icon5 from "../../assets/icons/Frame 1708.svg";
 
 function About() {
   const navigate = useNavigate();
@@ -120,7 +124,7 @@ function About() {
               <span className="text-green-500">
                 <IoLocationOutline />
               </span>
-              {result.address}
+              {result.viloyat + ' ' + result.tuman + ' ' + result.address}
             </p>
 
             <div className="w-full mb-8 md:mb-0">
@@ -144,60 +148,32 @@ function About() {
               <p className="font-bold">Sharoitlar</p>
               <div className="mt-3 font-sans">
                 <div className="flex items-center justify-between">
-                  <p>Kiyinish xonasi:</p>
-                  {result.kiyinish_xonasi ? (
-                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
-                  ) : (
-                    <ImCross className="text-red-500" />
-                  )}
+                  <p className={`${result.kiyinish_xonasi ? "" : "line-through" }`}>Kiyinish xonasi:</p>
+                  <img src={icon1} alt="" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <p>Dush:</p>
-                  {result.dush ? (
-                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
-                  ) : (
-                    <ImCross className="text-red-500" />
-                  )}
+                  <p className={`${result.dush ? "" : "line-through text-gray-400" }`}>Yuvinish xonasi:</p>
+                  <img src={icon4} alt="" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <p>Yoritish:</p>
-                  {result.yoritish ? (
-                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
-                  ) : (
-                    <ImCross className="text-red-500" />
-                  )}
+                  <p className={`${result.yoritish ? "" : "line-through text-gray-400" }`}>Yoritish:</p>
+                  <img src={icon3} alt="" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <p>Parkovka:</p>
-                  {result.parkofka ? (
-                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
-                  ) : (
-                    <ImCross className="text-red-500" />
-                  )}
+                  <p className={`${result.parkofka ? "" : "line-through text-gray-400" }`}>Parkovka:</p>
+                  <img src={icon5} alt="" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <p>Forma:</p>
-                  {result.forma ? (
-                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
-                  ) : (
-                    <ImCross className="text-red-500" />
-                  )}
+                  <p className={`${result.forma ? "" : "line-through text-gray-400" }`}>Formalar:</p>
+                  <img src={icon2} alt="" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <p>Tishli oyoq kiyim:</p>
-                  {result.tishli_oyoqkiyim ? (
-                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
-                  ) : (
-                    <ImCross className="text-red-500" />
-                  )}
+                  <p className={`${result.tishli_oyoqkiyim ? "" : "line-through text-gray-400" }`}>Tishli butsalarga ruxsat:</p>
+                  {/* <img src={icon6} alt="" /> */}
                 </div>
                 <div className="flex items-center justify-between">
-                  <p>Stadion usti ochiq:</p>
-                  {result.usti_ochiq_yopiq ? (
-                    <IoMdCheckmarkCircleOutline className="text-green-500 text-lg" />
-                  ) : (
-                    <ImCross className="text-red-500" />
-                  )}
+                  <p className={`${result.usti_ochiq_yopiq ? "" : "line-through text-gray-400" }`}>Stadion usti yopiq:</p>
+                  {/* <img src={icon7} alt="" /> */}
                 </div>
               </div>
             </div>

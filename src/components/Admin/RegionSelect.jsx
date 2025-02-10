@@ -35,7 +35,7 @@ export default function RegionSelect({ onSelectRegion, onSelectDistrict }) {
     };
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="md:flex items-center gap-4">
       <div>
         <label className="block mb-2 dark:text-gray-100 text-gray-700">
           Viloyatni tanlang:
@@ -55,7 +55,7 @@ export default function RegionSelect({ onSelectRegion, onSelectDistrict }) {
       </div>
 
       <div>
-        <label className="block mb-2 dark:text-gray-100 text-gray-700">
+        <label className="block mb-2 md:mt-0 mt-4 dark:text-gray-100 text-gray-700">
           Tumanni tanlang:
         </label>
         <select
