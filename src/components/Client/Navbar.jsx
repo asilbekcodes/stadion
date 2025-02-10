@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  FaRegHeart,
-  FaRegUser,
-  FaSearch,
-} from "react-icons/fa";
+import { FaRegHeart, FaRegUser, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import Modal from "./Modal";
@@ -83,7 +79,7 @@ const Navbar = ({ onRegionSelect }) => {
         <a onClick={(e) => e.preventDefault()}>
           <Space>
             <span className="hidden md:block">{selectedRegion}</span>
-            <IoIosArrowDown className="md:mb-0 mb-1"/>
+            <IoIosArrowDown className="md:mb-0 mb-1" />
           </Space>
         </a>
       </Dropdown>
@@ -104,18 +100,45 @@ const Navbar = ({ onRegionSelect }) => {
 
           {/* O'ng taraf */}
           <div className="flex items-center space-x-4">
-            <span className="text-sm text-blue-700 cursor-pointer">
+            <Link
+              to="/auth/login"
+              className="text-sm text-blue-700 cursor-pointer"
+            >
               Admin bo'lish
-            </span>
-            <span className="text-sm text-blue-700 cursor-pointer">
+            </Link>
+            <Link
+              to="/auth/login"
+              className="text-sm text-blue-700 cursor-pointer"
+            >
               Stadion qo'shish
-            </span>
+            </Link>
             <span className="text-sm text-gray-700 cursor-pointer">
               Savol-javob
             </span>
 
             {/* Til tanlash */}
             <div className="flex items-center space-x-1 cursor-pointer">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="rounded-full"
+              >
+                <path
+                  d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20Z"
+                  fill="#F4F5F5"
+                ></path>
+                <g>
+                  <rect width="20" height="20" fill="#0099B5"></rect>
+                  <rect y="13" width="20" height="7" fill="#1EB53A"></rect>
+                  <rect y="13" width="20" height="1" fill="#CE1126"></rect>
+                  <rect y="6" width="20" height="1" fill="#CE1126"></rect>
+                  <rect y="6.5" width="20" height="7" fill="white"></rect>
+                </g>
+              </svg>
+
               <span className="text-sm text-gray-700">O'zbekcha</span>
             </div>
           </div>
