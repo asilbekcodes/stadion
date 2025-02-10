@@ -9,10 +9,12 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { baseUrl } from "../../helpers/api/baseUrl"
 import { ChevronLeft, ChevronRight } from "@mui/icons-material"
+import { useNavigate } from "react-router-dom"
 
 const BannerCarousel = () => {
   const [img, setImg] = useState([])
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   function getImg() {
     axios
@@ -29,7 +31,7 @@ const BannerCarousel = () => {
 
   useEffect(() => {
     getImg()
-  }, []) //Fixed: Added empty dependency array to useEffect
+  }, [])
 
   if (loading) {
     return <div>Loading...</div>
@@ -62,7 +64,11 @@ const BannerCarousel = () => {
         className="h-[450px] xl:h-full rounded-lg"
       >
         {img.map((slide, index) => (
-          <SwiperSlide key={index} className="flex justify-center items-center">
+          <SwiperSlide
+            key={index}
+            className="flex justify-center items-center cursor-pointer"
+            onClick={() => navigate(`/about/${slide.id}`)} // Yo'naltirish
+          >
             <div className="w-full h-[450px] xl:w-full xl:h-full">
               {slide.photo ? (
                 <img
@@ -79,15 +85,14 @@ const BannerCarousel = () => {
       </Swiper>
 
       {/* Custom Navigation Buttons */}
-      <button className="swiper-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-40 rounded-full bg-white  opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <button className="swiper-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-40 rounded-full bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <ChevronLeft className="w-6 h-6" />
       </button>
       <button className="swiper-button-next absolute right-4 top-1/2 -translate-y-1/2 z-40 rounded-full bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <ChevronRight  className="w-6 h-2 " />
+        <ChevronRight className="w-6 h-6" />
       </button>
     </div>
   )
 }
 
 export default BannerCarousel
-
