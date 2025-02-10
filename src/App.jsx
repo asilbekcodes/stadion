@@ -24,6 +24,7 @@ const Statistika = lazy(() => import("./pages/Admin/Statistika"));
 const TimesPages = lazy(() => import("./pages/Admin/Times"));
 const Times = lazy(() => import("./components/Admin/Times"));
 const History = lazy(() => import("./pages/Admin/History"));
+const General = lazy(() => import("./components/Admin/Addstadion/General"));
 
 function App() {
   const navigate = useNavigate();
@@ -136,6 +137,14 @@ function App() {
             element={
               <ThemeContextProvider>
                 <History />
+              </ThemeContextProvider>
+            }
+          />
+          <Route
+            path="/general"
+            element={
+              <ThemeContextProvider>
+                <General />
               </ThemeContextProvider>
             }
           />

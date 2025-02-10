@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
-import { IoLocationOutline } from "react-icons/io5";
+import { IoLocationOutline, IoShirtOutline } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
 import MapComponent from "../../components/MapComponent";
 import CommitLog from "../../components/Client/CommitLog";
@@ -165,7 +165,7 @@ function About() {
                 </div>
                 <div className="flex items-center justify-between">
                   <p className={`${result.forma ? "" : "line-through text-gray-400" }`}>Formalar:</p>
-                  <img src={icon2} alt="" />
+                  <IoShirtOutline className="text-xl" />
                 </div>
                 <div className="flex items-center justify-between">
                   <p className={`${result.tishli_oyoqkiyim ? "" : "line-through text-gray-400" }`}>Tishli butsalarga ruxsat:</p>
