@@ -61,9 +61,14 @@ const Navbar = ({ onRegionSelect }) => {
     onRegionSelect(district.id);
   };
 
+  const isMobile = window.innerWidth <= 768;
+
+  const truncate = (text, maxLength = 20) =>
+    text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+
   const menuItems = regions.map((region) => ({
     key: region.id,
-    label: region.name,
+    label: isMobile ? truncate(region.name) : region.name,
     children: region.tumanlar.map((district) => ({
       key: district.id,
       label: district.name,
@@ -77,8 +82,8 @@ const Navbar = ({ onRegionSelect }) => {
       <Dropdown menu={{ items: menuItems }} trigger={["click"]}>
         <a onClick={(e) => e.preventDefault()}>
           <Space>
-            {selectedRegion}
-            <IoIosArrowDown />
+            <span className="hidden md:block">{selectedRegion}</span>
+            <IoIosArrowDown className="md:mb-0 mb-1"/>
           </Space>
         </a>
       </Dropdown>
@@ -198,7 +203,7 @@ const Navbar = ({ onRegionSelect }) => {
         </div>
 
         {/* Telefon versiyasi */}
-        <div className="flex items-center justify-between gap-2 w-full lg:hidden">
+        <div className="flex items-center justify-between gap-2 w-full lg:hidden mt-3">
           <input
             type="search"
             id="search-mobile"
@@ -208,7 +213,7 @@ const Navbar = ({ onRegionSelect }) => {
             placeholder="Qidirish..."
             required
           />
-          <FaSearch className="absolute top-4 left-7" />
+          <FaSearch className="absolute top-7 left-7" />
           {/* Filtrlash natijalarini ko'rsatish */}
           {filteredData.length > 0 && (
             <ul className="absolute top-14 left-0 w-full bg-white shadow-lg rounded-lg z-50 max-h-52 overflow-y-auto">
@@ -224,7 +229,7 @@ const Navbar = ({ onRegionSelect }) => {
               ))}
             </ul>
           )}
-          <button className="py-3 px-2 mr-4 bg-gray-100 text-sm text-gray-900 rounded-lg border border-gray-300">
+          <button className="py-[9.6px] px-2 mr-4 bg-gray-100 text-sm text-gray-900 rounded-lg border border-gray-300">
             <RegionDropdown />
           </button>
         </div>

@@ -1,8 +1,9 @@
 // import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaHome, FaReceipt, FaHeart, FaUser } from "react-icons/fa";
+import { FaHome, FaReceipt, FaHeart, FaUser, FaRegUser, FaRegHeart } from "react-icons/fa";
 import ModalComponent from "./Modal";
 import { useState } from "react";
+import { AiOutlineHome, AiOutlineShopping } from "react-icons/ai";
 
 const Footer = () => {
   const location = useLocation();
@@ -24,7 +25,7 @@ const Footer = () => {
             currentPath === "/" ? "text-blue-500" : ""
           }`}
         >
-          <FaHome className="text-xl mb-1" />
+          <AiOutlineHome className="text-xl mb-1" />
           <span>Bosh sahifa</span>
         </Link>
         <Link
@@ -33,7 +34,7 @@ const Footer = () => {
             currentPath === "/ordersPage" ? "text-blue-500" : ""
           }`}
         >
-          <FaReceipt className="text-xl mb-1" />
+          <AiOutlineShopping className="text-xl mb-1" />
           <span>Buyurtmalar</span>
         </Link>
         <Link
@@ -42,7 +43,7 @@ const Footer = () => {
             currentPath === "/favorites" ? "text-blue-500" : ""
           }`}
         >
-          <FaHeart className="text-xl mb-1" />
+          <FaRegHeart className="text-xl mb-1" />
           <span>Sevimlilar</span>
         </Link>
         <Link
@@ -56,7 +57,7 @@ const Footer = () => {
             currentPath === "/client/profil" ? "text-blue-500" : ""
           }`}
         >
-          <FaUser className="text-xl mb-1" />
+          <FaRegUser className="text-xl mb-1" />
           <span>{localStorage.getItem("userToken") ? "Profil" : "Kirish"}</span>
         </Link>
       </div>

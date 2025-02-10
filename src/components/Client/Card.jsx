@@ -102,16 +102,16 @@ function Card({ className, classNames, classNm, selectedRegionId }) {
                     )}
                     {stadium.star || "Bu hali yangi"}
                   </span>
-                  <span className="text-xs px-1 pb-0.5 text-white bg-green-600">
+                  <span className="text-xs px-1 text-white bg-green-600">
                     {stadium.star ? "" : "Yangi"}
                   </span>
                 </div>
                 <h3 className="text-sm mt-3 mb-1">{stadium.title}</h3>
-                <p className="text-xs flex items-center gap-1">
-                  <span className="text-green-500">
+                <p className="text-xs flex items-start gap-1">
+                  <span className="text-green-500 mt-1">
                     <IoLocationOutline />
                   </span>
-                  {stadium.address || "Manzil kiritilmagan"}
+                  {stadium.viloyat + ' ' + stadium.tuman + ' ' + stadium.address || "Manzil kiritilmagan"}
                 </p>
                 <p className="text-sm font-semibold mt-5">
                   {stadium.price ? stadium.price.toLocaleString("ru-RU") : "0"} so`m
