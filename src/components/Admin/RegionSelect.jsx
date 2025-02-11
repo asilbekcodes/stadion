@@ -35,13 +35,13 @@ export default function RegionSelect({ onSelectRegion, onSelectDistrict }) {
     };
 
   return (
-    <div className="md:flex items-center gap-4">
-      <div>
-        <label className="block mb-2 dark:text-gray-100 text-gray-700">
-          Viloyatni tanlang:
+    <div className="">
+      <div className="flex flex-col md:flex-row gap-[12px] ">
+        <label className="block md:mb-2 md:text-lg dark:text-gray-100 text-gray-700">
+          Viloyatni tanlang:<span className="text-red-500 mx-2">*</span>
         </label>
         <select
-          className="p-2 border rounded dark:bg-gray-800 dark:text-gray-100"
+          className="p-2 border border-gray-700 dark:border-gray-300 rounded dark:bg-gray-800 dark:text-gray-100"
           value={selectedRegion}
           onChange={handleRegionChange}
         >
@@ -54,12 +54,12 @@ export default function RegionSelect({ onSelectRegion, onSelectDistrict }) {
         </select>
       </div>
 
-      <div>
-        <label className="block mb-2 md:mt-0 mt-4 dark:text-gray-100 text-gray-700">
-          Tumanni tanlang:
+      <div className="flex flex-col md:flex-row gap-[12px] mt-4">
+        <label className="block md:text-lg md:mb-2 dark:text-gray-100 text-gray-700">
+          Tumanni tanlang:<span className="text-red-500 mx-2">*</span>
         </label>
         <select
-          className="p-2 border rounded dark:bg-gray-800 dark:text-gray-100"
+          className="p-2 border border-gray-700 dark:border-gray-300 rounded dark:bg-gray-800 dark:text-gray-100"
           value={selectedDistrict}
           onChange={handleDistrictChange}
           disabled={!selectedRegion}

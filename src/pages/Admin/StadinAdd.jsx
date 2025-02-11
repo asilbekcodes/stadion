@@ -7,6 +7,7 @@ import { IoClose } from "react-icons/io5";
 import { Adminconfig } from "../../helpers/token/admintoken";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const StadinAdd = ({ stadionCount }) => {
   const [getAdd, setGetadd] = useState(false);
@@ -35,19 +36,19 @@ const StadinAdd = ({ stadionCount }) => {
       [name]: checked,
     }));
   };
-  const imgRef = useRef()
+  const imgRef = useRef();
 
   // Tasvirlarni yuborish
   const postPhoto = () => {
     const formData = new FormData();
-  
+
     if (!imgRef.current || imgRef.current.files.length === 0) {
       toast.error("Iltimos, stadion rasmini tanlang!");
       return;
     }
-  
+
     formData.append("image", imgRef.current.files[0]);
-  
+
     axios
       .post(
         `${baseUrl}stadion/stadion-images/${selectedItem.id}/add/`,
@@ -64,7 +65,6 @@ const StadinAdd = ({ stadionCount }) => {
         toast.error("Rasm yuklashda xatolik yuz berdi.");
       });
   };
-
 
   function addStadion() {
     setGetadd(!getAdd);
@@ -143,12 +143,13 @@ const StadinAdd = ({ stadionCount }) => {
     <Layout>
       <div className="bg-gray-100 min-h-[100vh] dark:bg-gray-900">
         <div className="p-4 md:p-8">
-          <button
-            onClick={addStadion}
-            className="flex items-center gap-2 bg-slate-500 dark:bg-slate-700 text-white px-4 py-2 rounded-full transition"
-          >
-            Stadion qo'shish
-          </button>
+          <Link to={'/general'}>
+            <button
+              className="flex items-center gap-2 bg-green-500 dark:bg-green-700 text-white px-4 py-2 rounded-lg transition"
+            >
+              Stadion qo'shish
+            </button>
+          </Link>
         </div>
 
         <div className="px-4 md:px-8">
@@ -371,7 +372,9 @@ const StadinAdd = ({ stadionCount }) => {
                       <span className="ml-2">Yoritish</span>
                     </div>
                     <div className="flex flex-col gap-3">
-                      <p className="text-center text-xl">Qo'shimcha rasm qo'shish</p>
+                      <p className="text-center text-xl">
+                        Qo'shimcha rasm qo'shish
+                      </p>
                       <div className="flex gap-3 items-center">
                         <input
                           className="w-full px-2 py-2 border rounded-md bg-slate-800 text-white"
@@ -380,12 +383,14 @@ const StadinAdd = ({ stadionCount }) => {
                         />
                       </div>
                     </div>
-
                   </div>
                 </div>
                 <button
                   type="submit"
-                  onClick={() => { updateStadion(); postPhoto() }}
+                  onClick={() => {
+                    updateStadion();
+                    postPhoto();
+                  }}
                   className="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
                 >
                   Saqlash
