@@ -2,6 +2,7 @@ import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
 import ThemeContextProvider from "./context/ThemeContextProvider";
 import Loading from "./components/Loading";
+import StadionEdit from "./components/Admin/Addstadion/StadionEdit";
 
 const Home = lazy(() => import("./pages/Client/Home"));
 const Main = lazy(() => import("./pages/Client/Main"));
@@ -145,6 +146,14 @@ function App() {
             element={
               <ThemeContextProvider>
                 <General />
+              </ThemeContextProvider>
+            }
+          />
+          <Route
+            path="/stadionEdit/:id"
+            element={
+              <ThemeContextProvider>
+                <StadionEdit />
               </ThemeContextProvider>
             }
           />

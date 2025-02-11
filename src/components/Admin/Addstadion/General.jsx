@@ -1,5 +1,4 @@
-import { Tabs } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import Add from "./Add";
 import Layout from "../Layout";
 
