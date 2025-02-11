@@ -175,7 +175,7 @@ const Edit = () => {
           <input
             type="text"
             ref={nameRef}
-            className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 text-white"
+            className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 dark:text-white"
             required
           />
         </div>
@@ -187,7 +187,7 @@ const Edit = () => {
           </label>
           <textarea
             ref={descriptionRef}
-            className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 text-white"
+            className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 dark:text-white"
             required
           />
         </div>
@@ -200,7 +200,7 @@ const Edit = () => {
           <input
             type="number"
             ref={priceRef}
-            className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 text-white"
+            className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 dark:text-white"
             required
           />
         </div>
@@ -213,7 +213,7 @@ const Edit = () => {
           <input
             type="text"
             ref={addressRef}
-            className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 text-white"
+            className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 dark:text-white"
             required
           />
         </div>

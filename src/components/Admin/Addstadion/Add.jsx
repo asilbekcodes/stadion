@@ -178,7 +178,7 @@ function Add() {
               type="text"
               ref={nameRef}
               placeholder="Stadion nomi"
-              className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 text-white"
+              className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 dark:text-white"
               required
             />
           </div>
@@ -191,7 +191,7 @@ function Add() {
             <textarea
               ref={locationRef}
               placeholder="Stadion manzili"
-              className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 text-white"
+              className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 dark:text-white"
               required
             />
           </div>
@@ -205,7 +205,7 @@ function Add() {
               type="number"
               ref={capacityRef}
               placeholder="50000"
-              className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 text-white"
+              className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 dark:text-white"
               required
             />
           </div>
@@ -219,7 +219,7 @@ function Add() {
               type="text"
               ref={address}
               placeholder="Masalan: Marka ro'parasida"
-              className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 text-white"
+              className="w-full md:w-96 px-3 py-2 border border-gray-700 dark:border-gray-300 rounded-md dark:bg-slate-800 dark:text-white"
               required
             />
           </div>

@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Layout from "../Layout";
 import Edit from "./Edit";
 import Images from "./Images";
+import { IoIosArrowForward } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const { TabPane } = Tabs;
 
@@ -16,7 +18,15 @@ function StadionEdit() {
   return (
     <Layout>
       <div className="p-4 md:p-8 bg-gray-100 dark:bg-gray-900 dark:text-gray-100 min-h-screen">
-        <h1 className="md:text-2xl text-xl dark:text-gray-100">Stadionni tahrirlash</h1>
+        <div className="flex gap-2 mb-5">
+          <Link to={"/stadionAdd"} className="text-2xl text-blue-500">
+            Stadionlar
+          </Link>
+          <IoIosArrowForward className="text-xl mt-2" />
+          <h1 className="md:text-2xl text-xl mt-0.5 dark:text-gray-100">
+            Stadionni tahrirlash
+          </h1>
+        </div>
         <Tabs
           activeKey={activeTab}
           onChange={onChange}
@@ -25,14 +35,20 @@ function StadionEdit() {
           }}
         >
           <TabPane
-            tab={<span className="dark:text-gray-100">Ma'lumotlarni tahrirlash</span>}
+            tab={
+              <span className="dark:text-gray-100">
+                Ma'lumotlarni tahrirlash
+              </span>
+            }
             key="1"
           >
             <Edit />
           </TabPane>
           <TabPane
-            tab={<span className="dark:text-gray-100">Rasmlarni tahrirlash</span>}
-            key="3"
+            tab={
+              <span className="dark:text-gray-100">Rasmlarni tahrirlash</span>
+            }
+            key="2"
           >
             <Images />
           </TabPane>
