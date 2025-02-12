@@ -59,14 +59,14 @@ function ModalComponent({ isOpen, onClose }) {
       .then((res) => {
         message.success("Kod muvaffaqiyatli tasdiqlandi!");
         const data = res.data;
-        if (data.action_status === "register") {
-          setIsCodeModalOpen(false);
-          setIsModalNameOpen(true);
-        } else {
-          setIsCodeModalOpen(false);
-          localStorage.setItem("userToken", data.access);
+        // if (data.action_status === "register") {
+        setIsCodeModalOpen(false);
+        localStorage.setItem("userToken", data.access);
           window.location.reload();
-        }
+        // setIsModalNameOpen(true);
+        // } else {
+        //   setIsCodeModalOpen(false);
+        // }
       })
       .catch((err) => {
         message.error(err.response.data.message);
@@ -191,8 +191,11 @@ function ModalComponent({ isOpen, onClose }) {
           <button
             onClick={resentSms}
             disabled={timer > 0} // Vaqt tugamaguncha disable bo'ladi
-            className={`px-2 py-1 rounded-md text-white ${timer > 0 ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-500"
-              }`}
+            className={`px-2 py-1 rounded-md text-white ${
+              timer > 0
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-600 hover:bg-green-500"
+            }`}
           >
             Kodni qayta yuborish
           </button>
