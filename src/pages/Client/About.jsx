@@ -109,7 +109,7 @@ function About() {
         </div>
 
         <div className="w-full md:w-[400px] lg:w-[400px] xl:w-[500px] 2xl:w-[600px] p-4">
-          <div className="grid grid-rows-2 gap-32">
+          <div className="grid md:grid-rows-2 gap-0 md:gap-32">
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <span className="text-red-500 text-lg">
@@ -120,8 +120,8 @@ function About() {
               <h2 className="text-2xl md:text-[32px] font-semibold">
                 {result.title}
               </h2>
-              <p className="text-base flex items-center gap-1 md:text-lg text-gray-500 my-4">
-                <span className="text-green-500">
+              <p className="text-base flex items-start gap-1 md:text-lg text-gray-500 my-4">
+                <span className="text-green-500 mt-1 md:mt-[6px]">
                   <IoLocationOutline />
                 </span>
                 {result.viloyat + " " + result.tuman + " " + result.address}

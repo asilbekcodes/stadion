@@ -20,7 +20,7 @@ const MapComponent = ({ center, zoom, markers, className }) => {
   return (
     <MapContainer center={center} zoom={zoom} className={className}>
       <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       {markers &&
