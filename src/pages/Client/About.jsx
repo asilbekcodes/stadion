@@ -14,7 +14,6 @@ import { Box, TextField, Button } from "@mui/material";
 import { userConfig } from "../../helpers/token/userToken";
 import Footers from "./Footer";
 import icon1 from "../../assets/icons/Vector.svg";
-import icon2 from "../../assets/icons/Group.svg";
 import icon3 from "../../assets/icons/Group 1703.svg";
 import icon4 from "../../assets/icons/Group (1).svg";
 import icon5 from "../../assets/icons/Frame 1708.svg";
@@ -110,26 +109,37 @@ function About() {
         </div>
 
         <div className="w-full md:w-[400px] lg:w-[400px] xl:w-[500px] 2xl:w-[600px] p-4">
-          <div className="">
-            <div className="flex items-center space-x-2 mb-4">
-              <span className="text-red-500 text-lg">
-                <FaStar />
-              </span>
-              <span className="text-gray-500">{result.star} </span>
+          <div className="grid grid-rows-2 gap-32">
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <span className="text-red-500 text-lg">
+                  <FaStar />
+                </span>
+                <span className="text-gray-500">{result.star} </span>
+              </div>
+              <h2 className="text-2xl md:text-[32px] font-semibold">
+                {result.title}
+              </h2>
+              <p className="text-base flex items-center gap-1 md:text-lg text-gray-500 my-4">
+                <span className="text-green-500">
+                  <IoLocationOutline />
+                </span>
+                {result.viloyat + " " + result.tuman + " " + result.address}
+              </p>
             </div>
-            <h2 className="text-2xl md:text-[32px] font-semibold">
-              {result.title}
-            </h2>
-            <p className="text-base flex items-center gap-1 md:text-lg text-gray-500 my-4">
-              <span className="text-green-500">
-                <IoLocationOutline />
-              </span>
-              {result.viloyat + ' ' + result.tuman + ' ' + result.address}
-            </p>
-
-            <div className="w-full mb-8 md:mb-0">
-              <p className="font-bold">Tavsif</p>
-              <p className="mt-3">{result.description}</p>
+            <div className="hidden md:block">
+              <p className="text-base md:text-lg font-bold my-4">
+                Narxi:{" "}
+                {result.price ? result.price.toLocaleString("ru-RU") : "0"} so`m
+              </p>
+              <div className="flex gap-2">
+                <button onClick={() => navigate(`/clintBron/${result.id}`)} className="w-full py-3 bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition duration-300">
+                  Joyni band qilish
+                </button>
+                <button className="w-full py-3 bg-white text-black p-2 rounded-lg border border-gray-800 hover:bg-gray-200 transition duration-300">
+                  Sevimlilarga qo`shish
+                </button>
+              </div>
             </div>
 
             {/* Faqat mobil versiya uchun */}
@@ -143,50 +153,83 @@ function About() {
                 </Link>
               </div>
             </div>
-            {/* Kompyuter versiyasi */}
-            <div className="w-full mt-5">
-              <p className="font-bold">Sharoitlar</p>
-              <div className="mt-3 font-sans">
-                <div className="flex items-center justify-between">
-                  <p className={`${result.kiyinish_xonasi ? "" : "line-through" }`}>Kiyinish xonasi:</p>
-                  <img src={icon1} alt="" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className={`${result.dush ? "" : "line-through text-gray-400" }`}>Yuvinish xonasi:</p>
-                  <img src={icon4} alt="" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className={`${result.yoritish ? "" : "line-through text-gray-400" }`}>Yoritish:</p>
-                  <img src={icon3} alt="" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className={`${result.parkofka ? "" : "line-through text-gray-400" }`}>Parkovka:</p>
-                  <img src={icon5} alt="" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className={`${result.forma ? "" : "line-through text-gray-400" }`}>Formalar:</p>
-                  <IoShirtOutline className="text-xl" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className={`${result.tishli_oyoqkiyim ? "" : "line-through text-gray-400" }`}>Tishli butsalarga ruxsat:</p>
-                  {/* <img src={icon6} alt="" /> */}
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className={`${result.usti_ochiq_yopiq ? "" : "line-through text-gray-400" }`}>Stadion usti yopiq:</p>
-                  {/* <img src={icon7} alt="" /> */}
-                </div>
-              </div>
-            </div>
           </div>
-          <div className="hidden md:block">
-            <p className="text-base md:text-lg font-bold my-4">
-              Narxi: {result.price ? result.price.toLocaleString("ru-RU") : "0"} so`m
-            </p>
-            <Link to={`/clintBron/${result.id}`}>
-              <button className="w-full py-3 bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition duration-300">
-                Joyni band qilish
-              </button>
-            </Link>
+        </div>
+      </div>
+      <div className="p-3 lg:px-40 md:pt-16 bg-gray-50 flex flex-col md:flex-row ">
+        <div className="w-full md:w-[500px]">
+          <div className="w-full mb-8 md:mb-0">
+            <p className="font-bold">Tavsif</p>
+            <p className="mt-3">{result.description}</p>
+          </div>
+        </div>
+        <div className=" mt-5">
+          <p className="font-bold">Sharoitlar</p>
+          <div className="mt-3 font-sans">
+            <div className="flex items-center justify-between">
+              <p className={`${result.kiyinish_xonasi ? "" : "line-through"}`}>
+                Kiyinish xonasi:
+              </p>
+              <img src={icon1} alt="" />
+            </div>
+            <div className="flex items-center justify-between">
+              <p
+                className={`${result.dush ? "" : "line-through text-gray-400"}`}
+              >
+                Yuvinish xonasi:
+              </p>
+              <img src={icon4} alt="" />
+            </div>
+            <div className="flex items-center justify-between">
+              <p
+                className={`${
+                  result.yoritish ? "" : "line-through text-gray-400"
+                }`}
+              >
+                Yoritish:
+              </p>
+              <img src={icon3} alt="" />
+            </div>
+            <div className="flex items-center justify-between">
+              <p
+                className={`${
+                  result.parkofka ? "" : "line-through text-gray-400"
+                }`}
+              >
+                Parkovka:
+              </p>
+              <img src={icon5} alt="" />
+            </div>
+            <div className="flex items-center justify-between">
+              <p
+                className={`${
+                  result.forma ? "" : "line-through text-gray-400"
+                }`}
+              >
+                Formalar:
+              </p>
+              <IoShirtOutline className="text-xl" />
+            </div>
+            <div className="flex items-center justify-between">
+              <p
+                className={`${
+                  result.tishli_oyoqkiyim ? "" : "line-through text-gray-400"
+                }`}
+              >
+                Tishli butsalarga ruxsat:
+              </p>
+              {/* <img src={icon6} alt="" /> */}
+            </div>
+            <div className="flex items-center justify-between">
+              <p
+                className={`${
+                  result.usti_ochiq_yopiq ? "" : "line-through text-gray-400"
+                }`}
+              >
+                Stadion usti yopiq:
+              </p>
+              {/* <img src={icon7} alt="" /> */}
+            </div>
           </div>
         </div>
       </div>
@@ -207,7 +250,7 @@ function About() {
           />
         </div>
         <div className="w-full md:w-[500px] font-sans">
-          <p className="font-bold py-5">Kontakt</p>
+          <p className="font-bold py-5">Ma'muriyat telefon raqami</p>
           <p>{result.user.phone_number}</p>
         </div>
       </div>
