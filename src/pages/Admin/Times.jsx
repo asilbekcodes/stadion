@@ -72,13 +72,6 @@ const Times_Pages = () => {
     setSelectedHours([]);
   };
 
-  // Check if the hour is in the past
-  const isHourPast = (date, hour) => {
-    const now = dayjs();
-    const selectedDateTime = dayjs(`${date} ${hour}:00`, "YYYY-MM-DD HH:mm");
-    return selectedDateTime.isBefore(now);
-  };
-
   // Check if the hour is already booked
   const isHourBooked = (date, hour) => {
     const bookingsForDate = bookedSlots[date] || [];
@@ -93,10 +86,46 @@ const Times_Pages = () => {
 
   // Handle hour selection
   const handleHourClick = (hour) => {
-    if (isHourPast(selectedDate, hour)) return;
-
     setSelectedHours((prev) =>
       prev.includes(hour) ? prev.filter((h) => h !== hour) : [...prev, hour]
+    );
+  };
+
+  // Render hour slots
+  const renderHours = () => {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        {Array.from({ length: 24 }, (_, hour) => {
+          const isBooked = isHourBooked(selectedDate, hour);
+          const isSelected = selectedHours.includes(hour);
+          const priceForHour = price?.find((p) => p.time === hour)?.price || 0;
+
+          return (
+            <div
+              key={hour}
+              className={`relative flex items-center justify-center border rounded-lg py-4 shadow-sm text-center ${
+                isSelected
+                  ? "bg-green-600 text-white cursor-pointer"
+                  : isBooked
+                  ? "bg-gray-300 text-black cursor-not-allowed dark:bg-red-900 dark:text-gray-100"
+                  : "bg-white text-black dark:bg-gray-900 dark:text-gray-100 cursor-pointer"
+              }`}
+              onClick={() => !isBooked && handleHourClick(hour)}
+            >
+              <span>
+                {hour}:00 - {hour === 23 ? "00" : hour + 1}:00
+              </span>
+              <span className="ml-2">
+                {priceForHour ? priceForHour.toLocaleString("ru-Ru") : "0"} so'm
+              </span>
+              <BsPencil
+                className="absolute top-2 right-2 cursor-pointer"
+                onClick={() => openModal(hour, priceForHour)}
+              />
+            </div>
+          );
+        })}
+      </div>
     );
   };
 
@@ -130,45 +159,6 @@ const Times_Pages = () => {
         closeModal();
       })
       .catch(() => message.error("Narx o'zgartirishda xatolik yuz berdi!"));
-  };
-
-  // Render hour slots
-  const renderHours = () => {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-        {Array.from({ length: 24 }, (_, hour) => {
-          const isBooked = isHourBooked(selectedDate, hour);
-          const isPast = isHourPast(selectedDate, hour);
-          const isSelected = selectedHours.includes(hour);
-          const priceForHour = price?.find((p) => p.time === hour)?.price || 0;
-
-          return (
-            <div
-              key={hour}
-              className={`relative flex items-center justify-center border rounded-lg py-4 shadow-sm text-center ${
-                isPast
-                  ? "bg-gray-300 text-gray-800 cursor-not-allowed dark:bg-red-900 dark:text-gray-100"
-                  : isSelected
-                  ? "bg-green-600 text-white cursor-pointer"
-                  : isBooked
-                  ? "bg-gray-300 text-black cursor-not-allowed dark:bg-red-900 dark:text-gray-100"
-                  : "bg-white text-black dark:bg-gray-900 dark:text-gray-100 cursor-pointer"
-              }`}
-              onClick={() => !isBooked && !isPast && handleHourClick(hour)}
-            >
-              <span>
-                {hour}:00 - {hour === 23 ? "00" : hour + 1}:00
-              </span>
-              <span className="ml-2">{priceForHour ? priceForHour.toLocaleString("ru-Ru") : "0"} so'm</span>
-              <BsPencil
-                className="absolute top-2 right-2 cursor-pointer"
-                onClick={() => openModal(hour, priceForHour)}
-              />
-            </div>
-          );
-        })}
-      </div>
-    );
   };
 
   useEffect(() => {
