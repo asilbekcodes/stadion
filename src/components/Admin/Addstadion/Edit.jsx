@@ -143,6 +143,7 @@ const Edit = () => {
     formData.append("forma", facilities.formal);
     formData.append("tishli_oyoqkiyim", facilities.tishli_oyoqkiyim);
     formData.append("usti_ochiq_yopiq", facilities.usti_ochiq_yopiq);
+    formData.append("is_active", "true");
 
     // if (imgRef.current.files.length > 0) {
     //   formData.append("photo", imgRef.current.files[0]);

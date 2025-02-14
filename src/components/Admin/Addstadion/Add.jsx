@@ -150,6 +150,7 @@ function Add() {
     formData.append("tishli_oyoqkiyim", facilities.tishli_oyoqkiyim);
     formData.append("usti_ochiq_yopiq", facilities.usti_ochiq_yopiq);
     formData.append("user", getSaved.id);
+    formData.append("is_active", "true");
 
     axios
       .post(`${baseUrl}stadion/add-stadion/`, formData, Adminconfig)
