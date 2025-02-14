@@ -15,7 +15,7 @@ const Calendar = ({ selectedStadion }) => {
         `${baseUrl}stadion/statistika-oy/?stadion_id=${selectedStadion}&data=${currentYear}-${
           currentMonth + 1
         }`,
-        Adminconfig
+        Adminconfig()
       )
       .then((res) => {
         setDataGet(res.data);

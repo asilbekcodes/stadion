@@ -63,7 +63,7 @@ function Kunlik({ kunlikDateChange, kunlikDate }) {
     axios
       .get(
         `${baseUrl}stadion/statistika-kun/?stadion_id=${stadionId}&stadion_date=${kunlikDate}`,
-        Adminconfig
+        Adminconfig()
       )
       .then((res) => {
         setDataKunlik(res.data);
@@ -81,7 +81,7 @@ function Kunlik({ kunlikDateChange, kunlikDate }) {
 
   const Malumot = () => {
     axios
-      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
+      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig())
       .then((res) => {
         setgetSaved(res.data);
       })

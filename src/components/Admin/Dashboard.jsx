@@ -23,7 +23,7 @@ const Dashboard = () => {
     axios
       .get(
         `${baseUrl}order/stadion-statistika/${selectedStadion}/`,
-        Adminconfig
+        Adminconfig()
       )
       .then((res) => {
         setDate(res.data);
@@ -33,7 +33,7 @@ const Dashboard = () => {
 
   const Malumot = () => {
     axios
-      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
+      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig())
       .then((res) => {
         setGetSaved(res.data);
       })

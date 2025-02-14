@@ -18,7 +18,7 @@ const Images = () => {
   const fetchImages = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${baseUrl}/stadion/stadion-images/${id}/`, Adminconfig);
+      const response = await axios.get(`${baseUrl}/stadion/stadion-images/${id}/`, Adminconfig());
       setImages(response.data);
     } catch (err) {
       setError("Rasmlarni yuklashda xatolik yuz berdi.");
@@ -39,7 +39,7 @@ const Images = () => {
 
     try {
       setLoading(true);
-      await axios.post(`${baseUrl}/stadion/stadion-images/all-add/`, formData, Adminconfig);
+      await axios.post(`${baseUrl}/stadion/stadion-images/all-add/`, formData, Adminconfig());
       setSelectedFile(null);
       fetchImages(); // UI'ni yangilash
     } catch (err) {
@@ -52,7 +52,7 @@ const Images = () => {
   const handleRemoveImage = async (imageId) => {
     try {
       setLoading(true);
-      await axios.post(`${baseUrl}stadion/stadion-images/${id}/delete/${imageId}/`, '', Adminconfig);
+      await axios.post(`${baseUrl}stadion/stadion-images/${id}/delete/${imageId}/`, '', Adminconfig());
       setImages(images.filter((image) => image.id !== imageId)); // UI'dan o‘chirish
     } catch (err) {
       setError("Rasmni o‘chirishda xatolik yuz berdi.");

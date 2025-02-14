@@ -13,7 +13,7 @@ function Kontact() {
 
   const getPhones = () => {
     axios
-      .get(`${baseUrl}user/phones/`, Adminconfig)
+      .get(`${baseUrl}user/phones/`, Adminconfig())
       .then((res) => {
         setPhones(res.data); // telefon raqamlarini holatga saqlash
       })
@@ -35,7 +35,7 @@ function Kontact() {
 
   const handleDelete = (id) => {
     axios
-      .delete(`${baseUrl}user/phones/${id}/`, Adminconfig)
+      .delete(`${baseUrl}user/phones/${id}/`, Adminconfig())
       .then((res) => {
         getPhones();
       })
@@ -59,7 +59,7 @@ function Kontact() {
       is_active: true,
     };
     axios
-      .post(`${baseUrl}user/phones/`, { ...data }, Adminconfig)
+      .post(`${baseUrl}user/phones/`, { ...data }, Adminconfig())
       .then((res) => {
         getPhones();
         setIsModalVisible(false);

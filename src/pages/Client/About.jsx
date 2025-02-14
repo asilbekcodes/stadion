@@ -63,7 +63,7 @@ function About() {
         {
           comment: comment,
         },
-        userConfig
+        userConfig()
       )
       .then((res) => stadionReviews())
       .catch((err) => console.log(err));

@@ -66,7 +66,7 @@ const Edit = () => {
 
   useEffect(() => {
     axios
-      .get(`${baseUrl}stadion/${id}/`, Adminconfig)
+      .get(`${baseUrl}stadion/${id}/`, Adminconfig())
       .then((res) => {
         const data = res.data;
         nameRef.current.value = data.title;
@@ -150,7 +150,7 @@ const Edit = () => {
     // }
 
     axios
-      .put(`${baseUrl}stadion/admin-stadion-put/${id}/`, formData, Adminconfig)
+      .put(`${baseUrl}stadion/admin-stadion-put/${id}/`, formData, Adminconfig())
       .then(() => {
         toast.success("Stadion muvaffaqiyatli yangilandi");
         navigate("/stadionAdd");

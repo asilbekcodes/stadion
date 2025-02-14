@@ -3,10 +3,8 @@ function getToken() {
   return userToken ? userToken : "";
 }
 
-export const userConfig = {
+export const userConfig = () => ({
   headers: {
     Authorization: `Bearer ${getToken()}`,
   },
-};
-
-
+});

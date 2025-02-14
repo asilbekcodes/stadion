@@ -24,7 +24,7 @@ function ProfilCom() {
 
   const handleProfil = () => {
     axios
-      .get(`${baseUrl}user/user-info/`, Adminconfig)
+      .get(`${baseUrl}user/user-info/`, Adminconfig())
       .then((res) => {
         setgetProfil(res.data);
         setCurrentPhoneNumber(res.data.phone_number);
@@ -63,14 +63,14 @@ function ProfilCom() {
         last_name: last_name.current.value,
       };
       
-      await axios.put(`${baseUrl}user/user-info/`, nameData, Adminconfig);
+      await axios.put(`${baseUrl}user/user-info/`, nameData, Adminconfig());
       
       // If phone number is changed, initiate verification
       if (isPhoneNumberChanged()) {
         const phoneData = {
           phone_number: newPhoneNumber,
         };
-        await axios.post(`${baseUrl}user/reset-phone-number/`, phoneData, Adminconfig);
+        await axios.post(`${baseUrl}user/reset-phone-number/`, phoneData, Adminconfig());
         setIsVerificationModalOpen(true);
         toast.success("Tasdiqlash kodi yuborildi");
       } else {
@@ -93,7 +93,7 @@ function ProfilCom() {
         code: verificationCode
       };
       
-      await axios.post(`${baseUrl}user/verify-reset-phone-number/`, verificationData, Adminconfig);
+      await axios.post(`${baseUrl}user/verify-reset-phone-number/`, verificationData, Adminconfig());
       toast.success("Barcha ma'lumotlar muvaffaqiyatli yangilandi");
       setIsVerificationModalOpen(false);
       handleProfil();

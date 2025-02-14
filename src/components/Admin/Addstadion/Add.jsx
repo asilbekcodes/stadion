@@ -72,7 +72,7 @@ function Add() {
 
   const Malumot = () => {
     axios
-      .get(`${baseUrl}user/user-info/`, Adminconfig)
+      .get(`${baseUrl}user/user-info/`, Adminconfig())
       .then((res) => setgetSaved(res.data))
       .catch((err) => console.log(err));
   };
@@ -153,7 +153,7 @@ function Add() {
     formData.append("is_active", "true");
 
     axios
-      .post(`${baseUrl}stadion/add-stadion/`, formData, Adminconfig)
+      .post(`${baseUrl}stadion/add-stadion/`, formData, Adminconfig())
       .then((res) => {
         toast.success("Stadion muvaffaqiyatli qo'shildi!");
         navigate("/stadionAdd");

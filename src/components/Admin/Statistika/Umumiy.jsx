@@ -10,7 +10,7 @@ function Umumiy() {
   const [umumiyData, setUmumiyData] = React.useState([]);
 
   const umumiyStatistika = () => {
-    axios.get(`${baseUrl}stadion/statistika-umum/`, Adminconfig)
+    axios.get(`${baseUrl}stadion/statistika-umum/`, Adminconfig())
     .then((res) => {
       setUmumiyData(res.data)
     })

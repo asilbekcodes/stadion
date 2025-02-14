@@ -25,7 +25,7 @@ function Profils() {
 
   function handleProfil() {
     axios
-      .get(`${baseUrl}user/user-info/`, userConfig)
+      .get(`${baseUrl}user/user-info/`, userConfig())
       .then((res) => {
         setgetProfil(res.data);
         setCurrentPhoneNumber(res.data.phone_number);
@@ -61,7 +61,7 @@ function Profils() {
         const phoneData = {
           phone_number: newPhoneNumber,
         };
-        await axios.post(`${baseUrl}user/reset-phone-number/`, phoneData, userConfig);
+        await axios.post(`${baseUrl}user/reset-phone-number/`, phoneData, userConfig());
         setIsVerificationModalOpen(true);
         toast.success("Tasdiqlash kodi yuborildi");
       } else {
@@ -83,7 +83,7 @@ function Profils() {
     };
     
     axios
-      .post(`${baseUrl}user/verify-reset-phone-number/`, verificationData, userConfig)
+      .post(`${baseUrl}user/verify-reset-phone-number/`, verificationData, userConfig())
       .then((res) => {
         toast.success("Barcha ma'lumotlar muvaffaqiyatli yangilandi");
         setIsVerificationModalOpen(false);

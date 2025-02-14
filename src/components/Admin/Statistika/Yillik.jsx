@@ -42,7 +42,7 @@ function Yillik({ selectedYear, handleYearChange }) {
       axios
         .get(
           `${baseUrl}stadion/statistika-yil/?stadion_id=${selectedYil}&yil=${selectedYear}`,
-          Adminconfig
+          Adminconfig()
         )
         .then((res) => {
           setYillikData(res.data);
@@ -61,7 +61,7 @@ function Yillik({ selectedYear, handleYearChange }) {
 
   const getStadionlar = () => {
     axios
-      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
+      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig())
       .then((res) => {
         setGetYear(res.data);
       })

@@ -3,8 +3,8 @@ function getToken() {
     return token ? token : '';
   }
   
-  export const Adminconfig = {
+  export const Adminconfig = () => ({
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
-  };
+  });

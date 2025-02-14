@@ -20,7 +20,7 @@ const StadinAdd = ({ stadionCount }) => {
     try {
       await axios.delete(
         `${baseUrl}stadion/admin-stadion-delete/${item.id}/`,
-        Adminconfig
+        Adminconfig()
       );
       getMalumotlar();
     } catch (err) {
@@ -33,7 +33,7 @@ const StadinAdd = ({ stadionCount }) => {
   const getMalumotlar = useCallback(() => {
     setLoading(true);
     axios
-      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
+      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig())
       .then((res) => {
         setGetMalumot(res.data);
         stadionCount(res.data.length);

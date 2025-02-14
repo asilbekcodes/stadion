@@ -25,7 +25,7 @@ const Navbar = () => {
     const [getSaved , setgetSaved] = useState("")
 
   const Malumot = ()=>{
-    axios.get(`${baseUrl}user/user-info/`,Adminconfig)
+    axios.get(`${baseUrl}user/user-info/`,Adminconfig())
     .then(res=>setgetSaved(res.data))
     .catch(err=>console.log(err))
   }

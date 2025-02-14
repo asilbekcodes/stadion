@@ -37,7 +37,7 @@ function Oylik({ selectedDate, handleDateChange }) {
       axios
         .get(
           `${baseUrl}stadion/statistika-oy/?stadion_id=${selectedStadion}&data=${selectedDate}`,
-          Adminconfig
+          Adminconfig()
         )
         .then((res) => {
           setOylikData(res.data);
@@ -59,7 +59,7 @@ function Oylik({ selectedDate, handleDateChange }) {
   // Stadionlar ro'yxatini olish
   const getStadionlar = () => {
     axios
-      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
+      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig())
       .then((res) => {
         setGetStadion(res.data);
       })

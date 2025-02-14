@@ -48,7 +48,7 @@ function Times() {
         }));
 
         axios
-            .post(`${baseUrl}order/stadion/${select}/`, { brons }, Adminconfig)
+            .post(`${baseUrl}order/stadion/${select}/`, { brons }, Adminconfig())
             .then(() => {
                 message.success("Muvaffaqiyatli bron qilindi!");
                 getStadion();

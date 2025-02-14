@@ -9,7 +9,7 @@ function History() {
 
   useEffect(() => {
     axios
-      .get(`${baseUrl}order/my-stadion-history-bron/`, Adminconfig)
+      .get(`${baseUrl}order/my-stadion-history-bron/`, Adminconfig())
       .then((res) => setHistorys(res.data))
       .catch((err) => console.log(err));
   }, []);

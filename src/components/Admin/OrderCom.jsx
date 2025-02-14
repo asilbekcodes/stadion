@@ -47,7 +47,7 @@ function OrderCom({ onOrderCount }) {
     };
 
     axios
-      .post(`${baseUrl}order/verify-stadion-bron/`, data, Adminconfig)
+      .post(`${baseUrl}order/verify-stadion-bron/`, data, Adminconfig())
       .then((res) => {
         console.log("Response:", res.data);
         fetchOrders(); // Ma'lumotlarni qayta yuklash
@@ -69,7 +69,7 @@ function OrderCom({ onOrderCount }) {
   // Ma'lumotlarni serverdan olish uchun GET so'rov
   function fetchOrders() {
     axios
-      .get(`${baseUrl}order/my-stadion-bron/`, Adminconfig)
+      .get(`${baseUrl}order/my-stadion-bron/`, Adminconfig())
       .then((res) => {
         setGetOrder(res.data);
         onOrderCount(res.data.length);

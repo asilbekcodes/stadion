@@ -54,7 +54,7 @@ function ClintBron() {
       await axios.post(
         `${baseUrl}order/stadion/${resultId}/`,
         { brons },
-        userConfig
+        userConfig()
       );
       message.success("Muvaffaqiyatli bron qilindi!");
       getStadion();

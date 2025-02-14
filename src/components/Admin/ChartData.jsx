@@ -22,7 +22,7 @@ const Dashboard = () => {
 
     // API ma'lumotlarini olish funksiyasi
     function fetchChartData() {
-        axios.get(`${baseUrl}order/stadion-statistika/`, Adminconfig)
+        axios.get(`${baseUrl}order/stadion-statistika/`, Adminconfig())
             .then(res => {
                 const dates = res.data.date; // API dan olingan "date"
                 const brons = res.data.bron; // API dan olingan "bron"

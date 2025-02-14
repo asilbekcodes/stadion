@@ -22,7 +22,7 @@ const Times_Pages = () => {
   // Fetch stadion data
   const fetchStadions = () => {
     axios
-      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
+      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig())
       .then((res) => {
         setGetSaved(res.data || []);
         if (res.data?.length > 0) {
@@ -36,7 +36,7 @@ const Times_Pages = () => {
   const fetchStadionData = () => {
     if (selectedStadion) {
       axios
-        .get(`${baseUrl}order/stadion/${selectedStadion}/`, Adminconfig)
+        .get(`${baseUrl}order/stadion/${selectedStadion}/`, Adminconfig())
         .then((res) => {
           setBookedSlots(res.data?.brons || {});
           setPrice(res.data?.prices || []);
@@ -56,7 +56,7 @@ const Times_Pages = () => {
       .post(
         `${baseUrl}order/stadion/${selectedStadion}/`,
         { brons },
-        Adminconfig
+        Adminconfig()
       )
       .then(() => {
         message.success("Vaqtlar muvaffaqiyatli bron qilindi!");
@@ -151,7 +151,7 @@ const Times_Pages = () => {
       .post(
         `${baseUrl}stadion/edit-price/${selectedStadion}/`,
         data,
-        Adminconfig
+        Adminconfig()
       )
       .then(() => {
         message.success("Narx muvaffaqiyatli o'zgartirildi!");

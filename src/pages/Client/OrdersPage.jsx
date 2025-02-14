@@ -24,7 +24,7 @@ const OrdersPage = () => {
 
   const fetchData = () => {
     axios
-      .get(`${baseUrl}order/my-bron/`, userConfig)
+      .get(`${baseUrl}order/my-bron/`, userConfig())
       .then((res) => setData(res.data))
       .catch((err) => console.error(err));
   };

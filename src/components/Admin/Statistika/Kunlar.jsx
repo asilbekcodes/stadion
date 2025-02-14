@@ -43,7 +43,7 @@ function Kunlar({
       axios
         .get(
           `${baseUrl}stadion/statistika-kunlar/?stadion_id=${selectedStadion}&date_to=${kunlarDate}&date_from=${kunlarDays}`,
-          Adminconfig
+          Adminconfig()
         )
         .then((res) => {
           setKunDate(res.data);
@@ -63,7 +63,7 @@ function Kunlar({
 
   const Malumot = () => {
     axios
-      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig)
+      .get(`${baseUrl}stadion/admin-stadion-get/`, Adminconfig())
       .then((res) => {
         setgetSaved(res.data);
       })

@@ -62,7 +62,7 @@ function ModalComponent({ isOpen, onClose }) {
         // if (data.action_status === "register") {
         setIsCodeModalOpen(false);
         localStorage.setItem("userToken", data.access);
-          window.location.reload();
+          // window.location.reload();
         // setIsModalNameOpen(true);
         // } else {
         //   setIsCodeModalOpen(false);
