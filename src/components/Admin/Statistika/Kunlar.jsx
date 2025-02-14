@@ -170,7 +170,7 @@ function Kunlar({
         />
         <Card
           icon={<FaMoneyBillWave />}
-          title="Olingan daromat"
+          title="Olingan daromad"
           value={`${kunDate?.daromat || 0} so'm`}
         />
       </div>

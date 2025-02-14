@@ -144,7 +144,7 @@ function Kunlik({ kunlikDateChange, kunlikDate }) {
         />
         <Card
           icon={<FaMoneyBillWave />}
-          title="Olingan daromat"
+          title="Olingan daromad"
           value={`${dataKunlik?.daromat || 0} so'm`}
         />
       </div>

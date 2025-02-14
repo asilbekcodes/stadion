@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { FaBars, FaChartPie, FaClipboardList, FaPlusCircle, FaRegCalendarAlt, FaUserCircle } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import { AiOutlineLineChart } from "react-icons/ai";
 import { BsClockHistory } from 'react-icons/bs';
 import logo from '../../assets/StadionTopLogo.png';
+import logo2 from '../../assets/StadionTop.svg';
+import { ThemeContext } from '../../context/ThemeContextProvider';
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -50,6 +52,8 @@ const Sidebar = () => {
     },
   ];
 
+  const { theme } = useContext(ThemeContext);
+
   return (
     <div>
       {/* Mobil versiya uchun yon panelni ochuvchi tugma */}
@@ -66,7 +70,7 @@ const Sidebar = () => {
           ${isSidebarOpen ? 'block' : 'hidden'} md:block`}
       >
         {/* <h1 className="text-2xl font-bold mt-4 text-center italic">Stadion Top</h1> */}
-        <img className='h-[70px]' src={logo} alt="" />
+        <img className='h-[70px]' src={theme === "dark" ? logo2 : logo} alt="" />
         <ul className="flex flex-col mt-5 text-xl">
           {data.map((item, index) => (
             <NavLink

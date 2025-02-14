@@ -28,7 +28,7 @@ function Umumiy() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-6 gap-4">
         <Card icon={<MdOutlineSportsSoccer /> } title="Stadionlar soni" value={umumiyData.stadion_count} />
         <Card icon={<FaShoppingCart />} title="Bronlar soni" value={umumiyData.bron_count} />
-        <Card icon={<FaMoneyBillWave />} title="Olingan daromat" value={umumiyData.price} />
+        <Card icon={<FaMoneyBillWave />} title="Olingan daromad" value={umumiyData.price} />
       </div>
     </div>
   );

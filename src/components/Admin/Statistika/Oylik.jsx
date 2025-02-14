@@ -172,7 +172,7 @@ function Oylik({ selectedDate, handleDateChange }) {
         />
         <Card
           icon={<FaMoneyBillWave />}
-          title="Olingan daromat"
+          title="Olingan daromad"
           value={`${oylikData?.daromad || 0} so'm`} // Daromad qiymati
         />
       </div>

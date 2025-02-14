@@ -178,7 +178,7 @@ function Yillik({ selectedYear, handleYearChange }) {
         />
         <Card
           icon={<FaMoneyBillWave />}
-          title="Olingan daromat"
+          title="Olingan daromad"
           value={`${yillikData?.daromad || 0} so'm`}
         />
       </div>
