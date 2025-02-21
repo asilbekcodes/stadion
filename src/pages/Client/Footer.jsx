@@ -12,7 +12,7 @@ const Footers = () => {
             <a href="/#" className="flex items-center justify-center md:justify-start">
               <img src={logo1} className="w-32 h-32" alt="Stadion logo" />
             </a>
-            <p className="text-sm">Stadionlarni osongina buyurtma qiling!</p>
+            <p className="text-sm">Stadionlarni osongina buyurtma qiling!</p>  
 
           </div>
 
