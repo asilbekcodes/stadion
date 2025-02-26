@@ -3,7 +3,7 @@ import logo1 from "../../assets/StadionTop.png";
 
 const Footers = () => {
   return (
-    <footer className="bg-gray-100 text-black py-6 px-6 md:px-20 lg:px-40">
+    <footer className="bg-[#F6F9FC] text-black py-6 px-6 md:px-20 lg:px-40">
       <div className="container">
         {/* Tepki qism */}
         <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">

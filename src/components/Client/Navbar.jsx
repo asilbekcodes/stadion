@@ -89,7 +89,7 @@ const Navbar = ({ onRegionSelect }) => {
   return (
     <div>
       <div className="hidden md:block">
-        <nav className="flex items-center justify-between p-3 lg:px-40 lg:py-2 border-b bg-gray-100">
+        <nav className="flex items-center justify-between p-3 lg:px-40 lg:py-2 border-b bg-[#F6F9FC]">
           {/* Chap taraf */}
           <div className="flex items-center space-x-6">
             <RegionDropdown />
@@ -144,7 +144,7 @@ const Navbar = ({ onRegionSelect }) => {
           </div>
         </nav>
       </div>
-      <nav className="flex items-center justify-between bg-gray-50 pb-3 lg:px-40 lg:pb-6">
+      <nav className="flex items-center justify-between bg-white pb-3 lg:px-40 lg:pb-6">
         {/* Kompyuter versiyasi */}
         <div className="hidden lg:flex items-center justify-between w-full">
           <Link to={"/"} className="w-32 h-16">
@@ -166,7 +166,7 @@ const Navbar = ({ onRegionSelect }) => {
             />
             <button
               type="submit"
-              className="px-4 xl:px-7 py-[13.5px] text-sm font-medium h-full text-white rounded-e-lg border bg-gray-200 relative right-1"
+              className="px-4 xl:px-7 py-[13.5px] text-sm font-medium h-full text-white rounded-e-lg border bg-[#F6F9FC] relative right-1"
             >
               <FaSearch className="text-gray-500" />
             </button>

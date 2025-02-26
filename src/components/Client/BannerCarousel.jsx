@@ -72,7 +72,7 @@ const BannerCarousel = () => {
             <div className="w-full h-[450px] xl:w-full xl:h-full">
               {slide.photo ? (
                 <img
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded-[20px]"
                   src={slide.photo || "/placeholder.svg"}
                   alt={`Slide ${index + 1}`}
                 />

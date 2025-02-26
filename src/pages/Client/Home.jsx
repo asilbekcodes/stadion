@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import axios from "axios";
 import Footers from "./Footer";
+import vector from "../../assets/icons/Vector 2.svg";
 // import { toast } from 'react-toastify'
 
 function Home() {
@@ -41,22 +42,22 @@ function Home() {
   return (
     <div>
       <Navbar onRegionSelect={handleRegionSelect}/>
-      <div className="min-h-screen bg-gray-50 p-4 lg:px-40">
+      <div className="min-h-screen bg-white p-4 lg:px-40">
         <div className="hidden lg:block">
           <BannerCarousel />
         </div>
         <section>
           <div className="flex font-sans justify-between items-center md:mt-24">
             <div>
-              <h2 className="text-[15px] md:text-[25px] font-semibold mb-4">
+              <p className="text-[15px] md:text-[27px] font-semibold mb-4 text-[#292929]">
                 Tanlangan
-              </h2>
+              </p>
             </div>
             <div className="flex">
               <Link to={"/main"}>
-                <h2 className="text-[11px] md:text-[15px] mb-4 flex items-center gap-1">
-                  Hammasini ko`rish <FaChevronRight />
-                </h2>
+                <p className="text-[11px] md:text-[16px] mb-4 flex items-center gap-[15px] text-[#292929]">
+                  Hammasini ko`rish <img src={vector} alt="" />
+                </p>
               </Link>
             </div>
           </div>
@@ -67,17 +68,17 @@ function Home() {
               "grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-[330px] gap-y-5 sm:gap-5"
             }
             classNm={
-              "flex flex-col rounded-lg border border-gray-200 bg-white shadow-md relative w-[320px] sm:w-full"
+              "flex flex-col rounded-lg relative w-[320px] sm:w-full"
             }
           />
           <div className="font-sans mt-8 md:mt-24">
             <div className="flex justify-between">
-              <p className="text-[15px] md:text-[25px] font-semibold mb-4">
+              <p className="text-[15px] md:text-[27px] font-semibold mb-4">
                 Eng yangi
               </p>
               <Link to={"/main"}>
-                <h2 className="text-[11px] md:text-[15px] mb-4 flex items-center gap-1">
-                  Hammasini ko`rish <FaChevronRight />
+                <h2 className="text-[11px] md:text-[16px] mb-4 flex items-center gap-[15px] text-[#292929]">
+                  Hammasini ko`rish <img src={vector} alt="" />
                 </h2>
               </Link>
             </div>
@@ -88,7 +89,7 @@ function Home() {
                 "grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-[330px] gap-y-5 sm:gap-5"
               }
               classNm={
-                "flex flex-col rounded-lg border border-gray-200 bg-white shadow-md relative w-[320px] sm:w-full"
+                "flex flex-col rounded-lg relative w-[320px] sm:w-full"
               }
             />
           </div>
@@ -98,7 +99,7 @@ function Home() {
               <MapComponent
                 center={[markers[0]?.latitude || 0, markers[0]?.longitude || 0]}
                 zoom={13}
-                className="h-screen lg:h-[450px] w-full z-0"
+                className="h-screen lg:h-[500px] w-full z-0 rounded-[20px]"
                 markers={markers} // markersni to'g'ri o'tkazish
               />
             ) : (
