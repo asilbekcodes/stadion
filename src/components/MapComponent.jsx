@@ -2,17 +2,16 @@ import { MapContainer, Marker, TileLayer, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-// Leaflet marker ikonkalarini import qilish
-import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
-import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
+// O'z rangli ikonkani import qilish
+import customMarkerIcon from "../../public/Stadion.png";
 
-// Tasvirlarni to'g'irlash uchun ikonkalarni yangilash
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: markerIcon2x,
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
+// O'z rangli ikonkani sozlash
+const customIcon = new L.Icon({
+  iconUrl: customMarkerIcon,
+  iconSize: [55, 65], // Ikona o'lchami
+  iconAnchor: [25, 41], // Ikona anchor nuqtasi
+  popupAnchor: [1, -30], // Popup anchor nuqtasi
+  shadowSize: [41, 41], // Soyya o'lchami
 });
 
 // Ko'p markerlarni qo'llab-quvvatlash uchun MapComponent
@@ -28,6 +27,7 @@ const MapComponent = ({ center, zoom, markers, className }) => {
           <Marker
             key={marker.id}
             position={[marker.latitude || 0, marker.longitude || 0]}
+            icon={customIcon} // O'z rangli ikonkani ishlatish
           >
             <Popup>
               <b>{marker.title || "Noma'lum marker"}</b>
