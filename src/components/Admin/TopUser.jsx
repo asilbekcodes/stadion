@@ -4,7 +4,7 @@ const TopUsers = ({ data }) => {
   
     return (
       <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
-        <h2 className="text-lg font-bold mb-4">Top users</h2>
+        <h2 className="text-lg font-bold mb-4">Eng yaxshi foydalanuvchilar</h2>
         {topUser && topUser.length > 0 ? (
           <div className="flex gap-5 justify-center flex-wrap">
             {topUser.map((user, index) => (

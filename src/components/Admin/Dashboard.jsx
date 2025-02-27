@@ -148,7 +148,7 @@ const Dashboard = () => {
         />
         <Card
           icon={<AiOutlineClockCircle />}
-          title="Kutulayotgan buyurtmalar"
+          title="Kutilayotgan buyurtmalar"
           value={`${date.kutilayotgan_bronlar || 0} ta`}
         />
       </div>
@@ -160,7 +160,7 @@ const Dashboard = () => {
 
         {/* Activities & Events */}
         <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
-          <h2 className="text-lg font-semibold mb-4">Commit</h2>
+          <h2 className="text-lg font-semibold mb-4">Sharhlar</h2>
           <ul className="space-y-4">
             {comments && comments.length > 0 ? (
               visibleComments.map((item, index) => {

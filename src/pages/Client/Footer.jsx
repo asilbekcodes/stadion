@@ -27,8 +27,8 @@ const Footers = () => {
             <a href="#" className="hover:text-gray-600 transition">
               Stadionlar
             </a>
-            <a href="#" className="hover:text-gray-600 transition">
-              Aloqa
+            <a href="/auth/login" className="hover:text-gray-600 transition">
+              Stadion qo'shish
             </a>
           </div>
 

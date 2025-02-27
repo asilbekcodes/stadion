@@ -9,7 +9,7 @@ const User = ({ data }) => {
 
   return (
     <div className="dark:bg-gray-700 bg-white shadow rounded-lg p-6">
-      <h2 className="text-lg font-bold mb-4">Users</h2>
+      <h2 className="text-lg font-bold mb-4">Foydalanuvchilar</h2>
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 border-t border-gray-200 border-b uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
           <tr>
