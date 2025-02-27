@@ -13,7 +13,7 @@ function Main() {
       <div className=" hidden md:block">
         <Navbar />
       </div>
-      <div className="bg-gray-50 min-h-[87.5vh] p-4 lg:px-40">
+      <div className="bg-white min-h-[87.5vh] p-4 lg:px-40">
         <section className="mt-4">
           <Card
             classNames={

@@ -164,7 +164,7 @@ function ClintBron() {
   return (
     <div>
       <Navbar />
-      <div className="lg:px-40 bg-slate-50 p-4">
+      <div className="lg:px-40 bg-white p-4">
         <div style={wrapperStyle}>
           <Calendar
             fullscreen={false}

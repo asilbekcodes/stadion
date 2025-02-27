@@ -149,14 +149,14 @@ function Profils() {
 
   if (!isAuthenticated) {
     return (
-      <div className="h-screen bg-gray-50">
+      <div className="h-screen bg-white">
         <div className="p-4 block lg:hidden">
           <Buttons text={"Profil"} />
         </div>
         <div className="hidden lg:block">
           <Navbar />
         </div>
-        <div className="flex flex-col items-center justify-center h-[85vh] bg-gray-50">
+        <div className="flex flex-col items-center justify-center h-[85vh] bg-white">
           <h1 className="text-2xl font-semibold text-black">
             Siz hali akkauntga kirmagansiz!
           </h1>
@@ -176,7 +176,7 @@ function Profils() {
   }
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-white">
       <div className="p-4 block lg:hidden">
         <Buttons text={"Профиль"} />
       </div>
@@ -191,7 +191,7 @@ function Profils() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm text-gray-600 dark:text-gray-200">
-                Ism
+                Ism *
               </label>
               <input
                 type="text"
@@ -202,7 +202,7 @@ function Profils() {
             </div>
             <div>
               <label className="block text-sm text-gray-600 dark:text-gray-200">
-                Familiya
+                Familiya *
               </label>
               <input
                 type="text"
@@ -213,7 +213,7 @@ function Profils() {
             </div>
             <div>
               <label className="block text-sm text-gray-600 dark:text-gray-200">
-                Telefon raqam
+                Telefon raqam *
               </label>
               <input
                 value={newPhoneNumber}

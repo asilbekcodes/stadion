@@ -80,7 +80,7 @@ function About() {
       <div className="hidden md:block">
         <Navbar />
       </div>
-      <div className="md:px-3 lg:px-40 flex flex-col md:flex-row justify-between bg-gray-50">
+      <div className="md:px-3 lg:px-40 flex flex-col md:flex-row justify-between bg-white">
         <div className="w-full md:w-[500px]">
           <img
             className="w-full h-60 md:h-96 rounded-none md:rounded-md shadow-sm mb-4"
@@ -93,7 +93,7 @@ function About() {
           >
             <IoIosArrowBack />
           </button>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-4 gap-2">
             {result?.images?.length > 0
               ? result.images.map((img) => (
                   <img
@@ -128,15 +128,15 @@ function About() {
               </p>
             </div>
             <div className="hidden md:block">
-              <p className="text-base md:text-lg font-bold my-4">
+              <p className="text-base md:text-[20px] font-bold my-4">
                 Narxi:{" "}
                 {result.price ? result.price.toLocaleString("ru-RU") : "0"} so`m
               </p>
               <div className="flex gap-2">
-                <button onClick={() => navigate(`/clintBron/${result.id}`)} className="w-full py-3 bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition duration-300">
+                <button onClick={() => navigate(`/clintBron/${result.id}`)} className="w-full py-3 bg-[#34B271] text-white p-2 rounded-lg hover:bg-[#30a367] transition duration-300">
                   Joyni band qilish
                 </button>
-                <button className="w-full py-3 bg-white text-black p-2 rounded-lg border border-gray-800 hover:bg-gray-200 transition duration-300">
+                <button className="w-full py-3 bg-white text-black p-2 hover:bg-gray-200 rounded-[10px] ">
                   Sevimlilarga qo`shish
                 </button>
               </div>
@@ -147,7 +147,7 @@ function About() {
               <div className="flex justify-between items-center">
                 <p className="text-lg font-bold">{result.price} so`m</p>
                 <Link to={`/clintBron/${result.id}`}>
-                  <button className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition duration-300">
+                  <button className="bg-[#34B271] text-white p-2 rounded-[10px] hover:bg-green-600 transition duration-300">
                     Joyni band qilish
                   </button>
                 </Link>
@@ -156,75 +156,75 @@ function About() {
           </div>
         </div>
       </div>
-      <div className="p-3 lg:px-40 md:pt-16 bg-gray-50 flex flex-col md:flex-row ">
-        <div className="w-full md:w-[500px]">
+      <div className="p-3 lg:px-40 md:pt-16 bg-white flex flex-col justify-center md:flex-row ">
+        <div className="w-full md:w-[358px]">
           <div className="w-full mb-8 md:mb-0">
-            <p className="font-bold">Tavsif</p>
-            <p className="mt-3">{result.description}</p>
+            <p className="font-bold text-[20px]">Tavsif</p>
+            <p className="mt-3 text-[18px]">{result.description}</p>
           </div>
         </div>
         <div className=" mt-5">
-          <p className="font-bold">Sharoitlar</p>
+          <p className="font-bold text-[20px]">Sharoitlar</p>
           <div className="mt-3 font-sans">
-            <div className="flex items-center justify-between">
-              <p className={`${result.kiyinish_xonasi ? "" : "line-through"}`}>
+            <div className="flex items-center justify-between w-[338px]">
+              <p className={`${result.kiyinish_xonasi ? "" : "line-through"} text-[18px]`}>
                 Kiyinish xonasi:
               </p>
               <img src={icon1} alt="" />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between w-[338px]">
               <p
-                className={`${result.dush ? "" : "line-through text-gray-400"}`}
+                className={`${result.dush ? "" : "line-through text-gray-400"} text-[18px]`}
               >
                 Yuvinish xonasi:
               </p>
               <img src={icon4} alt="" />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between w-[338px]">
               <p
                 className={`${
                   result.yoritish ? "" : "line-through text-gray-400"
-                }`}
+                } text-[18px]`}
               >
                 Yoritish:
               </p>
               <img src={icon3} alt="" />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between w-[338px]">
               <p
                 className={`${
                   result.parkofka ? "" : "line-through text-gray-400"
-                }`}
+                } text-[18px]`}
               >
                 Parkovka:
               </p>
               <img src={icon5} alt="" />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between w-[338px]">
               <p
                 className={`${
                   result.forma ? "" : "line-through text-gray-400"
-                }`}
+                } text-[18px] `}
               >
                 Formalar:
               </p>
               <IoShirtOutline className="text-xl" />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between w-[338px]">
               <p
                 className={`${
                   result.tishli_oyoqkiyim ? "" : "line-through text-gray-400"
-                }`}
+                } text-[18px] `}
               >
                 Tishli butsalarga ruxsat:
               </p>
               {/* <img src={icon6} alt="" /> */}
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between w-[338px]">
               <p
                 className={`${
                   result.usti_ochiq_yopiq ? "" : "line-through text-gray-400"
-                }`}
+                } text-[18px]`}
               >
                 Stadion usti yopiq:
               </p>
@@ -233,29 +233,8 @@ function About() {
           </div>
         </div>
       </div>
-      <div className="p-3 lg:px-40 md:py-16 md:gap-20 gap-0 bg-gray-50 flex flex-col md:flex-row justify-between">
-        <div className="w-full">
-          <MapComponent
-            className={"h-[300px] lg:h-[450px] w-full z-0"}
-            center={[result.latitude || 0, result.longitude || 0]} // Markaz joylashuvi
-            zoom={15} // Zoom darajasi
-            markers={[
-              {
-                id: result.id || 1, // Marker ID
-                latitude: result.latitude || 0, // Latitude
-                longitude: result.longitude || 0, // Longitude
-                title: result.title || "Noma'lum manzil", // Pop-up matni
-              },
-            ]}
-          />
-        </div>
-        <div className="w-full md:w-[500px] font-sans">
-          <p className="font-bold py-5">Ma'muriyat telefon raqami</p>
-          <p>{result.user.phone_number}</p>
-        </div>
-      </div>
-      <div className="pt-4 bg-gray-50">
-        <div className="p-4 lg:px-40">
+      <div className="pt-4 bg-white">
+        <div className={`p-4 lg:px-40 `}>
           <Box sx={{ width: "100%" }}>
             {isEditing ? (
               <Box
@@ -274,7 +253,7 @@ function About() {
                   fullWidth
                   minRows={3}
                   variant="standard"
-                  placeholder="Write a comment..."
+                  placeholder="Sharh yozish"
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                   sx={{
@@ -346,15 +325,36 @@ function About() {
                   },
                 }}
               >
-                Comment qo'shish
+                Sharh yozish
               </Box>
             )}
           </Box>
         </div>
         <CommitLog reviews={reviews} />
       </div>
+      <div className="p-3 lg:px-40 md:py-16 md:gap-20 gap-0 bg-white flex flex-col md:flex-row justify-between">
+        <div className="w-full">
+          <MapComponent
+            className={"h-[300px] lg:h-[450px] w-full z-0 rounded-[10px]"}
+            center={[result.latitude || 0, result.longitude || 0]} // Markaz joylashuvi
+            zoom={15} // Zoom darajasi
+            markers={[
+              {
+                id: result.id || 1, // Marker ID
+                latitude: result.latitude || 0, // Latitude
+                longitude: result.longitude || 0, // Longitude
+                title: result.title || "Noma'lum manzil", // Pop-up matni
+              },
+            ]}
+          />
+        </div>
+        <div className="w-full md:w-[500px] font-sans">
+          <p className="font-bold py-5">Ma'muriyat telefon raqami</p>
+          <p>{result.user.phone_number}</p>
+        </div>
+      </div>
 
-      <div className="px-3 pt-4 pb-24 lg:px-40 bg-gray-50 md:pb-40">
+      <div className="px-3 pt-4 pb-24 lg:px-40 bg-white md:pb-40">
         <p className="text-[15px] md:text-[25px] font-semibold mb-4">
           Tavsif etilgan{" "}
         </p>
@@ -364,7 +364,7 @@ function About() {
             "grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-[330px] gap-y-5 sm:gap-5"
           }
           classNm={
-            "flex flex-col rounded-lg border border-gray-200 bg-white shadow-md relative w-[320px] sm:w-full"
+            "flex flex-col rounded-lg bg-white relative w-[320px] sm:w-full"
           }
         />
       </div>

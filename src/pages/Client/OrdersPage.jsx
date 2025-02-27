@@ -34,7 +34,7 @@ const OrdersPage = () => {
   }, []);
 
   return (
-    <div className="bg-gray-50  w-full">
+    <div className="bg-white  w-full">
       {/* Mobil versiyada "Заказы" tugmasi */}
       <div className="p-4 block lg:hidden">
         <Buttons text={"Buyurtmalar"} />
@@ -52,12 +52,12 @@ const OrdersPage = () => {
             data.map((item, index) => (
               <Card
                 key={index}
-                className="mb-4 w-full border border-gray-400 bg-gray-100 shadow-sm rounded-lg"
+                className="mb-4 w-full border border-gray-400 bg-white shadow-sm rounded-lg"
               >
                 <div>
                   {/* Buyurtma vaqti */}
                   <div className="flex justify-between items-center mb-2">
-                    <h5 className="text-lg font-bold">{item.time}</h5>
+                    <h5 className="text-[24px] text-[#292929] font-bold">{item.time}</h5>
                   </div>
                   {/* Sana va holat tugmasi */}
                   <div className="flex justify-between items-center">
@@ -66,11 +66,11 @@ const OrdersPage = () => {
                       size="xs"
                       className={`px-3 py-1 rounded-full text-sm font-medium ${
                         item.status === "K"
-                          ? "bg-yellow-500 text-white" // Kutulmoqda
+                          ? "bg-[#FFCC00] text-white" // Kutulmoqda
                           : item.status === "B"
-                          ? "bg-red-500 text-white" // Bekor qilingan
+                          ? "bg-[#FF3B30] text-white" // Bekor qilingan
                           : item.status === "T"
-                          ? "bg-green-500 text-white" // Tasdiqlangan
+                          ? "bg-[#34B271] text-white" // Tasdiqlangan
                           : "bg-gray-500 text-white" // Noma'lum holat
                       }`}
                     >
@@ -113,7 +113,7 @@ const OrdersPage = () => {
                         </div>
                         <p className="text-sm">{item.stadion?.title || "Stadion nomi yuq"}</p>
                         <p className="text-sm text-gray-500">
-                          {item.stadion?.address || "Stadion manzili yuq"}
+                          {item.stadion?.viloyat + ' ' + item.stadion?.tuman + ' ' + item.stadion.address || "Manzil kiritilmagan"}
                         </p>
                       </div>
                     </div>

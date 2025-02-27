@@ -32,7 +32,7 @@ function Favorites() {
   };
 
   return (
-    <div className="h-screen bg-gray-50">
+    <div className="h-screen bg-white">
       <div className="p-4 block lg:hidden">
         <Buttons text={"Sevimlilar"} />
       </div>
@@ -46,7 +46,7 @@ function Favorites() {
               {favorites.map((stadium) => (
                 <div
                   key={stadium.id}
-                  className="flex flex-col rounded-lg border border-gray-200 bg-white shadow-sm"
+                  className="flex flex-col rounded-lg bg-white"
                 >
                   <div className="relative">
                     <button
@@ -64,18 +64,18 @@ function Favorites() {
                       alt={stadium.name || "Favorite Stadium"}
                     />
                     {/* Stadion ismi rasmning ostiga joylashadi */}
-                    <div className="flex flex-col justify-center p-3 font-sans">
+                    <div className="flex flex-col justify-center p-[10px] font-sans">
                       <div className="flex items-center justify-between">
                         <span className="text-[12px] text-gray-500 flex items-center gap-1">
-                          {stadium.rank_ratio ? (
+                          {stadium.star ? (
                             <GiRoundStar className="text-red-600 text-[15px]" />
                           ) : (
                             ""
                           )}
-                          {stadium.rank_ratio || "Bu hali yangi"}
+                          {stadium.star || "Bu hali yangi"}
                         </span>
-                        <span className="text-xs px-1 pb-0.5 text-white bg-green-600">
-                          {stadium.rank_ratio ? "" : "Yangi"}
+                        <span className="text-xs px-1 text-white bg-green-600">
+                          {stadium.star ? "" : "Yangi"}
                         </span>
                       </div>
                       <h3 className="text-sm mt-3 mb-1">{stadium.title}</h3>
@@ -83,7 +83,7 @@ function Favorites() {
                         <span className="text-green-500">
                           <IoLocationOutline />
                         </span>
-                        {stadium.address || "Manzil kiritilmagan"}
+                        {stadium.viloyat + ' ' + stadium.tuman + ' ' + stadium.address || "Manzil kiritilmagan"}
                       </p>
                       <p className="text-sm font-semibold mt-5">
                         {stadium.price ? stadium.price.toLocaleString("ru-Ru") : "0"} So`m

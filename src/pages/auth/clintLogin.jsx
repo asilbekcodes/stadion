@@ -65,7 +65,7 @@ const ClintLogin = () => {
   };
 
   return (
-    <div className="bg-gray-50 h-screen">
+    <div className="bg-white h-screen">
       <div className="p-4 block lg:hidden">
         <Buttons text={"Tizimga kirish"} />
       </div>
@@ -88,7 +88,7 @@ const ClintLogin = () => {
               type="text"
               ref={phone}
               defaultValue={"+998"}
-              className="px-4 py-2 bg-gray-50 border rounded-md"
+              className="px-4 py-2 bg-white border rounded-md"
             />
           </div>
           <div className="mb-4 flex flex-col gap-1 relative">
@@ -96,7 +96,7 @@ const ClintLogin = () => {
             <input
               type={showPassword ? "text" : "password"}
               ref={password}
-              className="px-4 py-2 bg-gray-50 border rounded-md"
+              className="px-4 py-2 bg-white border rounded-md"
               placeholder=".........."
             />
             {/* Kuzcha (eye icon) */}
@@ -110,7 +110,7 @@ const ClintLogin = () => {
           {/* Tasdiqlash tugmasi */}
           <button
             onClick={postLogin}
-            className="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
+            className="w-full py-2 bg-[#34B271] text-white rounded-md hover:bg-green-600 transition"
           >
             Kirish
           </button>
