@@ -5,7 +5,7 @@ import Card from "../../components/Client/Card";
 import { useEffect, useState } from "react";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import axios from "axios";
-import { FaStar } from "react-icons/fa";
+import { FaRegHeart, FaStar } from "react-icons/fa";
 import { IoLocationOutline, IoShirtOutline } from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
 import MapComponent from "../../components/MapComponent";
@@ -17,6 +17,7 @@ import icon1 from "../../assets/icons/Vector.svg";
 import icon3 from "../../assets/icons/Group 1703.svg";
 import icon4 from "../../assets/icons/Group (1).svg";
 import icon5 from "../../assets/icons/Frame 1708.svg";
+import icon6 from "../../assets/icons/Vector (1).svg";
 
 function About() {
   const navigate = useNavigate();
@@ -133,11 +134,13 @@ function About() {
                 {result.price ? result.price.toLocaleString("ru-RU") : "0"} so`m
               </p>
               <div className="flex gap-2">
-                <button onClick={() => navigate(`/clintBron/${result.id}`)} className="w-full py-3 bg-[#34B271] text-white p-2 rounded-lg hover:bg-[#30a367] transition duration-300">
+                <button onClick={() => navigate(`/clintBron/${result.id}`)} className="w-full text-lg xl:text-xl px-2 xl:py-4 bg-[#34B271] text-white rounded-lg hover:bg-[#30a367] transition duration-300">
                   Joyni band qilish
+                  <img className="inline-block ml-1 xl:ml-3 w-4 h-4 xl:w-6 xl:h-6" src={icon6} alt="" />
                 </button>
-                <button className="w-full py-3 bg-white text-black p-2 hover:bg-gray-200 rounded-[10px] ">
-                  Sevimlilarga qo`shish
+                <button className="w-full text-xl py-3 bg-white text-black px-1 xl:px-2 hover:bg-gray-200 rounded-[10px] ">
+                  Sevimlilar
+                  <FaRegHeart className="inline-block ml-3" />
                 </button>
               </div>
             </div>
