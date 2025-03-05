@@ -5,37 +5,30 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { GiRoundStar } from "react-icons/gi";
 import { baseUrl } from "../../helpers/api/baseUrl";
+import { userConfig } from "../../helpers/token/userToken";
 
 function Card({ className, classNames, classNm, selectedRegionId }) {
   const [stadiums, setStadiums] = useState([]); // Stadionlar ro'yxati
   const [favorites, setFavorites] = useState([]); // Sevimli stadionlar ro'yxati
-
-  // LocalStorage'dan saqlangan ma'lumotni olish
-  const getStoredData = (key) => {
-    const storedData = localStorage.getItem(key);
-    return storedData ? JSON.parse(storedData) : [];
-  };
 
   // API orqali stadionlarni olish
   const getCard = () => {
     axios
       .get(`${baseUrl}stadion/all-stadion/`, {
         params: { tuman: selectedRegionId },
-      }) 
+      })
       .then((res) => {
-        const storedLikes = getStoredData("stadiums");
+        setStadiums(res.data);
+      })
+      .catch((err) => console.error(err));
+  };
 
-        // LocalStorage ma'lumotlari asosida stadion holatini sozlash
-        const updatedStadiums = res.data.map((stadium) => {
-          const liked =
-            storedLikes.find((s) => s.id === stadium.id)?.liked || false;
-          return { ...stadium, liked };
-        });
-
-        setStadiums(updatedStadiums);
-
-        // Favorites ro'yxatini LocalStorage'dan olish
-        setFavorites(getStoredData(favorites));
+  // API orqali sevimli stadionlarni olish
+  const getFavorites = () => {
+    axios
+      .get(`${baseUrl}common/liked-stadion/`, userConfig())
+      .then((res) => {
+        setFavorites(res.data);
       })
       .catch((err) => console.error(err));
   };
@@ -43,27 +36,36 @@ function Card({ className, classNames, classNm, selectedRegionId }) {
   // Sahifa birinchi yuklanganda API chaqirish
   useEffect(() => {
     getCard();
+    getFavorites();
   }, [selectedRegionId]);
 
   // Like holatini o'zgartiruvchi funksiya
-  const handleLikeClick = (index) => {
-    setStadiums((prevStadiums) => {
-      const updatedStadiums = prevStadiums.map((stadium, i) =>
-        i === index ? { ...stadium, liked: !stadium.liked } : stadium
-      );
+  const handleLikeClick = (stadionId) => {
+    // const isFavorite = favorites.some((fav) => fav.id === stadionId);
 
-      // LocalStorage'da stadionlarni saqlash
-      localStorage.setItem("stadiums", JSON.stringify(updatedStadiums));
-
-      // Sevimli stadionlar ro'yxatini yangilash
-      const updatedFavorites = updatedStadiums.filter(
-        (stadium) => stadium.liked
-      );
-      setFavorites(updatedFavorites);
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-
-      return updatedStadiums;
-    });
+    if (favorites.length > 0) {
+      // Agar stadion allaqachon sevimlilarga qo'shilgan bo'lsa, DELETE so'rovini yuborish
+      axios
+        .delete(`${baseUrl}common/delete-liked-stadion/${id}`, userConfig())
+        .then((res) => {
+          getFavorites(); // Sevimlilar ro'yxatini yangilash
+        })
+        .catch((err) => console.error(err));
+    } else {
+      // Agar stadion sevimlilarga qo'shilmagan bo'lsa, POST so'rovini yuborish
+      axios
+        .post(
+          `${baseUrl}common/liked-stadion/`,
+          {
+            stadion_id: stadionId,
+          },
+          userConfig()
+        )
+        .then((res) => {
+          getFavorites(); // Sevimlilar ro'yxatini yangilash
+        })
+        .catch((err) => console.error(err));
+    }
   };
 
   return (
@@ -74,9 +76,9 @@ function Card({ className, classNames, classNm, selectedRegionId }) {
             {/* Yurakcha ikonkasi */}
             <button
               className="absolute top-2 right-2 bg-white p-1 rounded-full shadow-md z-10 cursor-pointer"
-              onClick={() => handleLikeClick(index)} // Like holatini o'zgartirish
+              onClick={() => handleLikeClick(stadium.id)} // Like holatini o'zgartirish
             >
-              {stadium.liked ? (
+              {favorites.length > 0 && favorites ? (
                 <IoHeart className="text-red-600 text-xl" /> // Yurak qizil
               ) : (
                 <IoHeartOutline className="text-black text-xl" /> // Yurak qora
