@@ -185,6 +185,11 @@ const Navbar = ({ onRegionSelect }) => {
                 ))}
               </ul>
             )}
+            {searchTerm && filteredData.length === 0 && (
+              <p className="absolute top-12 left-0 w-full p-2 bg-white shadow-lg rounded-lg z-10 max-h-52 overflow-y-auto">
+                Ma'lumotlar topilmadi
+              </p>
+            )}
           </div>
           <div className="flex items-center space-x-3 xl:space-x-6">
             <Link
@@ -243,7 +248,7 @@ const Navbar = ({ onRegionSelect }) => {
               {filteredData.map((item) => (
                 <Link to={`/about/${item.id}`} key={item.id}>
                   <li
-                    className="hover:cursor-pointer hover:bg-gray-50 p-2"
+                    className="hover:cursor-pointer hover:bg-gray-50 p-2 mx-2"
                     onClick={() => setSearchTerm(item.title)}
                   >
                     {item.title}
@@ -251,6 +256,11 @@ const Navbar = ({ onRegionSelect }) => {
                 </Link>
               ))}
             </ul>
+          )}
+          {searchTerm && filteredData.length === 0 && (
+            <p className="absolute mx-2 top-14 left-0 w-full p-2 bg-white shadow-lg rounded-lg z-50 max-h-52 overflow-y-auto">
+              Ma'lumotlar topilmadi
+            </p>
           )}
           <button className="py-[9.6px] px-2 mr-4 bg-gray-100 text-sm text-gray-900 rounded-lg border border-gray-300">
             <RegionDropdown />

@@ -70,6 +70,11 @@ function Card({ className, classNames, classNm, selectedRegionId }) {
 
   return (
     <div className={className}>
+      {stadiums.length === 0 && (
+        <h1 className="text-lg min-h-52 flex items-center justify-center">
+          Stadionlar topilmadi
+        </h1>
+      )}
       <div className={classNames}>
         {stadiums.map((stadium, index) => (
           <div key={stadium.id || index} className={classNm}>
@@ -113,10 +118,15 @@ function Card({ className, classNames, classNm, selectedRegionId }) {
                   <span className="text-green-500 mt-1">
                     <IoLocationOutline />
                   </span>
-                  {stadium.viloyat + ' ' + stadium.tuman + ' ' + stadium.address || "Manzil kiritilmagan"}
+                  {stadium.viloyat +
+                    " " +
+                    stadium.tuman +
+                    " " +
+                    stadium.address || "Manzil kiritilmagan"}
                 </p>
                 <p className="text-sm font-semibold mt-5">
-                  {stadium.price ? stadium.price.toLocaleString("ru-RU") : "0"} so`m
+                  {stadium.price ? stadium.price.toLocaleString("ru-RU") : "0"}{" "}
+                  so`m
                 </p>
               </div>
             </Link>
