@@ -40,7 +40,7 @@ function Card({ className, classNames, classNm, selectedRegionId }) {
   }, [selectedRegionId]);
 
   // Like holatini o'zgartiruvchi funksiya
-  const handleLikeClick = (stadionId) => {
+  const handleLikeClick = (stadionId, id) => {
     // const isFavorite = favorites.some((fav) => fav.id === stadionId);
 
     if (favorites.length > 0) {
@@ -76,7 +76,7 @@ function Card({ className, classNames, classNm, selectedRegionId }) {
             {/* Yurakcha ikonkasi */}
             <button
               className="absolute top-2 right-2 bg-white p-1 rounded-full shadow-md z-10 cursor-pointer"
-              onClick={() => handleLikeClick(stadium.id)} // Like holatini o'zgartirish
+              onClick={() => handleLikeClick(stadium.id || favorites.id)} // Like holatini o'zgartirish
             >
               {favorites.length > 0 && favorites ? (
                 <IoHeart className="text-red-600 text-xl" /> // Yurak qizil
