@@ -6,7 +6,12 @@ import { useEffect, useState } from "react";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import axios from "axios";
 import { FaRegHeart, FaStar } from "react-icons/fa";
-import { IoLocationOutline, IoShirtOutline } from "react-icons/io5";
+import {
+  IoHeart,
+  IoHeartOutline,
+  IoLocationOutline,
+  IoShirtOutline,
+} from "react-icons/io5";
 import { IoIosArrowBack } from "react-icons/io";
 import MapComponent from "../../components/MapComponent";
 import CommitLog from "../../components/Client/CommitLog";
@@ -34,11 +39,22 @@ function About() {
 
   const [mainImage, setMainImage] = useState(result.photo);
 
+  const [favorites, setFavorites] = useState([]);
+
   const stadionReviews = () => {
     axios
       .get(`${baseUrl}stadion/stadion-review/${resultId}/`)
       .then((res) => setReviews(res.data))
       .catch((err) => console.log(err));
+  };
+
+  const getFavorites = () => {
+    axios
+      .get(`${baseUrl}common/liked-stadion/`, userConfig())
+      .then((res) => {
+        setFavorites(res.data);
+      })
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
@@ -48,6 +64,7 @@ function About() {
       .catch((err) => console.log(err));
 
     stadionReviews();
+    getFavorites();
   }, [resultId]);
 
   const latitude = result.latitude;
@@ -74,6 +91,40 @@ function About() {
     postComment();
     setIsEditing(false);
     setComment("");
+  };
+
+  // useEffect(() => {
+  //   getFavorites();
+  // }, [])
+
+  const handleLikeClick = (stadionId) => {
+    // Sevimlilar ro'yxatida ushbu stadion bormi?
+    const favorite = favorites.find((fav) => fav.stadion.id === stadionId);
+
+    if (favorite) {
+      // DELETE so'rovi (agar allaqachon sevimlilarda bo'lsa)
+      axios
+        .delete(
+          `${baseUrl}common/delete-liked-stadion/${favorite.id}`,
+          userConfig()
+        )
+        .then(() => {
+          getFavorites(); // Sevimlilar ro'yxatini yangilash
+        })
+        .catch((err) => console.error(err));
+    } else {
+      // POST so'rovi (agar sevimlilarda bo'lmasa)
+      axios
+        .post(
+          `${baseUrl}common/liked-stadion/`,
+          { stadion_id: stadionId },
+          userConfig()
+        )
+        .then(() => {
+          getFavorites(); // Sevimlilar ro'yxatini yangilash
+        })
+        .catch((err) => console.error(err));
+    }
   };
 
   return (
@@ -134,13 +185,28 @@ function About() {
                 {result.price ? result.price.toLocaleString("ru-RU") : "0"} so`m
               </p>
               <div className="flex gap-2">
-                <button onClick={() => navigate(`/clintBron/${result.id}`)} className="w-full text-lg xl:text-xl px-2 xl:py-4 bg-[#34B271] text-white rounded-lg hover:bg-[#30a367] transition duration-300">
+                <button
+                  onClick={() => navigate(`/clintBron/${result.id}`)}
+                  className="w-full text-lg xl:text-xl px-2 xl:py-4 bg-[#34B271] text-white rounded-lg hover:bg-[#30a367] transition duration-300"
+                >
                   Joyni band qilish
-                  <img className="inline-block ml-1 xl:ml-3 w-4 h-4 xl:w-6 xl:h-6" src={icon6} alt="" />
+                  <img
+                    className="inline-block ml-1 xl:ml-3 w-4 h-4 xl:w-6 xl:h-6"
+                    src={icon6}
+                    alt=""
+                  />
                 </button>
-                <button className="w-full text-xl py-3 bg-white text-black px-1 xl:px-2 hover:bg-gray-200 rounded-[10px] ">
+                <button
+                  onClick={() => handleLikeClick(result.id)}
+                  className="w-full text-xl py-3 bg-white text-black px-1 xl:px-2 hover:bg-gray-200 rounded-[10px] "
+                >
                   Sevimlilar
-                  <FaRegHeart className="inline-block ml-3" />
+                  {/* <FaRegHeart className="inline-block ml-3" /> */}
+                  {favorites.length > 0 && favorites ? (
+                    <IoHeart className="text-red-600 text-2xl ml-3 inline-block" /> // Yurak qizil
+                  ) : (
+                    <IoHeartOutline className="text-black text-2xl ml-3 inline-block" /> // Yurak qora
+                  )}
                 </button>
               </div>
             </div>
@@ -170,14 +236,20 @@ function About() {
           <p className="font-bold text-[20px]">Sharoitlar</p>
           <div className="mt-3 font-sans">
             <div className="flex items-center justify-between w-[338px]">
-              <p className={`${result.kiyinish_xonasi ? "" : "line-through"} text-[18px]`}>
+              <p
+                className={`${
+                  result.kiyinish_xonasi ? "" : "line-through"
+                } text-[18px]`}
+              >
                 Kiyinish xonasi:
               </p>
               <img src={icon1} alt="" />
             </div>
             <div className="flex items-center justify-between w-[338px]">
               <p
-                className={`${result.dush ? "" : "line-through text-gray-400"} text-[18px]`}
+                className={`${
+                  result.dush ? "" : "line-through text-gray-400"
+                } text-[18px]`}
               >
                 Yuvinish xonasi:
               </p>
