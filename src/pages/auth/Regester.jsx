@@ -28,7 +28,7 @@ function Regester() {
       toast.warning("Iltimos, familiyangizni kiriting!");
       return;
     }
-    if (!phoneRef.current.value) {
+    if (!phoneRef.current.value || phoneRef.current.value.length !== 13) {
       toast.warning("Iltimos, telefon raqamingizni kiriting!");
       return;
     }
