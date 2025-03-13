@@ -52,17 +52,26 @@ const MapComponent = ({ center, zoom, markers, className }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [selectedDestination, setSelectedDestination] = useState(null);
 
-  // Foydalanuvchi joylashuvini olish
+  // **Foydalanuvchi joylashuvini doimiy kuzatish**
   useEffect(() => {
     if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
+      const watchId = navigator.geolocation.watchPosition(
         (position) => {
           setUserLocation([position.coords.latitude, position.coords.longitude]);
         },
         (error) => {
           console.error("Foydalanuvchi joylashuvi olinmadi:", error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0,
         }
       );
+
+      return () => {
+        navigator.geolocation.clearWatch(watchId);
+      };
     }
   }, []);
 
