@@ -33,7 +33,7 @@ const CommitLog = ({ reviews }) => {
   };
 
   return (
-    <div className="bg-white px-4 py-8 lg:px-40 flex flex-wrap gap-4">
+    <div className="bg-white px-4 mt-8 lg:px-40 flex flex-wrap gap-4">
       {reviews.length > 0 ? (
         <>
           {reviews.slice(0, visibleCommits).map((commit) => {

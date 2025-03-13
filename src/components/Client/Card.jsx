@@ -88,14 +88,14 @@ function Card({ className, classNames, classNm, selectedRegionId }) {
               {favorites.length > 0 && favorites ? (
                 <IoHeart className="text-red-600 text-xl" /> // Yurak qizil
               ) : (
-                <IoHeartOutline className="text-black text-xl" /> // Yurak qora
+                <IoHeartOutline className="text-black text-[24px]" /> // Yurak qora
               )}
             </button>
 
             {/* Stadion rasmi */}
             <Link to={`/about/${stadium.id}`}>
               <img
-                className="rounded-t-lg w-full h-[200px] md:h-[150px]"
+                className="rounded-t-lg w-full h-[150px] md:h-[200px] "
                 src={stadium.photo || img} // Agar API'da rasm bo'lmasa, default rasm
                 alt={stadium.name || "Stadium"}
               />
@@ -103,9 +103,9 @@ function Card({ className, classNames, classNm, selectedRegionId }) {
               {/* Stadion ma'lumotlari */}
               <div className="flex flex-col justify-center p-3 font-sans">
                 <div className="flex items-center justify-between">
-                  <span className="text-[12px] text-gray-500 flex items-center gap-1">
+                  <span className="text-[12px] md:text-[16px] text-gray-500 flex gap-1">
                     {stadium.star ? (
-                      <GiRoundStar className="text-red-600 text-[15px]" />
+                      <GiRoundStar className="text-red-600 w-[15px] h-[15px] md:w-[20px] md:h-[20px]" />
                     ) : (
                       ""
                     )}
@@ -115,8 +115,8 @@ function Card({ className, classNames, classNm, selectedRegionId }) {
                     {stadium.star ? "" : "Yangi"}
                   </span>
                 </div>
-                <h3 className="text-sm mt-3 mb-1">{stadium.title}</h3>
-                <p className="text-xs flex items-start gap-1">
+                <p className="text-[14px] md:text-[18px] mt-3 mb-1">{stadium.title}</p>
+                <p className="text-[14px] md:text-[18px] flex items-start gap-1">
                   <span className="text-green-500 mt-1">
                     <IoLocationOutline />
                   </span>
@@ -126,7 +126,7 @@ function Card({ className, classNames, classNm, selectedRegionId }) {
                     " " +
                     stadium.address || "Manzil kiritilmagan"}
                 </p>
-                <p className="text-sm font-semibold mt-5">
+                <p className="text-[14px] md:text-[18px] font-bold mt-5">
                   {stadium.price ? stadium.price.toLocaleString("ru-RU") : "0"}{" "}
                   so`m
                 </p>

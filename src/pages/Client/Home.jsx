@@ -47,15 +47,15 @@ function Home() {
           <BannerCarousel />
         </div>
         <section>
-          <div className="flex font-sans justify-between items-center md:mt-24">
+          <div className="flex font-sans justify-between items-center mt-[15px] md:mt-[100px] mb-[20px] lg:mb-[50px]">
             <div>
-              <p className="text-[15px] md:text-[27px] font-semibold mb-4 text-[#292929]">
+              <p className="text-[16px] md:text-[27px] font-semibold text-[#292929]">
                 Tanlangan
               </p>
             </div>
             <div className="flex">
               <Link to={"/main"}>
-                <p className="text-[11px] md:text-[16px] mb-4 flex items-center gap-[15px] text-[#292929]">
+                <p className="text-[12px] md:text-[16px] flex items-center gap-[15px] text-[#292929]">
                   Hammasini ko`rish <img src={vector} alt="" />
                 </p>
               </Link>
@@ -65,19 +65,19 @@ function Home() {
             selectedRegionId={selectedRegionId}
             className={"overflow-x-scroll md:overflow-x-hidden"}
             classNames={
-              "grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-[330px] gap-y-5 sm:gap-5"
+              "grid grid-cols-3 sm:grid-cols-2 xl:grid-cols-3 gap-x-[330px] gap-y-5 sm:gap-5 "
             }
             classNm={
               "flex flex-col rounded-lg relative w-[320px] sm:w-full"
             }
           />
-          <div className="font-sans mt-8 md:mt-24">
-            <div className="flex justify-between">
-              <p className="text-[15px] md:text-[27px] font-semibold mb-4">
+          <div className="font-sans mt-[50px] md:mt-[120px]">
+            <div className="flex justify-between mb-[25px] lg:mb-[50px] ">
+              <p className="text-[16px] md:text-[27px] font-semibold">
                 Eng yangi
               </p>
               <Link to={"/main"}>
-                <h2 className="text-[11px] md:text-[16px] mb-4 flex items-center gap-[15px] text-[#292929]">
+                <h2 className="text-[12px] md:text-[16px] flex items-center gap-[15px] text-[#292929]">
                   Hammasini ko`rish <img src={vector} alt="" />
                 </h2>
               </Link>
@@ -86,7 +86,7 @@ function Home() {
               selectedRegionId={selectedRegionId}
               className={"overflow-x-scroll md:overflow-x-hidden"}
               classNames={
-                "grid grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-[330px] gap-y-5 sm:gap-5"
+                "grid grid-cols-3 sm:grid-cols-2 xl:grid-cols-3 gap-x-[330px] gap-y-5 sm:gap-5"
               }
               classNm={
                 "flex flex-col rounded-lg relative w-[320px] sm:w-full"
