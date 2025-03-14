@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { GiRoundStar } from "react-icons/gi";
 import { baseUrl } from "../../helpers/api/baseUrl";
 import { userConfig } from "../../helpers/token/userToken";
+import { toast } from "react-toastify";
 
 function Card({ className, classNames, classNm, selectedRegionId }) {
   const [stadiums, setStadiums] = useState([]); // Stadionlar ro'yxati
@@ -66,7 +67,13 @@ function Card({ className, classNames, classNm, selectedRegionId }) {
         .then(() => {
           getFavorites(); // Sevimlilar ro'yxatini yangilash
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          if (err.response.status === 401) {
+            toast.error("Iltimos, avval tizimga kiring!");
+          } else {
+            toast.error("Xatolik yuz berdi!");
+          }          
+        });
     }
   };
 
