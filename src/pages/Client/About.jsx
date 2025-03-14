@@ -160,7 +160,7 @@ function About() {
           </div>
         </div>
 
-        <div className="w-full md:w-[400px] lg:w-[400px] xl:w-[500px] 2xl:w-[600px] p-4">
+        <div className="w-full md:w-[400px] lg:w-[400px] xl:w-[500px] 2xl:w-[600px] p-3">
           <div className="grid md:grid-rows-2 gap-0 md:gap-24">
             <div>
               <div className="flex items-center space-x-2 mb-5">
@@ -229,13 +229,13 @@ function About() {
         <div className="w-full md:w-[358px]">
           <div className="w-full mb-8 md:mb-0">
             <p className="font-bold text-[20px]">Tavsif</p>
-            <p className="mt-[40px] text-[18px]">{result.description}</p>
+            <p className="mt-[20px] md:mt-[40px] text-[18px]">{result.description}</p>
           </div>
         </div>
         <div className="">
           <p className="font-bold text-[20px]">Sharoitlar</p>
-          <div className="mt-[40px] font-sans">
-            <div className="flex items-center justify-between w-[338px]">
+          <div className="mt-[20px] md:mt-[40px] font-sans">
+            <div className="flex items-center justify-between w-full md:w-[338px] mt-[10px] ">
               <p
                 className={`${
                   result.kiyinish_xonasi ? "" : "line-through"
@@ -245,7 +245,7 @@ function About() {
               </p>
               <img src={icon1} alt="" />
             </div>
-            <div className="flex items-center justify-between w-[338px] mt-[25px]">
+            <div className="flex items-center justify-between w-full md:w-[338px] mt-[10px] md:mt-[25px]">
               <p
                 className={`${
                   result.dush ? "" : "line-through text-gray-400"
@@ -255,7 +255,7 @@ function About() {
               </p>
               <img src={icon4} alt="" />
             </div>
-            <div className="flex items-center justify-between w-[338px] mt-[25px]">
+            <div className="flex items-center justify-between w-full md:w-[338px] mt-[10px] md:mt-[25px]">
               <p
                 className={`${
                   result.yoritish ? "" : "line-through text-gray-400"
@@ -265,7 +265,7 @@ function About() {
               </p>
               <img src={icon3} alt="" />
             </div>
-            <div className="flex items-center justify-between w-[338px] mt-[25px]">
+            <div className="flex items-center justify-between w-full md:w-[338px] mt-[10px] md:mt-[25px]">
               <p
                 className={`${
                   result.parkofka ? "" : "line-through text-gray-400"
@@ -275,7 +275,7 @@ function About() {
               </p>
               <img src={icon5} alt="" />
             </div>
-            <div className="flex items-center justify-between w-[338px] mt-[25px]">
+            <div className="flex items-center justify-between w-full md:w-[338px] mt-[10px] md:mt-[25px]">
               <p
                 className={`${
                   result.forma ? "" : "line-through text-gray-400"
@@ -285,7 +285,7 @@ function About() {
               </p>
               <IoShirtOutline className="text-xl" />
             </div>
-            <div className="flex items-center justify-between w-[338px] mt-[25px]">
+            <div className="flex items-center justify-between w-full md:w-[338px] mt-[10px] md:mt-[25px]">
               <p
                 className={`${
                   result.tishli_oyoqkiyim ? "" : "line-through text-gray-400"
@@ -295,7 +295,7 @@ function About() {
               </p>
               {/* <img src={icon6} alt="" /> */}
             </div>
-            <div className="flex items-center justify-between w-[338px] mt-[25px]">
+            <div className="flex items-center justify-between w-full md:w-[338px] mt-[10px] md:mt-[25px]">
               <p
                 className={`${
                   result.usti_ochiq_yopiq ? "" : "line-through text-gray-400"
@@ -309,7 +309,7 @@ function About() {
         </div>
       </div>
       <div className="bg-white">
-        <div className={`lg:px-40 `}>
+        <div className={`p-3 lg:px-40 `}>
           <Box sx={{ width: "100%" }}>
             {isEditing ? (
               <Box
@@ -430,7 +430,7 @@ function About() {
       </div>
 
       <div className="px-3 pb-24 lg:px-40 bg-white md:pb-40">
-        <p className="text-[16px] md:text-[27px] font-semibold mb-[50px]">
+        <p className="text-[16px] md:text-[27px] font-semibold mt-[50px] md:mt-0 mb-[25px] md:mb-[50px]">
           Tavsif etilgan{" "}
         </p>
         <Card

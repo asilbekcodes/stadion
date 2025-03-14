@@ -3,6 +3,8 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import ThemeContextProvider from "./context/ThemeContextProvider";
 import Loading from "./components/Loading";
 import StadionEdit from "./components/Admin/Addstadion/StadionEdit";
+import { baseUrl } from "./helpers/api/baseUrl";
+import axios from "axios";
 
 const Home = lazy(() => import("./pages/Client/Home"));
 const Main = lazy(() => import("./pages/Client/Main"));
@@ -56,6 +58,24 @@ function App() {
       navigate(lastPage);
     }
   }, [navigate]);
+
+  const refreshToken = async () => {
+    const refreshToken = localStorage.getItem("refreshToken");
+    try {
+      const response = await axios.post(`${baseUrl}user/token/refresh/`, {
+        refresh: refreshToken,
+      });
+      const newToken = response.data.access;
+      localStorage.setItem("token", newToken);
+      return newToken;
+    } catch (error) {
+      console.error("Failed to refresh token:", error);
+    }
+  };
+
+  useEffect(() => {
+    refreshToken();
+  }, [refreshToken]);
 
   return (
     <>

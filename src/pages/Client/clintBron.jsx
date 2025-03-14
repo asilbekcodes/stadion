@@ -182,8 +182,11 @@ function ClintBron() {
               className="bg-green-600 text-white max-w-max py-4 md:px-10 px-5 rounded-lg shadow-md hover:bg-green-500"
               onClick={handleOpenModal}
             >
-              Tanlangan vaq: {selectedHours.length} soat,{" "}
-              {calculateTotalPrice() ? calculateTotalPrice().toLocaleString("ru-RU") : "0"} so'm
+              { localStorage.getItem("userToken") ?
+              `Tanlangan vaqt: ${selectedHours.length} soat,
+              ${calculateTotalPrice() ? calculateTotalPrice().toLocaleString("ru-RU") : "0"} so'm`
+              : 'Bron qilish uchun tizimga kiring'
+              }
             </button>
           </div>
         )}
